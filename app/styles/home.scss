@@ -1,0 +1,139 @@
+.home-section {
+    position: relative;
+
+    .full-screen {
+        padding: 50px 0;
+        min-height: 100vh;
+    }
+
+    .home-text,
+    .home-img {
+        flex: 0 0 50%;
+        max-width: 50%;
+        padding: 0 15px;
+    }
+
+    .home-text {
+        p {
+            color: var(--text-black-600);
+            font-size: 18px;
+            text-transform: capitalize;
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 55px;
+            font-weight: 700;
+            color: var(--text-black-900);
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 20px;
+            font-weight: 500;
+            color: var(--text-black-600);
+            margin: 0;
+            text-transform: capitalize;
+        }
+
+        .btn-1 {
+            margin-top: 30px;
+            margin-right: 20px;
+        }
+    }
+
+    .home-img {
+        .img-box {
+            max-width: 450px;
+            display: block;
+            margin: auto;
+            border-radius: 50%;
+            padding: 15px;
+
+            img {
+                width: 100%;
+                border-radius: 50%;
+                border: 10px solid transparent;
+            }
+        }
+    }
+}
+
+.effect-wrap .effect {
+    position: absolute;
+    z-index: -1;
+}
+
+.effect-1 {
+    width: 30px;
+    height: 30px;
+    border: 4px solid #8a49ff;
+    right: 10%;
+    bottom: 10%;
+    animation: spin 10s linear infinite;
+}
+
+.effect-2 {
+    left: 9%;
+    bottom: 15%;
+    width: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    animation: topBounce 3s ease-in-out infinite;
+
+    div {
+        height: 3px;
+        width: 3px;
+        background-color: #ff9c07;
+        margin: 0 3px 8px;
+    }
+}
+
+
+.effect-3 {
+    height: 180px;
+    width: 180px;
+    border: 25px solid var(--skin-color);
+    border-radius: 50%;
+    left: 50%;
+    top: -120px;
+    animation: leftBounce 3s ease-in-out infinite;
+}
+
+.effect-4 {
+    border-top: 30px solid transparent;
+    border-left: 30px solid #06d79c;
+    left: 30%;
+    top: 20%;
+    animation: spin 15s linear infinite;
+
+    &::before {
+        content: '';
+        border-top: 30px solid transparent;
+        border-left: 30px solid #06d79c;
+        position: absolute;
+        opacity: 0.5;
+        top: -25px;
+        left: -35px;
+    }
+}
+
+.effect-5 {
+    height: 50px;
+    width: 50px;
+    right: 10%;
+    top: 30%;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 50%;
+    overflow: hidden;
+    animation: spin 10s linear infinite;
+
+    div {
+        width: 1px;
+        background-color: #4dd0e1;
+    }
+}
+
+@import "./responsive/home";

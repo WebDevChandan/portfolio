@@ -1,0 +1,14 @@
+@media(max-width: 768px) {
+
+    .certificate-popup .description,
+    .certificate-popup .info {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .certificate-popup .cp-main {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}

@@ -1,0 +1,215 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Home {
+  id         Int      @id @default(1)
+  image      String
+  role       String[]
+  created_at DateTime @default(now())
+  update_at  DateTime @updatedAt
+}
+
+model About {
+  id         Int      @id @default(1)
+  info       String
+  img        String
+  created_at DateTime @default(now())
+  update_at  DateTime @updatedAt
+}
+
+model SocialLinks {
+  id         Int      @id @default(autoincrement())
+  label      String
+  link       String
+  created_at DateTime @default(now())
+  update_at  DateTime @updatedAt
+}
+
+model Skill {
+  id         Int      @id @default(autoincrement())
+  name       String
+  level      String
+  created_at DateTime @default(now())
+  update_at  DateTime @updatedAt
+}
+
+model Experience {
+  id               Int          @id @default(autoincrement())
+  from             String
+  to               String
+  role             String
+  experienceDetail String
+  organization_id  Int
+  organization     Organization @relation(fields: [organization_id], references: [id])
+  created_at       DateTime     @default(now())
+  updated_at       DateTime     @updatedAt
+}
+
+model Organization {
+  id          Int          @id @default(autoincrement())
+  title       String
+  location    String
+  experiences Experience[]
+  created_at  DateTime     @default(now())
+  updated_at  DateTime     @updatedAt
+}
+
+model Education {
+  id             Int         @id @default(autoincrement())
+  from           String
+  to             String
+  level          String
+  info           String
+  institution_id Int
+  institution    Institution @relation(fields: [institution_id], references: [id])
+  created_at     DateTime    @default(now())
+  update_at      DateTime    @updatedAt
+}
+
+model Institution {
+  id         Int         @id @default(autoincrement())
+  title      String
+  location   String
+  Educations Education[]
+  created_at DateTime    @default(now())
+  update_at  DateTime    @updatedAt
+}
+
+model Resume {
+  id         Int      @id @default(1)
+  file       String
+  created_at DateTime @default(now())
+  update_at  DateTime @updatedAt
+}
+
+model Certificate {
+  id                Int               @id @default(autoincrement())
+  label             String
+  src               String
+  info              String
+  details_id        String            @unique
+  certificateDetail CertificateDetail @relation(fields: [details_id], references: [slug])
+  created_at        DateTime          @default(now())
+  update_at         DateTime          @updatedAt
+}
+
+model CertificateDetail {
+  id                      Int                     @id @default(autoincrement())
+  slug                    String                  @unique @default(uuid())
+  header_details_id       Int                     @unique
+  certificateHeaderDetail CertificateHeaderDetail @relation(fields: [header_details_id], references: [id])
+  main_details_id         Int                     @unique
+  certificateMainDetail   CertificateMainDetail   @relation(fields: [main_details_id], references: [id])
+  Certificate             Certificate?
+  created_at              DateTime                @default(now())
+  update_at               DateTime                @updatedAt
+}
+
+model CertificateHeaderDetail {
+  id                Int                @id @default(autoincrement())
+  authority         String
+  issueDate         String
+  expiryDate        String
+  skill             String
+  link              String
+  description       String
+  certificateDetail CertificateDetail?
+  created_at        DateTime           @default(now())
+  update_at         DateTime           @updatedAt
+}
+
+model CertificateMainDetail {
+  id                Int                @id @default(autoincrement())
+  certificateDetail CertificateDetail?
+  largeImage        String
+  imgText           String
+  created_at        DateTime           @default(now())
+  update_at         DateTime           @updatedAt
+}
+
+model Portfolio {
+  id                Int               @id @default(autoincrement())
+  title             String
+  src               String
+  altText           String
+  category_id       Int
+  portfolioCategory PortfolioCategory @relation(fields: [category_id], references: [id])
+  details_id        String            @unique
+  portfolioDetail   PortfolioDetail   @relation(fields: [details_id], references: [slug])
+  created_at        DateTime          @default(now())
+  update_at         DateTime          @updatedAt
+}
+
+model PortfolioDetail {
+  id                    Int                   @id @default(autoincrement())
+  slug                  String                @unique @default(uuid())
+  header_details_id     Int                   @unique
+  portfolioHeaderDetail PortfolioHeaderDetail @relation(fields: [header_details_id], references: [id])
+  main_details_id       Int                   @unique
+  portfolioMainDetail   PortfolioMainDetail   @relation(fields: [main_details_id], references: [id])
+  Portfolio             Portfolio?
+  created_at            DateTime              @default(now())
+  update_at             DateTime              @updatedAt
+}
+
+model PortfolioHeaderDetail {
+  id              Int              @id @default(autoincrement())
+  from            String
+  to              String
+  client          String
+  link            String
+  tools           String[]
+  demo            String
+  description     String
+  PortfolioDetail PortfolioDetail?
+  created_at      DateTime         @default(now())
+  update_at       DateTime         @updatedAt
+}
+
+model PortfolioMainDetail {
+  id              Int              @id @default(autoincrement())
+  imgSrc          String[]
+  altText         String
+  titleText       String
+  webFrameLink    String
+  PortfolioDetail PortfolioDetail?
+  created_at      DateTime         @default(now())
+  update_at       DateTime         @updatedAt
+}
+
+model PortfolioCategory {
+  id         Int         @id @default(autoincrement())
+  label      String
+  active     Boolean     @default(false)
+  Portfolio  Portfolio[]
+  created_at DateTime    @default(now())
+  update_at  DateTime    @updatedAt
+}
+
+model Contact {
+  id         Int      @id @default(autoincrement())
+  label      String
+  details    String
+  created_at DateTime @default(now())
+  update_at  DateTime @updatedAt
+}
+
+model Testimonial {
+  id         Int      @id @default(autoincrement())
+  name       String
+  img        String
+  region     String
+  feedback   String
+  active     Boolean  @default(false)
+  created_at DateTime @default(now())
+  update_at  DateTime @updatedAt
+}

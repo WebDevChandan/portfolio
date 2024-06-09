@@ -1,0 +1,12 @@
+@media (max-width: 1024px) {
+    .sidebar .menu-bar .menu {
+        margin-top: 10px;
+    }
+}
+
+@media(max-width: 574px) {
+    .sidebar {
+        display: none;
+    }
+}
+

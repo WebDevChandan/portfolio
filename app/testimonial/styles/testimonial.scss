@@ -1,0 +1,100 @@
+.testimonial-section {
+    padding: 80px 0 80px;
+    min-height: 100vh;
+
+    .testi-box {
+        width: 100%;
+        max-width: 600px;
+        margin: auto;
+        padding: 0 15px;
+    }
+
+    .testi-slider {
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .testi-slider-container {
+        display: flex;
+        transition: margin 1s ease;
+        align-items: center;
+    }
+
+    .testi-item {
+        padding: 30px;
+        text-align: center;
+        position: relative;
+
+        i {
+            position: absolute;
+            font-size: 30px;
+            color: var(--text-black-600);
+            opacity: 0.1;
+
+            &.left {
+                left: 5px;
+                top: 5px;
+            }
+
+            &.right {
+                right: 5px;
+                bottom: 5px;
+            }
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 26px;
+            color: var(--text-black-600);
+            margin: 0 0 30px;
+        }
+
+        img {
+            max-width: 70px;
+            display: inline-block;
+            width: 100%;
+        }
+
+        span {
+            display: block;
+            margin: 10px 0 0;
+            font-weight: 600;
+            font-size: 16px;
+            color: var(--text-black-700);
+            text-transform: capitalize;
+        }
+    }
+
+    .testi-slider-nav {
+        margin-top: 30px;
+        text-align: center;
+
+        span {
+            width: 40px;
+            height: 40px;
+            color: var(--skin-color);
+            display: inline-block;
+            font-size: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 50%;
+            margin: 0 4px;
+
+            &::after {
+                border-radius: 50%;
+            }
+
+            i {
+                line-height: 46px;
+            }
+        }
+    }
+
+    .client_region {
+        transform: translateY(10px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--text-black-700);
+    }
+}

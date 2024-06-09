@@ -1,0 +1,268 @@
+.portfolio-popup {
+    background-color: var(--bg-black-50);
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    overflow-y: scroll;
+    transition: all 0.3s ease;
+
+    .pp-details {
+        max-width: 1350px;
+        width: calc(85% + 30px);
+        margin: auto;
+        max-height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: all 0.5s ease;
+
+        &.active {
+            opacity: 1;
+            max-height: 400px;
+        }
+
+        .pp-details-inner {
+            padding: 30px 0;
+        }
+
+        .pp-title {
+            padding: 0 15px;
+
+            h2 {
+                font-size: 28px;
+                color: var(--text-black-900);
+                text-transform: capitalize;
+                font-weight: 600;
+                margin: 0 0 5px;
+            }
+
+            p {
+                font-size: 14px;
+                font-weight: 600;
+                color: var(--text-black-600);
+                margin: 0 0 15px;
+                border-bottom: 1px solid var(--bg-black-100);
+                padding-bottom: 10px;
+
+                span {
+                    font-weight: 400;
+                    text-transform: capitalize;
+                }
+            }
+        }
+
+        .pp-project-details {
+            h3 {
+                font-size: 20px;
+                font-weight: 600;
+                color: var(--text-black-700);
+                margin: 0 0 15px;
+                text-transform: capitalize;
+            }
+
+            .description {
+                flex: 0 0 65%;
+                max-width: 65%;
+                padding: 0 15px;
+
+                p {
+                    font-size: 16px;
+                    color: var(--text-black-600);
+                    line-height: 26px;
+                    margin: 0;
+                }
+            }
+
+            .info {
+                flex: 0 0 35%;
+                max-width: 65%;
+                padding: 0 15px;
+
+                ul {
+                    li {
+                        display: block;
+                        margin-bottom: 10px;
+                        font-weight: 600;
+                        color: var(--text-black-600);
+                        font-size: 16px;
+
+                        span {
+                            font-weight: 400;
+                        }
+
+                        a {
+                            color: var(--skin-color);
+                        }
+
+                        &:last-child {
+                            margin-bottom: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .separator {
+        height: 1px;
+        width: 100%;
+        display: block;
+        background-color: var(--bg-black-100);
+    }
+
+    .pp-main {
+        min-height: 100vh;
+        max-width: 1350px;
+        width: 85%;
+        margin: auto;
+
+        .pp-main-inner {
+            padding: 70px 0 50px;
+            position: relative;
+            width: 100%;
+
+            .pp-project-details-btn {
+                position: absolute;
+                left: 0;
+                border-radius: 30px;
+                font-size: 16px;
+                font-weight: 500;
+                color: var(--skin-color);
+                top: 15px;
+                cursor: pointer;
+                padding: 0 15px;
+                height: 40px;
+                line-height: 40px;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+
+                i {
+                    margin-left: 5px;
+                    display: flex;
+                }
+
+                &::after {
+                    border-radius: 30px;
+                }
+            }
+
+            .pp-project-live-btn,
+            .pp-project-screenshots-btn {
+                position: absolute;
+                border-radius: 30px;
+                font-size: 16px;
+                font-weight: 500;
+                color: var(--skin-color);
+                top: 15px;
+                cursor: pointer;
+                padding: 0 15px;
+                height: 40px;
+                line-height: 40px;
+                transition: all 0.3s ease;
+                display: flex;
+                align-items: center;
+
+                &::after {
+                    border-radius: 30px;
+                }
+            }
+
+            .pp-project-live-btn {
+                right: 200px;
+            }
+
+            .pp-project-screenshots-btn {
+                right: 60px;
+            }
+
+
+            .pp-close {
+                position: absolute;
+                right: 0;
+                border-radius: 50%;
+                height: 40px;
+                width: 40px;
+                top: 15px;
+                text-align: center;
+                line-height: 35px;
+                font-size: 35px;
+                color: var(--text-black-600);
+                cursor: pointer;
+                transition: all 0.3s ease;
+
+                &::after {
+                    border-radius: 50%;
+                }
+            }
+
+            .pp-counter {
+                position: absolute;
+                right: 0;
+                height: 40px;
+                line-height: 40px;
+                bottom: 5px;
+                font-size: 16px;
+                color: var(--text-black-600)
+            }
+
+            .pp-img {
+                max-width: 100%;
+                width: auto;
+                height: auto;
+                padding: 10px;
+                border-right: 5px;
+            }
+
+            .pp-iframe {
+                width: 100%;
+                height: 100vh;
+                padding: 10px;
+            }
+
+        }
+
+        .pp-prev {
+            left: 15px;
+
+            i svg {
+                transform: rotate(180deg);
+            }
+        }
+
+        .pp-next {
+            right: 15px;
+
+        }
+
+        .pp-prev,
+        .pp-next {
+            position: fixed;
+            top: 50%;
+            height: 40px;
+            width: 40px;
+            text-align: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1010;
+            color: var(--text-black-900);
+            transition: all 0.3s ease;
+            opacity: 0.5;
+        }
+
+        .pp-prev:hover,
+        .pp-next:hover {
+            opacity: 1;
+        }
+
+        .pp-prev i,
+        .pp-next i {
+            line-height: 40px;
+        }
+    }
+
+}
+
+@import "./responsive/projectDetails";

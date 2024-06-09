@@ -1,0 +1,18 @@
+.error {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: column;
+    color: var(--text-black-600);
+    gap: 5px;
+
+    h1 {
+        font-weight: 600;
+    }
+
+    p {
+        margin-bottom: 10px;
+    }
+}

@@ -1,0 +1,29 @@
+@media(max-width: 899px) {
+    .resume-section .resume-item-inner iframe {
+        height: 1190px;
+    }
+}
+
+@media(max-width: 768px) {
+    .resume-section .resume-item-inner iframe {
+        height: 1050px;
+    }
+}
+
+@media(max-width: 574px) {
+    .resume-section .resume-item-inner iframe {
+        max-height: 100vh;
+    }
+}
+
+@media(max-width: 375px) {
+    .resume-section .resume-item-inner iframe {
+        height: 490px;
+    }
+}
+
+@media(max-width: 320px) {
+    .resume-section .resume-item-inner iframe {
+        height: 450px;
+    }
+}

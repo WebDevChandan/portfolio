@@ -1,0 +1,18 @@
+@media(max-width: 899px) {
+    .contact-section .submit-btn #sub_msg {
+        transform: translateY(5px);
+    }
+}
+
+@media(max-width: 768px) {
+    .contact-section .w-50,
+    .contact-section .contact-item{
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .contact-section .submit-btn{
+        text-align: center;
+        display: block;
+    }
+}

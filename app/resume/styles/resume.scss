@@ -1,0 +1,18 @@
+.resume-section {
+    padding: 80px 0 80px;
+    min-height: 100vh;
+
+    .resume-item-inner {
+        padding: 50px 15px;
+        border-radius: 5px;
+        text-align: center;
+        width: 100%;
+    }
+
+    iframe {
+        height: calc(100vh - (-357%));
+        width: 100%;
+    }
+}
+
+@import "./responsive/resume";
