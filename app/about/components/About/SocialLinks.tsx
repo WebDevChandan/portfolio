@@ -1,23 +1,26 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/utils/prisma";
 import Link from "next/link"
 import { FaGithub, FaLinkedinIn, FaTwitter } from "react-icons/fa"
 import { SiLeetcode } from "react-icons/si"
 
-const prisma = new PrismaClient();
-
 const fetchSocialLinks = async () => {
-    const contactDetail = await prisma.socialLinks.findMany({
+    const [socialLinks] = await prisma.personalInfo.findMany({
         select: {
-            label: true,
-            link: true,
+            socialLinks: {
+                select: {
+                    label: true,
+                    link: true
+                }
+            }
         }
     })
-    return contactDetail;
+    return socialLinks;
 }
 
 export default async function SocialLinks() {
-    const socialLinks = await fetchSocialLinks();
+    const { socialLinks } = await fetchSocialLinks();
     const socialIcons = [<FaLinkedinIn />, <SiLeetcode />, <FaGithub />, <FaTwitter />]
+
 
     return (
         <div className="social-links">

@@ -1,20 +1,18 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/utils/prisma';
 import { Effects, HomeText, MyImage } from './components';
 import './styles/home.scss';
 
-const prisma = new PrismaClient();
-
 interface HomeDataType {
-  image: string,
-  role: string[],
+  myImages: string[],
+  roles: string[],
 }
 
 const fetchHomeDetails = async (): Promise<HomeDataType | null> => {
   try {
-    const homeData = await prisma.home.findFirst({
+    const homeData = await prisma.personalInfo.findFirst({
       select: {
-        image: true,
-        role: true,
+        myImages: true,
+        roles: true,
       }
     });
 
@@ -38,10 +36,10 @@ export default async function Home() {
 
           {homeData && (
             <>
-              <HomeText role={homeData?.role} />
+              <HomeText role={homeData?.roles} />
 
               <div className="home-img">
-                <MyImage src={homeData?.image} />
+                <MyImage src={homeData?.myImages[0]} />
               </div>
             </>
           )}

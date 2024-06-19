@@ -7,8 +7,8 @@ const fetchEducationDetail = async () => {
     try {
         const experienceDetail = await prisma.education.findMany({
             select: {
-                from: true,
                 to: true,
+                from: true,
                 level: true,
                 info: true,
                 institution: {

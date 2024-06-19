@@ -15,7 +15,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
       </head>
-      <body>
+      <body className='dark color-3'>
         <Header />
         <MainMenuBar />
         <StyleSwitcher />

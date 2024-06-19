@@ -1,17 +1,14 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/utils/prisma";
 import { MyImage } from "../components";
 import { AboutMe, AboutTabs, Education, Experience, Skill, SocialLinks, Title } from "./components";
 import './styles/about.scss';
 
-
-const prisma = new PrismaClient();
-
 const fetchAboutDetails = async () => {
     try {
-        const aboutData = await prisma.about.findFirst({
+        const aboutData = await prisma.personalInfo.findFirst({
             select: {
-                info: true,
-                img: true,
+                about: true,
+                myImages: true,
             }
         });
 
@@ -51,10 +48,10 @@ export default async function About() {
                     aboutData && (
                         <div className="row">
                             <div className="about-img">
-                                <MyImage src={aboutData?.img} />
+                                <MyImage src={aboutData?.myImages[1]} />
                                 <SocialLinks />
                             </div>
-                            <AboutMe info={aboutData!.info} />
+                            <AboutMe info={aboutData!.about} />
                         </div>
                     )
                 }

@@ -8,8 +8,8 @@ const fetchExpericneDetail = async () => {
     try {
         const experienceDetail = await prisma.experience.findMany({
             select: {
-                to: true,
                 from: true,
+                to: true,
                 role: true,
                 experienceDetail: true,
                 organization: {

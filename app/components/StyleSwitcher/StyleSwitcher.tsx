@@ -1,8 +1,8 @@
 "use client";
-import { FaMoon, FaSun } from 'react-icons/fa'
-import "../../styles/style-switcher.scss"
-import { ColorSwitcher } from '..'
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useLayoutEffect, useState } from 'react';
+import { FaSun } from 'react-icons/fa';
+import { ColorSwitcher } from '..';
+import "../../styles/style-switcher.scss";
 
 export default function StyleSwitcher() {
     const [styleSwitcherMode, setStyleSwitcherMode] = useState(false);
