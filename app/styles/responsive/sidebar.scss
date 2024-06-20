@@ -1,6 +1,9 @@
 @media (max-width: 1024px) {
     .sidebar .menu-bar .menu {
-        margin-top: 10px;
+        margin-top: 0px;
+        li{
+            margin-top: 10px;
+        }
     }
 }
 
@@ -10,3 +13,8 @@
     }
 }
 
+@media (min-width: 1025px) and (max-width: 1314px) {
+    .sidebar {
+      display: none;
+    }
+  }

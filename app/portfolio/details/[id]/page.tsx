@@ -1,10 +1,9 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/utils/prisma";
+import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
+import { notFound } from "next/navigation";
 import "../../styles/portfolio.scss";
 import { HeaderDetails, MainDetails } from './components';
 import './styles/projectDetails.scss';
-import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
-import { notFound } from "next/navigation";
-import prisma from "@/utils/prisma";
 
 const fetchPortfolioDetails = async (slug: string) => {
     try {
