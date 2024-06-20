@@ -1,8 +1,7 @@
-import { Portfolio, PrismaClient } from "@prisma/client";
+import prisma from "@/utils/prisma";
 import { HeaderDescription, HeaderInfo, HeaderTitle } from "..";
 
 type ProjectInfoType = {
-    id: number;
     from: string;
     to: string;
     client: string;
@@ -10,11 +9,8 @@ type ProjectInfoType = {
     tools: string[];
     demo: string;
     description: string;
-    created_at: Date;
-    update_at: Date;
 } | undefined
 
-const prisma = new PrismaClient();
 
 const fetchPortfolioDetail = async (details_id?: string) => {
     const portfolioDetail = await prisma.portfolio.findUnique({

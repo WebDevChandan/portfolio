@@ -1,9 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/utils/prisma';
 import Title from '../components/Title';
 import { CertificateCard } from './components/index';
 import './styles/certificate.scss';
-
-const prisma = new PrismaClient();
 
 const fetchCertificateCardInfo = async () => {
     try {

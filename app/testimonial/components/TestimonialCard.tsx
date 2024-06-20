@@ -1,8 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-import React from 'react'
-import { FaQuoteLeft, FaQuoteRight } from 'react-icons/fa'
-
-const prisma = new PrismaClient();
+import prisma from '@/utils/prisma';
+import { FaQuoteLeft, FaQuoteRight } from 'react-icons/fa';
 
 export const fetchTestimonialData = async () => {
     try {

@@ -1,6 +1,5 @@
+import prisma from "@/utils/prisma";
 import { PrismaClient } from "@prisma/client"
-
-const prisma = new PrismaClient();
 
 type skillDataType = {
     skills: {
@@ -27,8 +26,8 @@ const fetchSkills = async (): Promise<skillDataType | null> => {
         console.log("Error Fetching skill Data: ", error)
         return null;
     }
-
 }
+
 export default async function Skill() {
     const skillData = await fetchSkills();
 

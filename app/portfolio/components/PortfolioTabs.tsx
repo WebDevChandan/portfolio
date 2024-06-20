@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/utils/prisma";
 import { PortfolioFilter } from ".";
-
-const prisma = new PrismaClient();
 
 const fetchPortfolioTabs = async () => {
     try {

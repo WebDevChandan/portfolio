@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "@/utils/prisma";
 import { CertificateDescription, CertificateInfo, CertificateTitle } from "..";
 
 type HeaderDetailsType = {
@@ -10,7 +10,6 @@ type HeaderDetailsType = {
     description: string;
 } | undefined
 
-const prisma = new PrismaClient();
 
 const fetchCertificateTitle = async (details_id?: string) => {
     try {

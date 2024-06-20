@@ -1,8 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-import React from 'react'
-import { FaBriefcase } from 'react-icons/fa'
-
-const prisma = new PrismaClient();
+import prisma from '@/utils/prisma';
+import { FaBriefcase } from 'react-icons/fa';
 
 const fetchExpericneDetail = async () => {
     try {

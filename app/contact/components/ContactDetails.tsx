@@ -1,17 +1,20 @@
-import { PrismaClient } from "@prisma/client";
-import { FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa"
+import prisma from "@/utils/prisma";
+import { FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
 
-const prisma = new PrismaClient();
 
 const fetchContactDetails = async () => {
     try {
-        const contactDetail = await prisma.contact.findMany({
+        const [contact] = await prisma.personalInfo.findMany({
             select: {
-                label: true,
-                details: true,
+                contact: {
+                    select: {
+                        label: true,
+                        detail: true,
+                    }
+                }
             }
         })
-        return contactDetail;
+        return contact;
     } catch (error) {
         console.log("Error Fetching skill Data: ", error)
         return null;
@@ -24,13 +27,13 @@ export default async function ContactDetails() {
 
     return (
         <div className="row">
-            {contactDetailsDatas &&
-                (contactDetailsDatas?.map(({ label, details }, index) => (
+            {contactDetailsDatas?.contact &&
+                (contactDetailsDatas.contact?.map(({ label, detail }, index) => (
                     <div className="contact-item" key={index}>
                         <div className="contact-item-inner outer-shadow">
                             <i>{contactIcon[index]}</i>
                             <span>{label}</span>
-                            <p>{details}</p>
+                            <p>{detail}</p>
                         </div>
                     </div>
                 )))

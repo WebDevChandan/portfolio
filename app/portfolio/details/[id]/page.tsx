@@ -4,8 +4,7 @@ import { HeaderDetails, MainDetails } from './components';
 import './styles/projectDetails.scss';
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { notFound } from "next/navigation";
-
-const prisma = new PrismaClient();
+import prisma from "@/utils/prisma";
 
 const fetchPortfolioDetails = async (slug: string) => {
     try {
@@ -19,8 +18,6 @@ const fetchPortfolioDetails = async (slug: string) => {
             }
         })
 
-        console.log("Reached Here");
-
         return portfolioDetails;
     } catch (error) {
         console.log(error);
@@ -30,9 +27,7 @@ const fetchPortfolioDetails = async (slug: string) => {
 export default async function ProjectDetails({ params }: Params) {
 
     const uuid: string = params.id;
-    console.log(uuid);
     const portfolioDetailsData = await fetchPortfolioDetails(uuid);
-    console.log(portfolioDetailsData);
 
     return (
         <>

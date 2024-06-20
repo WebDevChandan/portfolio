@@ -1,9 +1,7 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/utils/prisma';
 import { Title } from '../components';
-import { PortfolioCard, PortfolioFilter, PortfolioTabs } from './components';
+import { PortfolioCard, PortfolioTabs } from './components';
 import './styles/portfolio.scss';
-
-const prisma = new PrismaClient();
 
 const fetchPortfolioCardData = async () => {
     try {

@@ -1,7 +1,6 @@
+import prisma from '@/utils/prisma';
 import { PrismaClient } from '@prisma/client';
 import { FaGraduationCap } from 'react-icons/fa'
-
-const prisma = new PrismaClient();
 
 const fetchEducationDetail = async () => {
     try {

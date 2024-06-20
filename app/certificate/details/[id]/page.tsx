@@ -1,11 +1,8 @@
-import React from 'react'
-import { HeaderDetails, MainDetails } from './components'
-import './styles/certificateDetails.scss';
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/utils/prisma';
 import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import { notFound } from 'next/navigation';
-
-const prisma = new PrismaClient();
+import { HeaderDetails, MainDetails } from './components';
+import './styles/certificateDetails.scss';
 
 const fetchCertificateDetails = async (slug: string) => {
     try {

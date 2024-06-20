@@ -1,12 +1,10 @@
-import { PrismaClient } from "@prisma/client"
-
-const prisma = new PrismaClient();
+import prisma from "@/utils/prisma";
 
 const fetchResume = async () => {
     try {
         const resumeFile = await prisma.personalInfo.findFirst({
             select: {
-                resume: false,
+                resume: true,
             }
         })
         return resumeFile;
@@ -18,10 +16,10 @@ const fetchResume = async () => {
 }
 
 export default async function Resume() {
-    const resumeFile = await fetchResume();
+    // const resumeFile = await fetchResume();
 
-    return (
-        resumeFile &&
-        <iframe src={`resume/${resumeFile?.resume}`} frameBorder="0"></iframe>
-    )
+    // return (
+    //     // resumeFile &&
+    //     // <iframe src={`resume/${resumeFile?.resume}`} frameBorder="0"></iframe>
+    // )
 }
