@@ -87,5 +87,7 @@
 		color: var(--text-black-600);
 		transform: translateY(-50%) rotate(-90deg);
 		left: calc(100px - 222px);
+		word-spacing: 2px;
+		letter-spacing: .1px;
 	}
 }

@@ -1,8 +1,14 @@
 import prisma from '@/utils/prisma';
-import { Params } from 'next/dist/shared/lib/router/utils/route-matcher';
 import { notFound } from 'next/navigation';
 import { HeaderDetails, MainDetails } from './components';
 import './styles/certificateDetails.scss';
+
+export type DetailPropsType = {
+    params: {
+        id: string;
+    };
+}
+
 
 const fetchCertificateDetails = async (slug: string) => {
     try {
@@ -36,9 +42,8 @@ const fetchCertificateDetails = async (slug: string) => {
     }
 }
 
-export default async function CertificateDetails({ params }: Params) {
-    const uuid: string = params.id;
-    const certificateDetails = await fetchCertificateDetails(uuid);
+export default async function CertificateDetails({ params: { id } }: DetailPropsType) {
+    const certificateDetails = await fetchCertificateDetails(id);
 
     return (
         <>

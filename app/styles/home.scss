@@ -23,9 +23,12 @@
 
         h2 {
             font-size: 55px;
-            font-weight: 700;
             color: var(--text-black-900);
             margin: 0;
+
+            label {
+                font-weight: 600;
+            }
         }
 
         h1 {

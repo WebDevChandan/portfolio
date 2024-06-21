@@ -1,5 +1,5 @@
 import prisma from "@/utils/prisma";
-import { FaEnvelope, FaMapMarkerAlt, FaPhone } from "react-icons/fa";
+import { FaEnvelope, FaMapMarkerAlt, FaPhone, FaWhatsapp } from "react-icons/fa";
 
 
 const fetchContactDetails = async () => {
@@ -23,7 +23,7 @@ const fetchContactDetails = async () => {
 export default async function ContactDetails() {
     const contactDetailsDatas = await fetchContactDetails();
 
-    const contactIcon = [<FaPhone />, <FaEnvelope />, <FaMapMarkerAlt />];
+    const contactIcon = [<FaWhatsapp />, <FaEnvelope />, <FaMapMarkerAlt />];
 
     return (
         <div className="row">

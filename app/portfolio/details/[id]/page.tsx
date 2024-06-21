@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import "../../styles/portfolio.scss";
 import { HeaderDetails, MainDetails } from './components';
 import './styles/projectDetails.scss';
+import { DetailPropsType } from "@/app/certificate/details/[id]/page";
 
 const fetchPortfolioDetails = async (slug: string) => {
     try {
@@ -23,10 +24,8 @@ const fetchPortfolioDetails = async (slug: string) => {
     }
 }
 
-export default async function ProjectDetails({ params }: Params) {
-
-    const uuid: string = params.id;
-    const portfolioDetailsData = await fetchPortfolioDetails(uuid);
+export default async function ProjectDetails({ params:{id} }: DetailPropsType) {
+    const portfolioDetailsData = await fetchPortfolioDetails(id);
 
     return (
         <>

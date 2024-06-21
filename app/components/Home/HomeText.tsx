@@ -1,13 +1,20 @@
 import { Button } from "..";
 
-export default function HomeText({ role }: { role: string[] | undefined }) {
+export default function HomeText({ name, roles }: { name: string, roles: string[] }) {
+    console.log();
     return (
         <div className="home-text">
 
             <p>Hello</p>
-            <h2>I'm <label id="myName">Chandan Kumar</label>
+            <h2>I'm <label id="myName">{name}</label>
             </h2>
-            <h1>Full-Stack Web/Java Developer</h1>
+            <h1>
+                {
+                    roles.map((role, idx) => (
+                        `${roles.length - 1 !== idx ? role + " / " : role}`
+                    ))
+                }
+            </h1>
 
             <Button label="Portfolio" />
             <Button label="Resume" />

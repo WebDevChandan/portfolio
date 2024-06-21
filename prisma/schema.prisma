@@ -68,6 +68,7 @@ type PortfolioMainDetail {
 
 model PersonalInfo {
   id          String       @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
   myImages    String[]
   roles       String[]
   about       String
@@ -148,7 +149,7 @@ model Portfolio {
 
 model PortfolioCategory {
   id         String      @id @default(auto()) @map("_id") @db.ObjectId
-  label      String      
+  label      String
   active     Boolean     @default(false)
   Portfolio  Portfolio[]
   created_at DateTime    @default(now())
