@@ -47,11 +47,12 @@
 @media(max-width: 320px) {
     .portfolio-popup .pp-main .pp-next {
         font-size: 1.02rem;
-        right: 0px;
+        right: -4px;
+        top:50.5%
     }
 
     .portfolio-popup .pp-main .pp-prev {
         font-size: 1.02rem;
-        left: 0px;
+        left: -10px;
     }
 }

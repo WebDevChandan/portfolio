@@ -5,8 +5,8 @@ export default function PortfolioThumbImage({ title, altText, src }: { title: st
       <>
           <div className="portfolio-item-img">
               <ThumbImage
-                  width={319.95}
-                  height={28.83}
+                  width={320}
+                  height={290}
                   src={src}
                   altText={altText}
                   title={title}

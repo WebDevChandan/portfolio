@@ -10,7 +10,6 @@ export default function MyImage({ src }: { src: string | undefined }) {
                 width={405}
                 height={405}
                 sizes="(max-width: 768px) 300px, 405px"
-                priority
             />
         </div>
     )
