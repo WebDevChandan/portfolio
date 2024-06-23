@@ -1,5 +1,6 @@
 import { setCookie } from 'cookies-next';
 import { FaCog } from 'react-icons/fa';
+import { sixMonthDuration } from './StyleSwitcher';
 
 type toggleColorSwitcherProps = {
     toggleColorSwitcher: () => void;
@@ -18,7 +19,7 @@ export default function ColorSwitcher({ toggleColorSwitcher }: toggleColorSwitch
         if (!found)
             bodyClassList?.add(currentColor);
 
-        setCookie('themeColor', currentColor);
+        setCookie('themeColor', currentColor, { maxAge: sixMonthDuration });
     }
 
     const colorPicker = [1, 2, 3, 4, 5];

@@ -1,12 +1,13 @@
 import { getCookie, getCookies, setCookie } from "cookies-next";
 import { useEffect, useState } from "react";
 import { FaMoon, FaSun } from "react-icons/fa";
+import { sixMonthDuration } from "./StyleSwitcher";
 
 export default function ThemeSwitcher() {
     const previousThemeMode = getCookie('theme');
     const [themeMode, setThemeMode] = useState(previousThemeMode ? previousThemeMode : "");
 
-    if(!themeMode && typeof document !== 'undefined'){
+    if (!themeMode && typeof document !== 'undefined') {
         const defaultThemeMode = document.documentElement.getAttribute('data-theme') as string;
         setThemeMode(defaultThemeMode);
     }
@@ -14,12 +15,12 @@ export default function ThemeSwitcher() {
     const changeThemeMode = () => {
         if (themeMode === "light") {
             setThemeMode("dark");
-            setCookie('theme', 'dark');
+            setCookie('theme', 'dark', { maxAge: sixMonthDuration });
             document.documentElement.setAttribute('data-theme', "dark");
         }
         else {
             setThemeMode("light");
-            setCookie('theme', 'light');
+            setCookie('theme', 'light', { maxAge: sixMonthDuration });
             document.documentElement.setAttribute('data-theme', "ligth");
         }
     }
