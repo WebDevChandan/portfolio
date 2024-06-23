@@ -1,21 +1,11 @@
-"use client"
+import { setCookie } from 'cookies-next';
 import { FaCog } from 'react-icons/fa';
-import { useEffect } from 'react';
 
 type toggleColorSwitcherProps = {
     toggleColorSwitcher: () => void;
 }
 
 export default function ColorSwitcher({ toggleColorSwitcher }: toggleColorSwitcherProps) {
-
-    useEffect(() => {
-        const currentThemeColor: string | null = localStorage.getItem("themeColor");
-
-        if (currentThemeColor)
-            changeTheme(currentThemeColor);
-
-    }, [])
-
     const changeTheme = (currentColor: string) => {
         const bodyClassList = document.querySelector('body')?.classList;
         let found = false;
@@ -28,7 +18,7 @@ export default function ColorSwitcher({ toggleColorSwitcher }: toggleColorSwitch
         if (!found)
             bodyClassList?.add(currentColor);
 
-        localStorage.setItem("themeColor", currentColor);
+        setCookie('themeColor', currentColor);
     }
 
     const colorPicker = [1, 2, 3, 4, 5];

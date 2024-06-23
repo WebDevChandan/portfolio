@@ -16,10 +16,10 @@ const fetchResume = async () => {
 }
 
 export default async function Resume() {
-    // const resumeFile = await fetchResume();
+    const resumeFile = await fetchResume();
 
-    // return (
-    //     // resumeFile &&
-    //     // <iframe src={`resume/${resumeFile?.resume}`} frameBorder="0"></iframe>
-    // )
+    return (
+        resumeFile &&
+        <iframe src={`resume/${resumeFile?.resume}`} frameBorder="0"></iframe>
+    )
 }
