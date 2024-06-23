@@ -1,4 +1,4 @@
-import { HamburgerButton } from "..";
+import { HamburgerButton, Logo } from "..";
 import "../../styles/header.scss";
 
 export default function Header() {
@@ -9,6 +9,7 @@ export default function Header() {
                 <div className="row justify-content-between">
                     <HamburgerButton />
                 </div>
+                <Logo />
             </div>
         </header>
     )

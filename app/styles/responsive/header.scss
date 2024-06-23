@@ -1,0 +1,19 @@
+@media (min-width: 1314px) {
+    .header {
+        .image {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: 1170px) {
+    .header {
+        .container {
+            .row {
+                position: fixed;
+                right: 0;
+                margin-right: 15px;
+            }
+        }
+    }
+}

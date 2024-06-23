@@ -1,5 +1,4 @@
 "use client";
-
 import { MdOutlineChevronRight } from 'react-icons/md';
 import { Logo, SideMenuLinks } from "..";
 import "../../styles/sidebar.scss";
@@ -21,9 +20,7 @@ export default function Sidebar() {
                 <nav className={`${sideBarMode ? "close " : ""}sidebar outer-shadow`}>
                     <header>
                         <div className="image-text">
-                            <span className="image">
-                                <Logo />
-                            </span>
+                            <Logo />
 
                             <div className="text logo-text">
                                 <span className="name">Chandan Kumar</span>

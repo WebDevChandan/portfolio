@@ -1,7 +1,11 @@
+import Link from "next/link";
+
 export default function Logo() {
   return (
+    <span className="image">
       <div className="logo">
-          <a href="https://hirechandan.in/">C</a>
+        <Link href="/">C</Link>
       </div>
+    </span>
   )
 }
