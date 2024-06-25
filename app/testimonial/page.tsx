@@ -12,9 +12,7 @@ export default function Testimonial() {
         <div className="row">
           <div className="testi-box">
             <div className="testi-slider outer-shadow">
-              <div className="testi-slider-container">
-                <TestimonialCard />
-              </div>
+              <TestimonialCard />
             </div>
 
             <TestimonialNavigation />

@@ -2,11 +2,8 @@
 import { useEffect, useState } from 'react';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
-let setTestiSliderContainerwidth = false;
-
-
-
 export default function NavigationHandler() {
+    let setTestiSliderContainerwidth = false;
     let [testiNavigationCount, setTestiNavigationCount] = useState(0);
 
     useEffect(() => {
