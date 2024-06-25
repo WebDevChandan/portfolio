@@ -14,19 +14,23 @@ export default function NavigationHandler() {
         const testiSliderContainer = document.querySelector('.testi-slider-container')! as HTMLElement;
         const testiItems = document.querySelectorAll('.testi-item');
         const sliderContainerWidth: number = testiSliderContainer?.offsetWidth;
+        const totalSliderContainerWidth = sliderContainerWidth * testiItems.length;
+        let testimonialCardWidth: number;
 
         if (!setTestiSliderContainerwidth) {
-            testiSliderContainer.style.width = `${sliderContainerWidth * testiItems.length}px`;
+            testiSliderContainer.style.width = `${totalSliderContainerWidth}px`;
+            testimonialCardWidth = Math.floor(totalSliderContainerWidth / testiItems.length);
             setTestiSliderContainerwidth = true;
         }
 
+
         testiItems.forEach((item: Element, index) => {
             const testimonialCard = item as HTMLElement;
-            testimonialCard.style.width = `${sliderContainerWidth / testiItems.length}px`;
+            testimonialCard.style.width = `${testimonialCardWidth}px`;
 
             if (testimonialCard.classList.contains('active')) {
-                const marginLeft = testimonialCard?.offsetWidth * index;
-                testiSliderContainer.style.marginLeft = `-${marginLeft}px`;
+                const marginLeft = testimonialCardWidth * index;
+                testiSliderContainer.style.marginLeft = `${!marginLeft ? marginLeft : -marginLeft}px`;
                 setTestiNavigationCount(-index);
             }
         });
