@@ -1,6 +1,7 @@
 "use client";
 import { useEffect } from 'react';
 import { activateSideLink } from "../Sidebar/SideMenuLinks";
+import { usePathname } from 'next/navigation';
 
 export const toggleMainMenuBar = (currentElement?: HTMLElement) => {
   const mainMenu = document.querySelector('.nav-menu');
@@ -30,11 +31,11 @@ export const activateNavLink = (pathName?: string | null) => {
 }
 
 export default function HamburgerButton() {
+  const pathName = usePathname().replace(/[/]/g, "") as string;
 
   useEffect(() => {
-    const pathName = window.location.pathname.replace(/[/]/g, "") as string;
     activateNavLink(pathName);
-  });
+  }, [pathName]);
 
   return (
     <div className="hamburger-btn outer-shadow hover-in-shadow" onClick={() => toggleMainMenuBar()}>

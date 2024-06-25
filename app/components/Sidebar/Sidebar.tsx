@@ -9,8 +9,18 @@ export default function Sidebar() {
     const [shouldRenderSidebar, setShouldRenderSidebar] = useState(true);
 
     useEffect(() => {
-        window.screen.width < 575 ? setShouldRenderSidebar(false) : null;
-    }, [])
+        const handleResize = () => {
+            setShouldRenderSidebar(window.innerWidth >= 1314);
+        };
+
+        handleResize();
+
+        window.addEventListener('resize', handleResize);
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
+    }, []);
 
 
     return (
@@ -24,7 +34,7 @@ export default function Sidebar() {
 
                             <div className="text logo-text">
                                 <span className="name">Chandan Kumar</span>
-                                <span className="profession">Full-Stack developer</span>
+                                <span className="profession">Software Developer</span>
                             </div>
                         </div>
 

@@ -54,19 +54,19 @@ export const navLinks = [
         icon: <FaEnvelope />,
         active: false,
     },
-]
-export default function SideNavLinks() {
+];
 
+export default function SideNavLinks() {
     return (
         <div className="menu-bar">
             <div className="menu">
                 <ul className="menu-links">
                     {
                         navLinks.map(({ label, icon, active }, index) => (
-                            <li className={`nav-link${active ? " active" : ""} outer-shadow`} key={index}
+                            <li className={`nav-link ${active ? "active" : ""} outer-shadow`} key={index}
                                 onClick={(e) => {
                                     const link = e.currentTarget.firstChild as HTMLElement;
-                                    activateNavLink(link.getAttribute('href')?.replace(/[/]/g,""));
+                                    activateNavLink(link.getAttribute('href')?.replace(/[/]/g, ""));
                                 }}>
                                 <Link href={label !== "Home" ? label.toLowerCase() : "/"}>
                                     <i className='icon'>{icon}</i>

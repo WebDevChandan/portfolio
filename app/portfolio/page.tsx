@@ -27,8 +27,8 @@ const fetchPortfolioCardData = async () => {
     }
 }
 
-export default async function Portfolio() {
 
+export default async function Portfolio() {
     const portfolioCardData = await fetchPortfolioCardData();
 
     return (
@@ -39,7 +39,7 @@ export default async function Portfolio() {
 
                 <PortfolioTabs />
 
-                <PortfolioCard portfolioCardData={portfolioCardData} />
+                <PortfolioCard portfolioCardData={portfolioCardData}/>
             </div>
         </section>
     )

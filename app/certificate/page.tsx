@@ -31,7 +31,7 @@ export default async function Certificate() {
 
                 <div className="row">
                     {certificateCardInfo && certificateCardInfo?.map(({ details_id, label, src, info }, index) => (
-                        <CertificateCard id={details_id} label={label} src={src} info={info} key={index} />
+                        <CertificateCard id={details_id} label={label} src={src} info={info} key={index}/>
                     ))}
 
                 </div>

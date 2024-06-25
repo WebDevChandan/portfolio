@@ -18,8 +18,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className={previousThemeColor?previousThemeColor:""}>
         <Header />
         <MainMenuBar />
-        <StyleSwitcher />
         <Sidebar />
+        <StyleSwitcher />
         {children}
       </body>
     </html>

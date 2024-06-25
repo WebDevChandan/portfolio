@@ -12,6 +12,7 @@
     "@prisma/client": "^5.15.1",
     "cookies-next": "^4.2.1",
     "next": "^14.2.4",
+    "plaiceholder": "^3.0.0",
     "react": "^18",
     "react-dom": "^18",
     "react-icons": "^4.11.0",

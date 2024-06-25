@@ -11,9 +11,9 @@ export default function LargeImage(
             src={largeImage}
             alt={altText}
             loading="lazy"
-            quality={60}
+            quality={65}
             priority={false}
-            sizes="(max-width: 768px) 629px, 1185px"
+            sizes="(max-width: 768px) 429px, 900px"
         />
     )
 }

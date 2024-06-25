@@ -9,7 +9,7 @@ export default function MyImage({ src }: { src: string | undefined }) {
                 alt="Chandan Kumar"
                 width={405}
                 height={405}
-                sizes="(max-width: 768px) 300px, 405px"
+                sizes="(min-width: 1100px) 400px, (min-width: 780px) calc(46.33vw - 100px), (min-width: 580px) 300px, 210px"
                 priority
             />
         </div>
