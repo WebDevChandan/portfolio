@@ -1,8 +1,9 @@
 "use client";
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { FaPlay } from 'react-icons/fa';
 import { LiveBtn, ProjectDetailsCloseBtn, ProjectDetailsOpenBtn, ScreenshotsBtn, WebFrame } from '..';
 import { LargeImage } from '@/app/certificate/details/[id]/components';
+import Loading from '../../loading';
 
 export default function MainDetails({ src, altText, titleText, webFrameLink }: {
     src: string[];
@@ -15,6 +16,7 @@ export default function MainDetails({ src, altText, titleText, webFrameLink }: {
 
     const playPrev = () => count > 0 ? setCount(count - 1) : null;
     const playNext = () => count >= 0 && count < src.length - 1 ? setCount(count + 1) : null;
+    new Promise((resolve) => setTimeout(() => resolve, 2000));
 
     return (
         <div className="pp-main">
@@ -23,6 +25,7 @@ export default function MainDetails({ src, altText, titleText, webFrameLink }: {
                 <ProjectDetailsCloseBtn />
                 {(src[count] && webFrameLink) && <LiveBtn active={switchFrameToPic} onClick={() => { !switchFrameToPic ? setSwitchFrameToPic(true) : null }} />}
                 {(src[count] && webFrameLink) && <ScreenshotsBtn active={!switchFrameToPic} onClick={() => { switchFrameToPic ? setSwitchFrameToPic(false) : null }} />}
+
 
                 {src[count] && !switchFrameToPic &&
                     <LargeImage
@@ -40,6 +43,7 @@ export default function MainDetails({ src, altText, titleText, webFrameLink }: {
                         {`${count + 1} of ${src.length}`}
                     </div>
                 }
+
             </div>
 
             {!switchFrameToPic && src.length > 1 &&

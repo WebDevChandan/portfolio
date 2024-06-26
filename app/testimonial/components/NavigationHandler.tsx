@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa';
 
 export default function NavigationHandler() {
-    let setTestiSliderContainerwidth = false;
+    let isTestiContainerWidthSet = false;
     let [testiNavigationCount, setTestiNavigationCount] = useState(0);
 
     useEffect(() => {
@@ -13,16 +13,16 @@ export default function NavigationHandler() {
     const testiCardSetup = () => {
         const testiSliderContainer = document.querySelector('.testi-slider-container')! as HTMLElement;
         const testiItems = document.querySelectorAll('.testi-item');
+
         const sliderContainerWidth: number = testiSliderContainer?.offsetWidth;
         const totalSliderContainerWidth = sliderContainerWidth * testiItems.length;
         let testimonialCardWidth: number;
 
-        if (!setTestiSliderContainerwidth) {
+        if (!isTestiContainerWidthSet) {
             testiSliderContainer.style.width = `${totalSliderContainerWidth}px`;
             testimonialCardWidth = Math.floor(totalSliderContainerWidth / testiItems.length);
-            setTestiSliderContainerwidth = true;
+            isTestiContainerWidthSet = true;
         }
-
 
         testiItems.forEach((item: Element, index) => {
             const testimonialCard = item as HTMLElement;
@@ -61,11 +61,11 @@ export default function NavigationHandler() {
     return (
         <>
             <span className="prev outer-shadow hover-in-shadow" onClick={() => testiCardNavigation("left")}
-                onKeyDown={(e) => testiCardNavigation(e.key)} tabIndex={0}>
+                tabIndex={0}>
                 <i><FaAngleLeft /></i>
             </span>
             <span className="next outer-shadow hover-in-shadow" onClick={() => testiCardNavigation("right")}
-                onKeyDown={(e) => testiCardNavigation(e.key)} tabIndex={0}>
+                tabIndex={0}>
                 <i><FaAngleRight /></i>
             </span>
         </>

@@ -2,6 +2,9 @@ import prisma from "@/utils/prisma";
 import { MyImage } from "../components";
 import { AboutMe, AboutTabs, Education, Experience, Skill, SocialLinks, Title } from "./components";
 import './styles/about.scss';
+import { Suspense } from "react";
+import Loading from "../loading";
+// import Loading from "./loading";
 
 const fetchAboutDetails = async () => {
     try {
@@ -18,6 +21,7 @@ const fetchAboutDetails = async () => {
         return null;
     }
 }
+
 export default async function About() {
     const tabsComponent = [
         {
@@ -44,28 +48,31 @@ export default async function About() {
         <section className="about-section section" id="about">
             <div className="container">
                 <Title title="About Me" subTitle="Main Info" />
-                {
-                    aboutData && (
-                        <div className="row">
-                            <div className="about-img">
-                                <MyImage src={aboutData?.myImages[1]} />
-                                <SocialLinks />
-                            </div>
-                            <AboutMe info={aboutData!.about} />
-                        </div>
-                    )
-                }
-                <AboutTabs />
-
-                {tabsComponent.map(({ label, component, active }, index) => (
-                    <div className="row" key={index}>
-                        <div className={`${active ? "active" : ""} ${label} tab-content`}>
+                <Suspense fallback={<Loading />}>
+                    {
+                        aboutData && (
                             <div className="row">
-                                {component}
+                                <div className="about-img">
+                                    <MyImage src={aboutData?.myImages[1]} />
+                                    <SocialLinks />
+                                </div>
+                                <AboutMe info={aboutData!.about} />
+                            </div>
+                        )
+                    }
+
+                    <AboutTabs />
+
+                    {tabsComponent.map(({ label, component, active }, index) => (
+                        <div className="row" key={index}>
+                            <div className={`${active ? "active" : ""} ${label} tab-content`}>
+                                <div className="row">
+                                    {component}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ))}
+                    ))}
+                </Suspense>
             </div>
         </section>
     )

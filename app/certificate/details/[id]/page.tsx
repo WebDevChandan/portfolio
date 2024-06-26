@@ -2,6 +2,8 @@ import prisma from '@/utils/prisma';
 import { notFound } from 'next/navigation';
 import { HeaderDetails, MainDetails } from './components';
 import './styles/certificateDetails.scss';
+import { Suspense } from 'react';
+import Loading from './loading';
 
 export type DetailPropsType = {
     params: {
@@ -55,10 +57,9 @@ export default async function CertificateDetails({ params: { id } }: DetailProps
                 </div>
 
                 <div className="separator"></div>
-
-                <div className="cp-main">
-                    <MainDetails mainDetails={certificateDetails?.certificateMainDetail} />
-                </div>
+                    <div className="cp-main">
+                        <MainDetails mainDetails={certificateDetails?.certificateMainDetail} />
+                    </div>
             </div>) : notFound()}
         </>
     )
