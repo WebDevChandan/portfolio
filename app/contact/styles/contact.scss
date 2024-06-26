@@ -1,6 +1,7 @@
 .contact-section {
     padding: 80px 0 0;
     min-height: 100vh;
+    position: relative;
 
     .contact-item {
         flex: 0 0 33.33%;
@@ -104,12 +105,13 @@
     .copyright-text-bottom {
         font-size: 15px;
         color: var(--text-black-600);
-        display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
-        transform: translateY(50%);
-        margin-bottom: 15px;
+        margin-bottom: 15px;        
+        width: 100%; 
+        position: absolute;
+        bottom: 0;   
     }
 }
 

@@ -3,16 +3,34 @@ import Title from '../components/Title';
 import { Resume } from './components';
 import './styles/resume.scss';
 import Loading from '../loading';
+import prisma from "@/utils/prisma";
 
-export default function page() {
-    return (
+const fetchResume = async () => {
+    try {
+        const resumeFile = await prisma.personalInfo.findFirst({
+            select: {
+                resume: true,
+            }
+        })
+        return resumeFile;
+    } catch (error) {
+        console.log("Error Fetching Resume Data: ", error)
+        return null;
+    }
+
+}
+
+export default async function page() {
+    const resumeFile = await fetchResume();
+
+    return (resumeFile &&
         <section className="resume-section section" id="resume">
             <div className="container">
                 <Title title="Resume" subTitle='View My Resume' />
                 <Suspense fallback={<Loading />}>
                     <div className="row">
                         <div className="resume-item-inner outer-shadow">
-                            <Resume />
+                            <Resume resumeFile={resumeFile} />
                         </div>
                     </div>
                 </Suspense>

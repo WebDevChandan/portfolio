@@ -16,3 +16,9 @@
         display: block;
     }
 }
+
+@media(max-width: 1024px) {
+    .contact-section .submit-btn {
+        margin-bottom: 80px;
+    }
+}

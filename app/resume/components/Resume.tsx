@@ -1,25 +1,22 @@
-import prisma from "@/utils/prisma";
+"use client";
+import { useEffect, useState } from "react";
+import PDFViewer from "./PDFViewer";
 
-const fetchResume = async () => {
-    try {
-        const resumeFile = await prisma.personalInfo.findFirst({
-            select: {
-                resume: true,
-            }
-        })
-        return resumeFile;
-    } catch (error) {
-        console.log("Error Fetching Resume Data: ", error)
-        return null;
-    }
-
+type resumeFileType = {
+    resume: string;
 }
 
-export default async function Resume() {
-    const resumeFile = await fetchResume();
+export default function Resume({ resumeFile }: { resumeFile: resumeFileType }) {
+    const [url, setUrl] = useState("");
 
-    return (
-        resumeFile &&
-        <iframe src={`resume/${resumeFile?.resume}`} frameBorder="0"></iframe>
-    )
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            const currentURL = window.location.href;
+            setUrl(currentURL);
+        }
+    })
+
+    console.log(url);
+
+    return <PDFViewer pdfUrl={`${url}/${resumeFile.resume}`} />
 }

@@ -18,6 +18,6 @@ export default function Conact() {
 
       <CopyrightText footerText="| Inc. All Rights Reserved" />
 
-    </section>
+    </section >
   )
 }
