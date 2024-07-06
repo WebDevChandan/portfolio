@@ -1,8 +1,8 @@
 import prisma from '@/utils/prisma';
-import { Effects, HomeText, MyImage } from './components';
-import './styles/home.scss';
 import { Suspense } from 'react';
-import Loading from './loading';
+import { Effects, HomeText, MyImage } from './components';
+import Loading from './components/Loading';
+import './styles/home.scss';
 
 interface HomeDataType {
   name: string,
@@ -32,13 +32,13 @@ export default async function Home() {
   const homeData = await fetchHomeDetails();
 
   return (
-    <Suspense fallback={<Loading />}>
-      <section className="home-section section" id="home">
-        <Effects />
+    <section className="home-section section" id="home">
+      <Effects />
 
-        <div className="container">
-          <div className="row full-screen align-items-center">
+      <div className="container">
+        <div className="row full-screen align-items-center">
 
+          <Suspense fallback={<Loading />}>
             {homeData && (
               <>
                 <HomeText name={homeData.name} roles={homeData.roles} />
@@ -48,11 +48,11 @@ export default async function Home() {
                 </div>
               </>
             )}
+          </Suspense>
 
-          </div>
         </div>
-      </section>
-    </Suspense>
+      </div>
+    </section>
 
   )
 }

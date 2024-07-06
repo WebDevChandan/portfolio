@@ -16,7 +16,6 @@ export default function MainDetails({ src, altText, titleText, webFrameLink }: {
 
     const playPrev = () => count > 0 ? setCount(count - 1) : null;
     const playNext = () => count >= 0 && count < src.length - 1 ? setCount(count + 1) : null;
-    new Promise((resolve) => setTimeout(() => resolve, 2000));
 
     return (
         <div className="pp-main">

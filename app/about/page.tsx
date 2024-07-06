@@ -3,8 +3,7 @@ import { MyImage } from "../components";
 import { AboutMe, AboutTabs, Education, Experience, Skill, SocialLinks, Title } from "./components";
 import './styles/about.scss';
 import { Suspense } from "react";
-import Loading from "../loading";
-// import Loading from "./loading";
+import Loading from "../components/Loading";
 
 const fetchAboutDetails = async () => {
     try {

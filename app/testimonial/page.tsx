@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { Title } from '../components';
 import { TestimonialCard, TestimonialNavigation } from './components';
 import './styles/testimonial.scss';
-import Loading from '../loading';
+import Loading from '../components/Loading';
 
 export default function Testimonial() {
   return (

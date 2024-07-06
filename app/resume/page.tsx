@@ -2,8 +2,8 @@ import { Suspense } from 'react';
 import Title from '../components/Title';
 import { Resume } from './components';
 import './styles/resume.scss';
-import Loading from '../loading';
 import prisma from "@/utils/prisma";
+import Loading from '../components/Loading';
 
 const fetchResume = async () => {
     try {
@@ -27,6 +27,7 @@ export default async function page() {
         <section className="resume-section section" id="resume">
             <div className="container">
                 <Title title="Resume" subTitle='View My Resume' />
+
                 <Suspense fallback={<Loading />}>
                     <div className="row">
                         <div className="resume-item-inner outer-shadow">
@@ -34,6 +35,7 @@ export default async function page() {
                         </div>
                     </div>
                 </Suspense>
+
             </div>
         </section>
     )

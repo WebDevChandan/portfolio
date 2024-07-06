@@ -3,7 +3,7 @@ import { Title } from '../components';
 import { PortfolioCard, PortfolioTabs } from './components';
 import './styles/portfolio.scss';
 import { Suspense } from 'react';
-import Loading from '../loading';
+import Loading from '../components/Loading';
 
 const fetchPortfolioCardData = async () => {
     try {

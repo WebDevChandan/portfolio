@@ -3,7 +3,7 @@ import Title from '../components/Title';
 import { CertificateCard } from './components/index';
 import './styles/certificate.scss';
 import { Suspense } from 'react';
-import Loading from '../loading';
+import Loading from '../components/Loading';
 
 const fetchCertificateCardInfo = async () => {
     try {
@@ -30,7 +30,7 @@ export default async function Certificate() {
         <section className="certificate-section section" id="certificate">
             <div className="container">
                 <Title title='Certificate' subTitle='Achievements' />
-                
+
                 <Suspense fallback={<Loading />}>
                     <div className="row">
                         {certificateCardInfo && certificateCardInfo?.map(({ details_id, label, src, info }, index) => (

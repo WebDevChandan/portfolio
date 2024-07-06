@@ -1,22 +1,26 @@
-"use client";
-import { useEffect, useState } from "react";
+// "use client";
+import { Suspense } from "react";
 import PDFViewer from "./PDFViewer";
+import Loading from "@/app/certificate/details/[id]/loading";
 
 type resumeFileType = {
     resume: string;
 }
 
-export default function Resume({ resumeFile }: { resumeFile: resumeFileType }) {
-    const [url, setUrl] = useState("");
+export default async function Resume({ resumeFile }: { resumeFile: resumeFileType }) {
+    const { status } = await fetch(`${process.env.NEXT_PUBLIC_URL}/resume/${resumeFile.resume}`);
 
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            const currentURL = window.location.href;
-            setUrl(currentURL);
-        }
-    })
-
-    console.log(url);
-
-    return <PDFViewer pdfUrl={`${url}/${resumeFile.resume}`} />
+    return (
+        <>
+            {
+                status === 200 && <PDFViewer pdfUrl={`${process.env.NEXT_PUBLIC_URL}/resume/${resumeFile.resume}`} />
+                ||
+                <h2
+                style={{
+                    color:"var(--text-black-600)"
+                }}
+                >Opps! Resume Not Found 🥲</h2>
+            }
+        </>
+    )
 }

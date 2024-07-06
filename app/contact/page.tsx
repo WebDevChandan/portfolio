@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import { CopyrightText, Title } from '../components';
 import { ContactDetails, ContactForm } from './components';
 import './styles/contact.scss';
-import Loading from '../loading';
+import Loading from '../components/Loading';
 
 export default function Conact() {
   return (
