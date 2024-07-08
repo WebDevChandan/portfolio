@@ -44,7 +44,7 @@ export default async function About() {
     const aboutData = await fetchAboutDetails();
 
     return (
-        <section className="about-section section" id="about">
+        <section className="other-section section" id="about">
             <div className="container">
                 <Title title="About Me" subTitle="Main Info" />
                 <Suspense fallback={<Loading />}>

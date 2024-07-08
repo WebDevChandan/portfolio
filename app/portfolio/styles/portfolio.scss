@@ -1,105 +1,100 @@
-.portfolio-section {
-    padding: 80px 0 80px;
-    min-height: 100vh;
+.portfolio-filter {
+    padding: 0 15px;
+    flex: 0 0 100%;
+    max-width: 100%;
+    text-align: center;
+    margin-bottom: 20px;
 
-    .portfolio-filter {
-        padding: 0 15px;
-        flex: 0 0 100%;
-        max-width: 100%;
-        text-align: center;
-        margin-bottom: 20px;
+    .filter-item {
+        display: inline-block;
+        margin: 0 5px 10px;
+        padding: 5px 10px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-weight: 500;
+        color: var(--text-black-600);
+        text-transform: capitalize;
+        font-size: 16px;
+        transition: all 0.3s ease;
 
-        .filter-item {
-            display: inline-block;
-            margin: 0 5px 10px;
-            padding: 5px 10px;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 500;
+        &:hover:not(.active) {
+            opacity: 0.6;
+        }
+
+        &.active {
+            color: var(--skin-color);
+        }
+    }
+}
+
+.portfolio-item {
+    flex: 0 0 33.33%;
+    max-width: 100%;
+    padding: 15px;
+    display: flex;
+    flex-wrap: wrap;
+
+    &.hide {
+        display: none;
+    }
+
+    &.show {
+        display: block;
+        animation: fadeInTop 0.5s ease;
+    }
+
+    .portfolio-item-inner {
+        padding: 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+
+        .portfolio-item-img {
+            position: relative;
+
+            .animate {
+                border-radius: 5px;
+                width: 100%;
+                transition: all 0.3s ease;
+                height: auto;
+            }
+
+            .view-project {
+                text-transform: capitalize;
+                font-size: 16px;
+                font-weight: 500;
+                color: var(--skin-color);
+                transition: all 0.3s ease;
+                position: absolute;
+                left: 0;
+                bottom: -4px;
+                transform: translateY(-5px);
+                z-index: -1;
+                opacity: 0;
+            }
+        }
+
+        &:hover {
+            .portfolio-item-img {
+                .animate {
+                    transform: translateY(-25px);
+                }
+            }
+
+            .view-project {
+                transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+
+        p {
+            font-size: 16px;
+            margin: 10px 0 0;
             color: var(--text-black-600);
             text-transform: capitalize;
-            font-size: 16px;
-            transition: all 0.3s ease;
-
-            &:hover:not(.active) {
-                opacity: 0.6;
-            }
-
-            &.active {
-                color: var(--skin-color);
-            }
         }
     }
-
-    .portfolio-item {
-        flex: 0 0 33.33%;
-        max-width: 100%;
-        padding: 15px;
-        display: flex;
-        flex-wrap: wrap;
-
-        &.hide {
-            display: none;
-        }
-
-        &.show {
-            display: block;
-            animation: fadeInTop 0.5s ease;
-        }
-
-        .portfolio-item-inner {
-            padding: 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-
-            .portfolio-item-img {
-                position: relative;
-
-                .animate {
-                    border-radius: 5px;
-                    width: 100%;
-                    transition: all 0.3s ease;
-                    height: auto;
-                }
-
-                .view-project {
-                    text-transform: capitalize;
-                    font-size: 16px;
-                    font-weight: 500;
-                    color: var(--skin-color);
-                    transition: all 0.3s ease;
-                    position: absolute;
-                    left: 0;
-                    bottom: -4px;
-                    transform: translateY(-5px);
-                    z-index: -1;
-                    opacity: 0;
-                }
-            }
-
-            &:hover {
-                .portfolio-item-img {
-                    .animate {
-                        transform: translateY(-25px);
-                    }
-                }
-
-                .view-project {
-                    transform: translateY(0px);
-                    opacity: 1;
-                }
-            }
-
-            p {
-                font-size: 16px;
-                margin: 10px 0 0;
-                color: var(--text-black-600);
-                text-transform: capitalize;
-            }
-        }
-    }
-
 }
+
 
 @import "./responsive/portfolio"

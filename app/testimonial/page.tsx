@@ -6,7 +6,7 @@ import Loading from '../components/Loading';
 
 export default function Testimonial() {
   return (
-    <section className="testimonial-section section" id="testimonial">
+    <section className="other-section section" id="testimonial">
       <div className="container">
 
         <Title title='Client Speak' subTitle='Testimonial' />

@@ -27,7 +27,7 @@ export default async function Certificate() {
     const certificateCardInfo = await fetchCertificateCardInfo();
 
     return (
-        <section className="certificate-section section" id="certificate">
+        <section className="other-section section" id="certificate">
             <div className="container">
                 <Title title='Certificate' subTitle='Achievements' />
 

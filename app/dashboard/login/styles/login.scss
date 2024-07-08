@@ -1,0 +1,129 @@
+.login-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    margin: 0 10px;
+}
+
+.form-container {
+    width: 330px;
+    border-radius: 10px;
+    padding: 40px 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.form-container form{
+    width: 270px;
+}
+
+.form-container .logo-container {
+    width: 90px;
+    height: 90px;
+    margin-top: -100px;
+    border-radius: 50px;
+    box-shadow: var(--outer-shadow);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg-black-50);
+}
+
+.form-container .text {
+    font-size: 25px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin: 10px 0px 25px;
+    color: var(--text-black-900);
+}
+
+.form-container .field {
+    height: 45px;
+    width: 100%;
+    display: flex;
+    position: relative;
+    margin: 0 0 25px;
+    transition: all .3s;
+    border-radius: 30px;
+}
+
+.form-container .field::after {
+    border-radius: 30px;
+}
+
+.field input {
+    height: 100%;
+    width: 100%;
+    padding-left: 45px;
+    font-size: 16px;
+    outline: none;
+    border: none;
+    color: var(--text-black-700);
+    background: #0000;
+    border-radius: 30px;
+    padding-right: 10px;
+}
+
+.field input:focus~label {
+    box-shadow: inset 2px 2px 5px #babecc,
+        inset -1px -1px 2px #ffffff73;
+}
+
+.field:nth-child(2) {
+    margin: 20px 0px 2px;
+}
+
+.field span {
+    position: absolute;
+    width: 50px;
+    line-height: 50px;
+    color: var(--skin-color);
+    left: 15px;
+}
+
+.field label {
+    position: absolute;
+    top: 50%;
+    left: 45px;
+    pointer-events: none;
+    color: #666666;
+    transform: translateY(-50%);
+}
+
+
+.field input:focus~label {
+    opacity: 0;
+}
+
+
+button {
+    margin: 25px 0 0 0;
+    width: 100%;
+}
+
+.form-container .or {
+    color: black;
+    margin-top: 9px;
+}
+
+.form-container .logo-container .image .logo a {
+    font-size: 44px;
+    border: none;
+}
+
+.form-container .forgot-pass-container{
+    width: 100%;
+    margin: 20px 0px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container .forgot-pass-container .forgot-pass{
+    font-size: 14px;
+    color: var(--text-black-600);
+    cursor: pointer;
+}
+

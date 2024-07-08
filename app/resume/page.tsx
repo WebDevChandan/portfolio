@@ -24,7 +24,7 @@ export default async function page() {
     const resumeFile = await fetchResume();
 
     return (resumeFile &&
-        <section className="resume-section section" id="resume">
+        <section className="other-section section" id="resume">
             <div className="container">
                 <Title title="Resume" subTitle='View My Resume' />
 

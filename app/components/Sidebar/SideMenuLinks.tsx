@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import { FaCode, FaEnvelope, FaFileAlt, FaHome, FaUser, FaUsers } from "react-icons/fa";
+import { BiSolidMessageRoundedDetail } from "react-icons/bi";
+import { FaBriefcase, FaCode, FaEnvelope, FaFileAlt, FaHome, FaUser, FaUserCircle, FaUsers } from "react-icons/fa";
 import { PiCertificateFill } from 'react-icons/pi';
 import { activateNavLink } from '../Header/HamburgerButton';
 
@@ -24,6 +25,39 @@ export const navLinks = [
         icon: <FaHome />,
         active: true,
     },
+    {
+        label: "About",
+        icon: <FaUserCircle />,
+        active: false,
+    },
+    {
+        label: "Resume",
+        icon: <FaFileAlt />,
+        active: false,
+    },
+    {
+        label: "Certificate",
+        icon: <PiCertificateFill />,
+        active: false,
+    },
+    {
+        label: "Portfolio",
+        icon: <FaBriefcase />,
+        active: false,
+    },
+    {
+        label: "Testimonial",
+        icon: <FaUsers />,
+        active: false,
+    },
+    {
+        label: "Contact",
+        icon: <BiSolidMessageRoundedDetail />,
+        active: false,
+    },
+];
+
+export const dashboardNavLinks = [
     {
         label: "About",
         icon: <FaUser />,
@@ -56,24 +90,46 @@ export const navLinks = [
     },
 ];
 
-export default function SideNavLinks() {
+export default function SideNavLinks({ pathName }: { pathName: string }) {
+    const isDashboard = pathName === "/dashboard";
     return (
         <div className="menu-bar">
             <div className="menu">
                 <ul className="menu-links">
                     {
-                        navLinks.map(({ label, icon, active }, index) => (
-                            <li className={`nav-link ${active ? "active" : ""} outer-shadow`} key={index}
-                                onClick={(e) => {
-                                    const link = e.currentTarget.firstChild as HTMLElement;
-                                    activateNavLink(link.getAttribute('href')?.replace(/[/]/g, ""));
-                                }}>
-                                <Link href={label !== "Home" ? label.toLowerCase() : "/"}>
-                                    <i className='icon'>{icon}</i>
-                                    <span className="text nav-text">{label}</span>
-                                </Link>
-                            </li>
-                        ))
+                        !isDashboard
+                            ? (navLinks.map(({ label, icon, active }, index) => (
+                                <li
+                                    className={`nav-link ${active ? "active" : ""} outer-shadow`}
+                                    key={index}
+                                    onClick={(e) => {
+                                        const link = e.currentTarget.firstChild as HTMLElement;
+                                        activateNavLink(link.getAttribute('href')?.replace(/[/]/g, ""));
+                                    }}
+                                    title={label}
+                                >
+                                    <Link href={label !== "Home" ? label.toLowerCase() : "/"}>
+                                        <i className='icon'>{icon}</i>
+                                        <span className="text nav-text">{label}</span>
+                                    </Link>
+                                </li>
+                            )))
+                            : (dashboardNavLinks.map(({ label, icon, active }, index) => (
+                                <li
+                                    className={`nav-link ${active ? "active" : ""} outer-shadow`}
+                                    key={index}
+                                    onClick={(e) => {
+                                        const link = e.currentTarget.firstChild as HTMLElement;
+                                        activateNavLink(link.getAttribute('href')?.replace(/[/]/g, ""));
+                                    }}
+                                    title={label}
+                                >
+                                    <Link href={label !== "Home" ? label.toLowerCase() : "/dashboard"}>
+                                        <i className='icon'>{icon}</i>
+                                        <span className="text nav-text">{label}</span>
+                                    </Link>
+                                </li>
+                            )))
                     }
                 </ul>
             </div>

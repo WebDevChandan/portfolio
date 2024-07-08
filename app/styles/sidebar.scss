@@ -19,32 +19,6 @@
             justify-content: space-between;
             height: 50px;
 
-            .image {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                .logo {
-                    width: 40px;
-                    border-radius: 6px;
-                }
-
-                a {
-                    display: inline-block;
-                    text-decoration: none;
-                    text-align: center;
-                    line-height: 36px;
-                    height: 40px;
-                    width: 40px;
-                    border: 2px solid var(--skin-color);
-                    font-size: 24px;
-                    border-radius: 50%;
-                    font-weight: 600;
-                    text-transform: uppercase;
-                    color: var(--skin-color);
-                }
-            }
-
             .logo-text {
                 display: flex;
                 flex-direction: column;

@@ -33,7 +33,7 @@ export default async function Portfolio() {
     const portfolioCardData = await fetchPortfolioCardData();
 
     return (
-        <section className="portfolio-section section" id="portfolio">
+        <section className="other-section section" id="portfolio">
             <div className="container">
 
                 <Title title="Portfolio" subTitle="Latest Projects" />

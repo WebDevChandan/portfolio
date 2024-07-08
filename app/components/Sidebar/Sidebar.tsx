@@ -3,10 +3,12 @@ import { MdOutlineChevronRight } from 'react-icons/md';
 import { Logo, SideMenuLinks } from "..";
 import "../../styles/sidebar.scss";
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 export default function Sidebar() {
     const [sideBarMode, setSideBarMode] = useState(true);
     const [shouldRenderSidebar, setShouldRenderSidebar] = useState(true);
+    const pathName = usePathname();
 
     useEffect(() => {
         const handleResize = () => {
@@ -41,7 +43,7 @@ export default function Sidebar() {
                         <i className='right toggle outer-shadow' onClick={() => setSideBarMode(!sideBarMode)}><MdOutlineChevronRight /></i>
                     </header>
 
-                    <SideMenuLinks />
+                    <SideMenuLinks pathName={pathName}/>
                 </nav>
             }
         </>
