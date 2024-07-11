@@ -61,7 +61,7 @@ export const dashboardNavLinks = [
     {
         label: "About",
         icon: <FaUser />,
-        active: false,
+        active: true,
     },
     {
         label: "Resume",

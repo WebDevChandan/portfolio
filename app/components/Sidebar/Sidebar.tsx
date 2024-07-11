@@ -9,6 +9,7 @@ export default function Sidebar() {
     const [sideBarMode, setSideBarMode] = useState(true);
     const [shouldRenderSidebar, setShouldRenderSidebar] = useState(true);
     const pathName = usePathname();
+    const isLoginPage = pathName === "/dashboard/login";
 
     useEffect(() => {
         const handleResize = () => {
@@ -22,13 +23,13 @@ export default function Sidebar() {
         return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, []);
+    }, [pathName]);
 
 
     return (
         <>
             {
-                shouldRenderSidebar &&
+                !isLoginPage && shouldRenderSidebar &&
                 <nav className={`${sideBarMode ? "close " : ""}sidebar outer-shadow`}>
                     <header>
                         <div className="image-text">
@@ -43,7 +44,7 @@ export default function Sidebar() {
                         <i className='right toggle outer-shadow' onClick={() => setSideBarMode(!sideBarMode)}><MdOutlineChevronRight /></i>
                     </header>
 
-                    <SideMenuLinks pathName={pathName}/>
+                    <SideMenuLinks pathName={pathName} />
                 </nav>
             }
         </>

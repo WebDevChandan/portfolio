@@ -28,11 +28,11 @@ export async function POST(req: Request) {
             },
             {
                 valid: validator.isEmail(email),
-                errorMessage: "Email is Invalid",
+                errorMessage: "Invalid Email",
             },
             {
                 valid: validator.isStrongPassword(password),
-                errorMessage: "Passoword is Invalid",
+                errorMessage: "Invalid Passoword",
             },
         ]
 
@@ -55,6 +55,8 @@ export async function POST(req: Request) {
                 id: true,
                 email: true,
                 password: true,
+                firstName: true,
+                lastName: true,
             }
         })
 
@@ -77,7 +79,7 @@ export async function POST(req: Request) {
 
         const secret = new TextEncoder().encode(process.env.JWT_SECRET);
 
-        const token = await new jose.SignJWT({ id: admin.id, email: admin.email })
+        const token = await new jose.SignJWT({ id: admin.id, firstName: admin.firstName, lastName: admin.lastName, email: admin.email })
             .setProtectedHeader({ alg })
             .setExpirationTime("2h")
             .sign(secret);
@@ -88,7 +90,7 @@ export async function POST(req: Request) {
 
 
         return NextResponse.json(
-            { message: "Login Successfull" },
+            { admin, message: "Login Successfull" },
             { status: 200 }
         );
 

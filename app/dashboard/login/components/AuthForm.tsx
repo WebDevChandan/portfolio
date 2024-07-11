@@ -33,10 +33,10 @@ export default function AuthForm() {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+        
         const { status } = await logIn({ email: inputs.email, password: inputs.password }) as { status: number };
 
-        if (status === 200)
-            rounter.push("/dashboard");
+        console.log(status);
     }
 
     return (

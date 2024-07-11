@@ -1,6 +1,6 @@
 import HamburgerButton from "./Header/HamburgerButton";
 import Header from "./Header/Header";
-import Logo from "./Header/Logo";
+import Logo from "./Logo";
 import Button from "./Button";
 import Effects from "./Home/Effects";
 import HomeText from "./Home/HomeText";

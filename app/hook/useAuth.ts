@@ -21,17 +21,15 @@ export default function useAuth() {
             const response = await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/auth/login`, {
                 email,
                 password
-            }).then(response => response);
+            });
 
             setAuthState({
                 loading: false,
-                data: response.data.message,
+                data: response.data.admin,
                 error: null,
             });
 
-            return {
-                status: response.status,
-            }
+            return response;
 
         } catch (error: any) {
             const errorMessage = error.response?.data?.errorMessage || "An unexpected error occurred.";
