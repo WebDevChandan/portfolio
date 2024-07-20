@@ -8,7 +8,7 @@ export async function GET(req: Request) {
 
         if (!token) {
             return NextResponse.json(
-                { error: "Unauthorized Access" },
+                { errorMessage: "Unauthorized Access" },
                 { status: 401 },
             );
         }
@@ -18,16 +18,16 @@ export async function GET(req: Request) {
 
         } catch (error: any) {
             return NextResponse.json(
-                { error: error?.message },
+                { errorMessage: error?.message },
                 { status: 401 },
             );
         }
 
-        const payload = jwt.decode(token) as { id: string, email: string };
+        const payload = jwt.decode(token) as { id: string, firstName: string, lastName: string, email: string };
 
-        if (!payload.id || !payload.email)
+        if (!payload.firstName || !payload.email || !payload.lastName)
             return NextResponse.json(
-                { error: "Unauthorized Access" },
+                { errorMessage: "Unauthorized Access" },
                 { status: 401 },
             );
 
@@ -44,18 +44,18 @@ export async function GET(req: Request) {
 
         if (!admin)
             return NextResponse.json(
-                { error: "Unauthorized Access" },
+                { errorMessage: "Unauthorized Access" },
                 { status: 401 }
             )
 
         return NextResponse.json(
-            { data: payload.email },
+            { data: { firstName: payload.firstName, lastName: payload.lastName, email: payload.email } },
             { status: 200 }
         );
 
     } catch (error) {
         return NextResponse.json(
-            { error: "Internal Server Error" },
+            { errorMessage: "Internal Server Error" },
             { status: 503 },
         );
     }

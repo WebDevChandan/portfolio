@@ -1,5 +1,7 @@
 import axios from "axios";
+import { deleteCookie } from "cookies-next";
 import { useContext } from "react";
+import { Flip, toast } from "react-toastify";
 import { AuthenticationContext } from "../context/AuthContext";
 
 interface LogInParams {
@@ -23,16 +25,37 @@ export default function useAuth() {
                 password
             });
 
+            toast.success(response.data.successMessage, {
+                position: "top-center",
+                autoClose: 1500,
+                hideProgressBar: true,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+                transition: Flip,
+            });
+
             setAuthState({
                 loading: false,
                 data: response.data.admin,
                 error: null,
             });
 
-            return response;
-
         } catch (error: any) {
             const errorMessage = error.response?.data?.errorMessage || "An unexpected error occurred.";
+
+            toast.error(errorMessage, {
+                position: "top-center",
+                autoClose: 1500,
+                hideProgressBar: true,
+                closeOnClick: false,
+                pauseOnHover: false,
+                draggable: false,
+                progress: undefined,
+                transition: Flip,
+            });
+
             setAuthState({
                 loading: false,
                 data: null,
@@ -48,6 +71,24 @@ export default function useAuth() {
             error: null,
         });
 
+        deleteCookie("jwt");
+
+        toast.success("Logout Successfull", {
+            position: "top-center",
+            autoClose: 1500,
+            hideProgressBar: true,
+            closeOnClick: false,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            transition: Flip,
+        });
+
+        setAuthState({
+            loading: false,
+            data: null,
+            error: null,
+        });
     }
 
     return {

@@ -1,8 +1,12 @@
+"use client";
+import useAuth from '@/app/hook/useAuth';
 import Link from 'next/link';
 import { BiSolidMessageRoundedDetail } from "react-icons/bi";
 import { FaBriefcase, FaCode, FaEnvelope, FaFileAlt, FaHome, FaUser, FaUserCircle, FaUsers } from "react-icons/fa";
 import { PiCertificateFill } from 'react-icons/pi';
+import { SlLogout } from "react-icons/sl";
 import { activateNavLink } from '../Header/HamburgerButton';
+import { useRouter } from 'next/navigation';
 
 export const activateSideLink = (pathName?: string | null) => {
     const sideLinkLIst = document.querySelector('.menu-links')?.childNodes;
@@ -88,10 +92,24 @@ export const dashboardNavLinks = [
         icon: <FaEnvelope />,
         active: false,
     },
+    {
+        label: "Logout",
+        icon: <SlLogout />,
+        active: false,
+    },
 ];
 
 export default function SideNavLinks({ pathName }: { pathName: string }) {
     const isDashboard = pathName === "/dashboard";
+    const { logOut } = useAuth();
+    const router = useRouter();
+
+    const handleLogout = async (event: React.FormEvent) => {
+        event.preventDefault();
+        await logOut();
+        router.push("/");
+    }
+
     return (
         <div className="menu-bar">
             <div className="menu">
@@ -115,20 +133,32 @@ export default function SideNavLinks({ pathName }: { pathName: string }) {
                                 </li>
                             )))
                             : (dashboardNavLinks.map(({ label, icon, active }, index) => (
-                                <li
-                                    className={`nav-link ${active ? "active" : ""} outer-shadow`}
-                                    key={index}
-                                    onClick={(e) => {
-                                        const link = e.currentTarget.firstChild as HTMLElement;
-                                        activateNavLink(link.getAttribute('href')?.replace(/[/]/g, ""));
-                                    }}
-                                    title={label}
-                                >
-                                    <Link href={label !== "Home" ? label.toLowerCase() : "/dashboard"}>
-                                        <i className='icon'>{icon}</i>
-                                        <span className="text nav-text">{label}</span>
-                                    </Link>
-                                </li>
+                                label === "Logout"
+                                    ? (<li
+                                        className={`nav-link ${active ? "active" : ""} outer-shadow`}
+                                        key={index}
+                                        onClick={(e) => { handleLogout(e) }}
+                                        title={label}
+                                    >
+                                            <i className='icon'>{icon}</i>
+                                            <span className="text nav-text">{label}</span>
+                                        {/* <Link href="#">
+                                        </Link> */}
+                                    </li>)
+                                    : (<li
+                                        className={`nav-link ${active ? "active" : ""} outer-shadow`}
+                                        key={index}
+                                        onClick={(e) => {
+                                            const link = e.currentTarget.firstChild as HTMLElement;
+                                            activateNavLink(link.getAttribute('href')?.replace(/[/]/g, ""));
+                                        }}
+                                        title={label}
+                                    >
+                                        <Link href={label !== "Home" ? label.toLowerCase() : "/dashboard"}>
+                                            <i className='icon'>{icon}</i>
+                                            <span className="text nav-text">{label}</span>
+                                        </Link>
+                                    </li>)
                             )))
                     }
                 </ul>

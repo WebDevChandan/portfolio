@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import AuthContext from '../context/AuthContext';
 
 export const metadata: Metadata = {
     title: 'Dashboard | Portfolio',
@@ -7,8 +8,8 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <>
+        <AuthContext>
             {children}
-        </>
+        </AuthContext>
     )
 }

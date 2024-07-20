@@ -56,13 +56,13 @@ export default function AuthContext({ children }: { children: React.ReactNode })
                 headers: {
                     authorization: jwt
                 }
-            }).then(response => response.data)
+            });
 
             axios.defaults.headers.common["authorization"] = `${jwt}`;
 
             setAuthState({
                 loading: false,
-                data: response.data,
+                data: response.data.data,
                 error: null,
             })
 

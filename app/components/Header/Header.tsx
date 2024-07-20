@@ -5,7 +5,7 @@ import "../../styles/header.scss";
 
 export default function Header() {
     const pathName = usePathname();
-    const isLoginPage = pathName === "/dashboard/login";
+    const isLoginPage = pathName === "/login";
 
     return (
         !isLoginPage &&

@@ -2,14 +2,15 @@
 import { MdOutlineChevronRight } from 'react-icons/md';
 import { Logo, SideMenuLinks } from "..";
 import "../../styles/sidebar.scss";
-import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { useContext, useEffect, useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
+import AuthContext, { AuthenticationContext } from '@/app/context/AuthContext';
 
 export default function Sidebar() {
     const [sideBarMode, setSideBarMode] = useState(true);
     const [shouldRenderSidebar, setShouldRenderSidebar] = useState(true);
     const pathName = usePathname();
-    const isLoginPage = pathName === "/dashboard/login";
+    const isLoginPage = pathName === "/login";
 
     useEffect(() => {
         const handleResize = () => {
@@ -43,7 +44,6 @@ export default function Sidebar() {
 
                         <i className='right toggle outer-shadow' onClick={() => setSideBarMode(!sideBarMode)}><MdOutlineChevronRight /></i>
                     </header>
-
                     <SideMenuLinks pathName={pathName} />
                 </nav>
             }

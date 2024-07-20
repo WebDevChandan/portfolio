@@ -15,7 +15,8 @@
     align-items: center;
     flex-direction: column;
 }
-.form-container form{
+
+.form-container form {
     width: 270px;
 }
 
@@ -77,7 +78,7 @@
 
 .field span {
     position: absolute;
-    width: 50px;
+    // width: 50px;
     line-height: 50px;
     color: var(--skin-color);
     left: 15px;
@@ -92,15 +93,20 @@
     transform: translateY(-50%);
 }
 
-
 .field input:focus~label {
     opacity: 0;
 }
 
 
-button {
+.login-btn {
     margin: 25px 0 0 0;
     width: 100%;
+}
+
+.login-btn.disabled {
+    background: var(--bg-disabled);
+    color: var(--text-disabled);
+    cursor: not-allowed;
 }
 
 .form-container .or {
@@ -113,7 +119,7 @@ button {
     border: none;
 }
 
-.form-container .forgot-pass-container{
+.form-container .forgot-pass-container {
     width: 100%;
     margin: 20px 0px 0px;
     display: flex;
@@ -121,9 +127,8 @@ button {
     align-items: center;
 }
 
-.form-container .forgot-pass-container .forgot-pass{
+.form-container .forgot-pass-container .forgot-pass {
     font-size: 14px;
     color: var(--text-black-600);
     cursor: pointer;
 }
-

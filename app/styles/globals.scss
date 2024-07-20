@@ -132,42 +132,52 @@ p {
     min-height: 100vh;
 }
 
-    .container {
-        max-width: 1140px;
-        margin: auto;
+.row {
+    display: flex;
+    flex-wrap: wrap;
+}
 
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-        }
+.container {
+    max-width: 1140px;
+    margin: auto;
 
-        .section-title {
-            padding: 0 15px;
-            flex: 0 0 100%;
-            max-width: 100%;
-            text-align: center;
-            margin-bottom: 40px;
+    .section-title {
+        padding: 0 15px;
+        flex: 0 0 100%;
+        max-width: 100%;
+        text-align: center;
+        margin-bottom: 40px;
 
-            h2 {
-                display: inline-block;
-                font-size: 30px;
-                font-weight: 700;
-                color: var(--text-black-900);
-                text-transform: uppercase;
-                margin: 0;
+        h2 {
+            display: inline-block;
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--text-black-900);
+            text-transform: uppercase;
+            margin: 0;
 
-                &::before {
-                    content: attr(data-heading);
-                    display: block;
-                    font-size: 16px;
-                    font-weight: 600;
-                    color: var(--skin-color);
-                }
+            &::before {
+                content: attr(data-heading);
+                display: block;
+                font-size: 16px;
+                font-weight: 600;
+                color: var(--skin-color);
             }
         }
     }
+}
 
+.Toastify__toast-container {
+    .Toastify__toast {
+        background: var(--bg-black-50);
+        color: var(--text-black-900);
+        box-shadow: var(--outer-shadow);
+    }
 
+    .Toastify__close-button {
+        color: var(--text-black-600);
+    }
+}
 
 @keyframes spin {
     0% {

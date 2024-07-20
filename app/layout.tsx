@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { Header, MainMenuBar, Sidebar, StyleSwitcher } from './components';
-import AuthContext from './context/AuthContext';
 import './styles/globals.scss';
+import AuthContext from './context/AuthContext';
 
 export const metadata: Metadata = {
   title: 'WebDevChandan | Portfolio',
@@ -16,14 +16,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" data-theme={previousThemeMode ? previousThemeMode : "light"}>
       <body className={previousThemeColor ? previousThemeColor : ""}>
-        <AuthContext>
-          <Header />
-          <MainMenuBar />
-          <Sidebar />
-          <StyleSwitcher />
-          {children}
-        </AuthContext>
-
+        <Header />
+        <MainMenuBar />
+        <Sidebar />
+        <StyleSwitcher />
+        {children}
       </body >
     </html >
   )

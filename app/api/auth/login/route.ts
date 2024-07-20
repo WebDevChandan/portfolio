@@ -1,14 +1,14 @@
 import prisma from "@/utils/prisma";
-import { NextResponse } from "next/server";
 import validator from 'validator';
 import * as jose from 'jose';
 import bcrypt from 'bcrypt';
 import { cookies } from "next/headers";
+import jwt from 'jsonwebtoken';
 
 export async function POST(req: Request) {
     try {
         if (req.method !== "POST") {
-            return NextResponse.json(
+            return Response.json(
                 { error: "Method Not Allowed" },
                 { status: 405 },
             )
@@ -42,10 +42,31 @@ export async function POST(req: Request) {
         })
 
         if (errors.length)
-            return NextResponse.json(
+            return Response.json(
                 { errorMessage: errors[0] },
                 { status: 401 }
             );
+
+        try {
+            const token = cookies().get("jwt")?.value as string;
+
+            if (token) {
+                jwt.verify(token, `${process.env.JWT_SECRET}`);
+                const payload = jwt.decode(token) as { email: string };
+
+                if (email === payload.email)
+                    return Response.json(
+                        { errorMessage: "Already Logged In!" },
+                        { status: 409 }
+                    );
+            }
+
+        } catch (error: any) {
+            return Response.json(
+                { errorMessage: error.message },
+                { status: 401 }
+            );
+        }
 
         const admin = await prisma.admin.findUnique({
             where: {
@@ -61,16 +82,16 @@ export async function POST(req: Request) {
         })
 
         if (!admin)
-            return NextResponse.json(
-                { errorMessage: "Unauthorized Access" },
+            return Response.json(
+                { errorMessage: "Unauthorized Access!" },
                 { status: 401 }
             )
 
         const isMatch = await bcrypt.compare(password, admin.password);
 
         if (!isMatch)
-            return NextResponse.json(
-                { errorMessage: "Unauthorized Access" },
+            return Response.json(
+                { errorMessage: "Unauthorized Access!" },
                 { status: 401 }
             )
 
@@ -88,14 +109,13 @@ export async function POST(req: Request) {
             maxAge: 60 * 6 * 2
         });
 
-
-        return NextResponse.json(
-            { admin, message: "Login Successfull" },
+        return Response.json(
+            { admin: { firstName: admin.firstName, lastName: admin.lastName, email: admin.email }, successMessage: "Login Successfull" },
             { status: 200 }
         );
 
     } catch (error) {
-        return NextResponse.json(
+        return Response.json(
             { error: "Internal Server Error" },
             { status: 503 },
         );
