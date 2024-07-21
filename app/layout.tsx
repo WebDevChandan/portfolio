@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { Header, MainMenuBar, Sidebar, StyleSwitcher } from './components';
 import './styles/globals.scss';
-import AuthContext from './context/AuthContext';
 
 export const metadata: Metadata = {
   title: 'WebDevChandan | Portfolio',

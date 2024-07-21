@@ -6,7 +6,6 @@ export default function AboutMe({ info }: { info: string | TrustedHTML }) {
     return (
         <div className="about-info">
             <p dangerouslySetInnerHTML={{ __html: info }} />
-
             <p>
                 Remotely available UTC-1 to UTC+05:30.
                 <Link href="mailto:hirechandan@gmail.com" className="email">hirechandan@gmail.com</Link>

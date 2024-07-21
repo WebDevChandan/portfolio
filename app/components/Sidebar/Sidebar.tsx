@@ -1,16 +1,15 @@
 "use client";
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { MdOutlineChevronRight } from 'react-icons/md';
 import { Logo, SideMenuLinks } from "..";
 import "../../styles/sidebar.scss";
-import { useContext, useEffect, useState } from 'react';
-import { usePathname, useRouter } from 'next/navigation';
-import AuthContext, { AuthenticationContext } from '@/app/context/AuthContext';
 
 export default function Sidebar() {
     const [sideBarMode, setSideBarMode] = useState(true);
     const [shouldRenderSidebar, setShouldRenderSidebar] = useState(true);
     const pathName = usePathname();
-    const isLoginPage = pathName === "/login";
+    const isLoginPage = pathName === "/login" || pathName.startsWith('/login/');
 
     useEffect(() => {
         const handleResize = () => {

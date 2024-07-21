@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import AuthContext from '../context/AuthContext';
+import './styles/dashboard.scss';
 
 export const metadata: Metadata = {
     title: 'Dashboard | Portfolio',
@@ -8,8 +8,10 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
     return (
-        <AuthContext>
-            {children}
-        </AuthContext>
+        <section className="dashboard-section section">
+            <div className="container">
+                {children}
+            </div>
+        </section>
     )
 }

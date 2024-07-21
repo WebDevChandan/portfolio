@@ -1,0 +1,121 @@
+@mixin link-item($fontWeight) {
+    color: var(--text-black-600);
+    font-weight: $fontWeight;
+}
+
+.profile-img {
+    flex: 0 0 40%;
+    max-width: 40%;
+    padding: 0 15px;
+
+
+    .img-box {
+        padding: 15px;
+        border-radius: 5px;
+    }
+
+    img {
+        width: 100%;
+        border: 10px solid transparent;
+        border-radius: 5px;
+        height: auto;
+    }
+}
+
+.profile-info {
+    flex: 0 0 60%;
+    max-width: 60%;
+    padding: 0 15px;
+
+    p {
+        font-size: 16px;
+        line-height: 26px;
+        margin-bottom: 15px;
+        color: var(--text-black-600);
+    }
+
+    .portfolioPage {
+        @include link-item(bold);
+    }
+
+    .email {
+        @include link-item(600);
+    }
+
+    span {
+        font-weight: 600;
+    }
+
+}
+
+.social-item,
+.skill-item {
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding: 0 15px;
+}
+
+
+.skill-item {
+    p {
+        font-size: 16px;
+        color: var(--text-black-600);
+        text-transform: capitalize;
+        margin: 0 0 10px;
+    }
+
+    .range-container {
+        height: 20px;
+        border-radius: 10px;
+        position: relative;
+        margin: 0 0 25px;
+
+        .range-bar {
+            height: 6px;
+            left: 7px;
+            top: 7px;
+            position: absolute;
+            border-radius: 10px;
+            width: 97%;
+            appearance: none;
+            -webkit-appearance: none;
+            background-color: var(--text-black-600);
+            cursor: grab;
+
+            &::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                width: 15px;
+                height: 15px;
+                background: var(--text-black-600);
+                border-radius: 50%;
+                box-shadow: var(--outer-shadow);
+                transition: box-shadow 0.2s ease-in-out;
+            }
+        }
+
+        // &::before {
+        //     content: '';
+        //     height: 10px;
+        //     width: var(--fill-percentage, 50%);
+        //     background: #3498db;
+        //     /* Fill color */
+        //     position: absolute;
+        //     top: 20px;
+        //     /* Adjust based on the padding of slider-container */
+        //     left: 20px;
+        //     /* Adjust based on the padding of slider-container */
+        //     border-radius: 10px;
+        //     z-index: 0;
+        // }
+    }
+
+    span {
+        position: absolute;
+        right: 0;
+        top: 0;
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--text-black-600);
+        margin-top: -40px;
+    }
+}

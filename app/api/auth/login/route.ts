@@ -106,7 +106,7 @@ export async function POST(req: Request) {
             .sign(secret);
 
         cookies().set("jwt", token, {
-            maxAge: 60 * 6 * 2
+            maxAge: 60 * 60 * 2
         });
 
         return Response.json(

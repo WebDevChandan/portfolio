@@ -1,12 +1,13 @@
 "use client";
 import useAuth from '@/app/hook/useAuth';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { BiSolidMessageRoundedDetail } from "react-icons/bi";
-import { FaBriefcase, FaCode, FaEnvelope, FaFileAlt, FaHome, FaUser, FaUserCircle, FaUsers } from "react-icons/fa";
+import { FaBriefcase, FaFileAlt, FaGraduationCap, FaHome, FaUser, FaUserCircle, FaUsers } from "react-icons/fa";
+import { MdDashboard, MdWorkHistory } from 'react-icons/md';
 import { PiCertificateFill } from 'react-icons/pi';
 import { SlLogout } from "react-icons/sl";
 import { activateNavLink } from '../Header/HamburgerButton';
-import { useRouter } from 'next/navigation';
 
 export const activateSideLink = (pathName?: string | null) => {
     const sideLinkLIst = document.querySelector('.menu-links')?.childNodes;
@@ -46,7 +47,7 @@ export const navLinks = [
     },
     {
         label: "Portfolio",
-        icon: <FaBriefcase />,
+        icon: <MdWorkHistory />,
         active: false,
     },
     {
@@ -63,13 +64,23 @@ export const navLinks = [
 
 export const dashboardNavLinks = [
     {
-        label: "About",
-        icon: <FaUser />,
+        label: "Dashboard",
+        icon: <MdDashboard />,
         active: true,
     },
     {
-        label: "Resume",
-        icon: <FaFileAlt />,
+        label: "Profile",
+        icon: <FaUser />,
+        active: false,
+    },
+    {
+        label: "Education",
+        icon: <FaGraduationCap />,
+        active: false,
+    },
+    {
+        label: "Experience",
+        icon: <FaBriefcase />,
         active: false,
     },
     {
@@ -79,17 +90,12 @@ export const dashboardNavLinks = [
     },
     {
         label: "Portfolio",
-        icon: <FaCode />,
+        icon: <MdWorkHistory />,
         active: false,
     },
     {
         label: "Testimonial",
         icon: <FaUsers />,
-        active: false,
-    },
-    {
-        label: "Contact",
-        icon: <FaEnvelope />,
         active: false,
     },
     {
@@ -100,7 +106,7 @@ export const dashboardNavLinks = [
 ];
 
 export default function SideNavLinks({ pathName }: { pathName: string }) {
-    const isDashboard = pathName === "/dashboard";
+    const isDashboard = pathName === "/dashboard" || pathName.startsWith("/dashboard");
     const { logOut } = useAuth();
     const router = useRouter();
 
@@ -140,10 +146,8 @@ export default function SideNavLinks({ pathName }: { pathName: string }) {
                                         onClick={(e) => { handleLogout(e) }}
                                         title={label}
                                     >
-                                            <i className='icon'>{icon}</i>
-                                            <span className="text nav-text">{label}</span>
-                                        {/* <Link href="#">
-                                        </Link> */}
+                                        <i className='icon'>{icon}</i>
+                                        <span className="text nav-text">{label}</span>
                                     </li>)
                                     : (<li
                                         className={`nav-link ${active ? "active" : ""} outer-shadow`}
@@ -154,7 +158,7 @@ export default function SideNavLinks({ pathName }: { pathName: string }) {
                                         }}
                                         title={label}
                                     >
-                                        <Link href={label !== "Home" ? label.toLowerCase() : "/dashboard"}>
+                                        <Link href={label !== "Dashboard" ? `/dashboard/${label.toLowerCase()}` : "/dashboard"}>
                                             <i className='icon'>{icon}</i>
                                             <span className="text nav-text">{label}</span>
                                         </Link>

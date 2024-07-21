@@ -1,0 +1,64 @@
+@mixin inputControl($inputField: true) {
+    height: 45px;
+    display: block;
+    width: 100%;
+    border-radius: 30px;
+    border: none;
+    background-color: transparent;
+    font-size: 16px;
+    padding: 0 15px;
+    color: var(--text-black-700);
+
+    @if $inputField {
+        padding-left: 45px;
+    }
+}
+
+.field-label {
+    padding-bottom: 5px;
+
+    label {
+        color: var(--text-black-600);
+    }
+}
+
+.input-group {
+    position: relative;
+    margin: 0 0 25px;
+    transition: all 0.3s ease;
+    border-radius: 30px;
+
+    &::after {
+        border-radius: 30px;
+    }
+
+    .input-control {
+        @include inputControl($inputField: true)
+    }
+
+    span {
+        position: absolute;
+        line-height: 50px;
+        color: var(--skin-color);
+        left: 15px;
+        font-size: 18px;
+    }
+
+    textarea {
+        &.textarea-control {
+            @include inputControl($inputField: false);
+            height: 184px;
+            padding-top: 15px;
+            resize: none;
+            line-height: 1.6;
+            height: 100%;
+            border-radius: 5px;
+        }
+    }
+
+}
+
+.textarea-group{
+    height: 80%;
+    border-radius: 5px;
+}

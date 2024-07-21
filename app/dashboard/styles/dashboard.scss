@@ -1,0 +1,11 @@
+@import "../../styles/variables";
+
+.dashboard-section {
+    padding: 60px 0 0;
+    min-height: 100vh;
+
+    .container .section-title {
+        text-align: left; 
+        margin-bottom: 40px;
+    }
+}
