@@ -53,7 +53,7 @@ export default function AuthForm() {
             </div>
 
             <button type="submit"
-                className={`btn-1 login-btn outer-shadow ${disabled ? "disabled" : "hover-in-shadow"}`}
+                className={`btn-1 login-btn outer-shadow ${disabled ? "btn-disabled" : "hover-in-shadow"}`}
                 onClick={(e) => handleSubmit(e)}
                 disabled={disabled}
             >

@@ -1,7 +1,10 @@
 "use client";
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useContext, useState } from 'react';
+import { EditableContext } from '../../context/EditableProvider';
 
 export default function Skills() {
+    const { isEditable } = useContext(EditableContext);
+
     const [rangeValues, setRangeValues] = useState({
         html: 90,
         css: 60,
@@ -11,7 +14,7 @@ export default function Skills() {
     const handleChange = (e: ChangeEvent<HTMLInputElement>, skill: string) => {
         setRangeValues({
             ...rangeValues,
-            [skill]:parseInt(e.target.value, 10),
+            [skill]: parseInt(e.target.value, 10),
         });
     };
 
@@ -23,11 +26,12 @@ export default function Skills() {
                 <div className="range-container inner-shadow">
                     <input
                         type="range"
-                        className='range-bar'
+                        className={`range-bar ${!isEditable ? "disabled" : ""}`}
                         min={0} max={100}
                         value={rangeValues.html}
                         onChange={(e) => handleChange(e, "html")}
                         name='html'
+                        disabled={!isEditable}
                     />
                     <span>{`${rangeValues.html}%`}</span>
                 </div>
@@ -37,11 +41,12 @@ export default function Skills() {
                 <div className="range-container inner-shadow">
                     <input
                         type="range"
-                        className='range-bar'
+                        className={`range-bar ${!isEditable ? "disabled" : ""}`}
                         min={0} max={100}
                         value={rangeValues.css}
                         onChange={(e) => handleChange(e, "css")}
                         name='css'
+                        disabled={!isEditable}
                     />
                     <span>{`${rangeValues.css}%`}</span>
                 </div>
@@ -51,11 +56,12 @@ export default function Skills() {
                 <div className="range-container inner-shadow">
                     <input
                         type="range"
-                        className='range-bar'
+                        className={`range-bar ${!isEditable ? "disabled" : ""}`}
                         min={0} max={100}
                         value={rangeValues.js}
                         onChange={(e) => handleChange(e, "js")}
                         name='js'
+                        disabled={!isEditable}
                     />
                     <span>{`${rangeValues.js}%`}</span>
                 </div>

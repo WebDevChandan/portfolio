@@ -7,7 +7,7 @@
     flex: 0 0 40%;
     max-width: 40%;
     padding: 0 15px;
-
+    position: relative;
 
     .img-box {
         padding: 15px;
@@ -19,6 +19,15 @@
         border: 10px solid transparent;
         border-radius: 5px;
         height: auto;
+    }
+
+    svg{
+        position: absolute;
+        top: 20px;
+        right: 35px;
+        cursor: pointer;
+        color: var(--skin-color);
+        font-size: 20px;
     }
 }
 
@@ -90,6 +99,9 @@
                 border-radius: 50%;
                 box-shadow: var(--outer-shadow);
                 transition: box-shadow 0.2s ease-in-out;
+            }
+            &.disabled{
+                cursor: not-allowed;
             }
         }
 

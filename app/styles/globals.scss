@@ -179,6 +179,12 @@ p {
     }
 }
 
+.btn-disabled {
+    background: var(--bg-disabled);
+    color: var(--text-disabled);
+    cursor: not-allowed;
+}
+
 @keyframes spin {
     0% {
         -webkit-transform: rotate(0deg);
