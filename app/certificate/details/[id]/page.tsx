@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation';
 import { HeaderDetails, MainDetails } from './components';
 import './styles/certificateDetails.scss';
 import { Suspense } from 'react';
-import Loading from './loading';
+import Loading from '../../../components/Loader/SpinLoader';
+import SpinLoader from '../../../components/Loader/SpinLoader';
 
 export type DetailPropsType = {
     params: {
@@ -48,7 +49,7 @@ export default async function CertificateDetails({ params: { id } }: DetailProps
     const certificateDetails = await fetchCertificateDetails(id);
 
     return (
-        <>
+        <Suspense fallback={<SpinLoader />}>
             {certificateDetails ? (<div className="cp certificate-popup">
                 <div className="cp-details">
                     <div className="cp-details-inner">
@@ -57,10 +58,10 @@ export default async function CertificateDetails({ params: { id } }: DetailProps
                 </div>
 
                 <div className="separator"></div>
-                    <div className="cp-main">
-                        <MainDetails mainDetails={certificateDetails?.certificateMainDetail} />
-                    </div>
+                <div className="cp-main">
+                    <MainDetails mainDetails={certificateDetails?.certificateMainDetail} />
+                </div>
             </div>) : notFound()}
-        </>
+        </Suspense>
     )
 }

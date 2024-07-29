@@ -1,16 +1,15 @@
 import { Suspense } from 'react';
-import { CopyrightText, Title } from '../components';
+import { CopyrightText, Title, WaveLoader } from '../components';
 import { ContactDetails, ContactForm } from './components';
 import './styles/contact.scss';
-import Loading from '../components/Loading';
 
 export default function Conact() {
   return (
-    <section className="other-section section" id="contact">
+    <section className="other-section contact-section" id="contact">
       <div className="container">
         <Title title='Get in Touch' subTitle='contact' />
 
-        <Suspense fallback={<Loading />}>
+        <Suspense fallback={<WaveLoader />}>
           <ContactDetails />
           <ContactForm />
         </Suspense>

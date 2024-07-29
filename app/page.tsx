@@ -1,7 +1,6 @@
 import prisma from '@/utils/prisma';
 import { Suspense } from 'react';
-import { Effects, HomeText, MyImage } from './components';
-import Loading from './components/Loading';
+import { Effects, HomeText, MyImage, WaveLoader } from './components';
 import './styles/home.scss';
 
 interface HomeDataType {
@@ -38,7 +37,7 @@ export default async function Home() {
       <div className="container">
         <div className="row full-screen align-items-center">
 
-          <Suspense fallback={<Loading />}>
+          <Suspense fallback={<WaveLoader />}>
             {homeData && (
               <>
                 <HomeText name={homeData.name} roles={homeData.roles} />

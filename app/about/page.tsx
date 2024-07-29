@@ -1,9 +1,8 @@
 import prisma from "@/utils/prisma";
-import { MyImage } from "../components";
+import { Suspense } from "react";
+import { MyImage, WaveLoader } from "../components";
 import { AboutMe, AboutTabs, Education, Experience, Skill, SocialLinks, Title } from "./components";
 import './styles/about.scss';
-import { Suspense } from "react";
-import Loading from "../components/Loading";
 
 const fetchAboutDetails = async () => {
     try {
@@ -44,10 +43,10 @@ export default async function About() {
     const aboutData = await fetchAboutDetails();
 
     return (
-        <section className="other-section section" id="about">
+        <section className="other-section about-section" id="about">
             <div className="container">
                 <Title title="About Me" subTitle="Main Info" />
-                <Suspense fallback={<Loading />}>
+                <Suspense fallback={<WaveLoader />}>
                     {
                         aboutData && (
                             <div className="row">

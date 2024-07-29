@@ -1,17 +1,16 @@
 import { Suspense } from 'react';
-import { Title } from '../components';
+import { Title, WaveLoader } from '../components';
 import { TestimonialCard, TestimonialNavigation } from './components';
 import './styles/testimonial.scss';
-import Loading from '../components/Loading';
 
 export default function Testimonial() {
   return (
-    <section className="other-section section" id="testimonial">
+    <section className="other-section testimonial-section" id="testimonial">
       <div className="container">
 
         <Title title='Client Speak' subTitle='Testimonial' />
 
-        <Suspense fallback={<Loading />}>
+        <Suspense fallback={<WaveLoader />}>
           <div className="row">
             <div className="testi-box">
               <div className="testi-slider outer-shadow">

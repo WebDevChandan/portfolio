@@ -1,7 +1,7 @@
 // "use client";
 import { Suspense } from "react";
 import PDFViewer from "./PDFViewer";
-import Loading from "@/app/certificate/details/[id]/loading";
+import Loading from "@/app/components/Loader/SpinLoader";
 
 type resumeFileType = {
     resume: string;

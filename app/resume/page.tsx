@@ -1,9 +1,9 @@
+import prisma from "@/utils/prisma";
 import { Suspense } from 'react';
+import WaveLoader from '../components/Loader/WaveLoader';
 import Title from '../components/Title';
 import { Resume } from './components';
 import './styles/resume.scss';
-import prisma from "@/utils/prisma";
-import Loading from '../components/Loading';
 
 const fetchResume = async () => {
     try {
@@ -24,11 +24,11 @@ export default async function page() {
     const resumeFile = await fetchResume();
 
     return (resumeFile &&
-        <section className="other-section section" id="resume">
+        <section className="other-section resume-section" id="resume">
             <div className="container">
                 <Title title="Resume" subTitle='View My Resume' />
 
-                <Suspense fallback={<Loading />}>
+                <Suspense fallback={<WaveLoader />}>
                     <div className="row">
                         <div className="resume-item-inner outer-shadow">
                             <Resume resumeFile={resumeFile} />

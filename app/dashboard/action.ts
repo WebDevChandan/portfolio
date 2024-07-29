@@ -2,12 +2,13 @@
 
 export async function updateProfile(formData: FormData) {
     const rawFormData = {
-        bio: formData.get('bio'),
-        github: formData.get('github'),
-        linkedin: formData.get('linkedin'),
-        html: formData.get('html'),
-        css: formData.get('css'),
-    }
+        bio: formData.get('bio') as string | null,
+        github: formData.get('github') as string | null,
+        linkedin: formData.get('linkedin') as string | null,
+        html: formData.get('html') as string | null,
+        css: formData.get('css') as string | null,
+        file: formData.get('aboutImage') instanceof File ? formData.get('aboutImage') as File : null
+    };
 
-    console.log(rawFormData);
+    console.log(rawFormData.file?.name); // Retrieve and log the file name
 }

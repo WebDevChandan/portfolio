@@ -17,9 +17,10 @@ export default function InputField({ label, icon, value, isTextArea, handleChang
 
     return (
         <>
-            {label && <div className="field-label">
-                <label htmlFor={label?.toLocaleLowerCase()}>{label}</label>
-            </div>}
+            {label &&
+                <div className="field-label">
+                    <label htmlFor={label?.toLocaleLowerCase()}>{label}</label>
+                </div>}
 
             <div className={`input-group outer-shadow ${isEditable ? "hover-in-shadow" : ""} ${isTextArea ? "textarea-group" : ""}`}>
                 {icon && <span className="fa fa-lock">{icon}</span>}

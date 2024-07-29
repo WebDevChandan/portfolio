@@ -1,10 +1,15 @@
 import Image from "next/image";
 
-export default function MyImage({ src }: { src: string | undefined }) {
+type MyImageType = {
+    src: string | undefined;
+    blobImg?: string | null;
+}
+
+export default function MyImage({ src, blobImg }: MyImageType) {
     return (
         <div className="img-box inner-shadow">
             <Image
-                src={`/img/${src}`}
+                src={blobImg ? blobImg : `/img/${src}`}
                 className="outer-shadow"
                 alt="Chandan Kumar"
                 width={405}

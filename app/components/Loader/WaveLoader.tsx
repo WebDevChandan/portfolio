@@ -1,8 +1,8 @@
-import '../styles/loading.scss';
+import '../../styles/loader/wave-loader.scss';
 
-export default function Loading() {
+export default function WaveLoader() {
     return (
-        <div className="preloader" >
+        <div className="wave-loader" >
             <div className="box">
                 <div></div>
                 <div></div>

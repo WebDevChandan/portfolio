@@ -1,12 +1,11 @@
+import { DetailPropsType } from "@/app/certificate/details/[id]/page";
+import { SpinLoader } from "@/app/components";
 import prisma from "@/utils/prisma";
-import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import "../../styles/portfolio.scss";
 import { HeaderDetails, MainDetails } from './components';
 import './styles/projectDetails.scss';
-import { DetailPropsType } from "@/app/certificate/details/[id]/page";
-import { Suspense } from "react";
-import Loading from "./loading";
 
 const fetchPortfolioDetails = async (slug: string) => {
     try {
@@ -30,9 +29,8 @@ export default async function ProjectDetails({ params: { id } }: DetailPropsType
     const portfolioDetailsData = await fetchPortfolioDetails(id);
 
     return (
-        <>
+        <Suspense fallback={<SpinLoader />}>
             {portfolioDetailsData ? (<div className="pp portfolio-popup">
-
                 <div className="pp-details">
                     <HeaderDetails
                         headerDetails={portfolioDetailsData?.portfolioHeaderDetail}
@@ -42,13 +40,13 @@ export default async function ProjectDetails({ params: { id } }: DetailPropsType
 
                 <div className="separator"></div>
 
-                    <MainDetails
-                        src={portfolioDetailsData!.portfolioMainDetail.imgSrc}
-                        altText={portfolioDetailsData!.portfolioMainDetail.altText}
-                        titleText={portfolioDetailsData?.portfolioMainDetail.titleText}
-                        webFrameLink={portfolioDetailsData?.portfolioMainDetail.webFrameLink}
-                    />
+                <MainDetails
+                    src={portfolioDetailsData!.portfolioMainDetail.imgSrc}
+                    altText={portfolioDetailsData!.portfolioMainDetail.altText}
+                    titleText={portfolioDetailsData?.portfolioMainDetail.titleText}
+                    webFrameLink={portfolioDetailsData?.portfolioMainDetail.webFrameLink}
+                />
             </div >) : notFound()}
-        </>
+        </Suspense>
     )
 }
