@@ -10,5 +10,6 @@ export async function updateProfile(formData: FormData) {
         file: formData.get('aboutImage') instanceof File ? formData.get('aboutImage') as File : null
     };
 
-    console.log(rawFormData.file?.name); // Retrieve and log the file name
+    // console.log(rawFormData.file?.name); // Retrieve and log the file name
+    console.log(formData);
 }

@@ -2,6 +2,7 @@ import { ChangeEvent, ReactElement, useContext } from "react";
 import { IconType } from "react-icons";
 import '../styles/inputField.scss';
 import { EditableContext } from "../context/EditableProvider";
+import Editor from "./Editor";
 
 type InputFieldType = {
     label?: string,
@@ -22,7 +23,7 @@ export default function InputField({ label, icon, value, isTextArea, handleChang
                     <label htmlFor={label?.toLocaleLowerCase()}>{label}</label>
                 </div>}
 
-            <div className={`input-group outer-shadow ${isEditable ? "hover-in-shadow" : ""} ${isTextArea ? "textarea-group" : ""}`}>
+            <div className={`input-group outer-shadow ${isEditable ? "hover-in-shadow" : ""}${isTextArea ? "textarea-group" : ""}`}>
                 {icon && <span className="fa fa-lock">{icon}</span>}
 
                 {!isTextArea && <input
@@ -37,7 +38,7 @@ export default function InputField({ label, icon, value, isTextArea, handleChang
                     disabled={!isEditable}
                 />}
 
-                {isTextArea && <textarea
+                {/* {isTextArea && <textarea
                     className="textarea-control"
                     autoComplete="off"
                     value={value}
@@ -45,7 +46,12 @@ export default function InputField({ label, icon, value, isTextArea, handleChang
                     onChange={(e) => handleChangeText(e)}
                     readOnly={!isEditable}
                     disabled={!isEditable}
-                />}
+                />} */}
+
+                {
+                    isTextArea &&
+                    <Editor />
+                }
             </div>
         </>
     )

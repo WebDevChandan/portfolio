@@ -62,6 +62,7 @@ export async function POST(req: Request) {
             }
 
         } catch (error: any) {
+            cookies().delete("jwt");
             return Response.json(
                 { errorMessage: error.message },
                 { status: 401 }
