@@ -7,46 +7,50 @@ import Link from "@tiptap/extension-link";
 import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
+import '../styles/Editor.scss';
 
 type EditorContentType = {
     content: string,
-    setContent: Dispatch<SetStateAction<string>>
+    setContent: Dispatch<SetStateAction<string>>,
+    isEditable: boolean,
 }
 
-export default function Editor() {
+export default function Editor({ content, setContent, isEditable }: EditorContentType) {
+console.log(content);
     const editor = useEditor({
         extensions: [
             StarterKit,
             Underline.configure({
                 HTMLAttributes: {
-                  class: "underline-class",
+                    class: "underline-class",
                 }
-              }),
-              Link.configure({
+            }),
+            Link.configure({
                 openOnClick: false,
                 autolink: true,
                 defaultProtocol: 'https',
-              }),
-              Highlight.configure({
+            }),
+            Highlight.configure({
                 multicolor: true,
-              }),
-              TextAlign.configure({
+            }),
+            TextAlign.configure({
                 types: ['heading', 'paragraph'],
-              })
+            })
         ],
         editorProps: {
             attributes: {
                 class: "text-editor",
-                spellcheck:"false"
+                spellcheck: "false"
             },
         },
-        // content: `${content}`,
-        content: `Hi`,
+        content: `${content}`,
         immediatelyRender: false,
-        // onUpdate: ({ editor }) => { setContent(editor.getHTML()), console.log(editor.state) },
+        onUpdate: ({ editor }) => { editor.isEditable ? setContent(editor.getHTML()) : null },
+        editable: false,
+        autofocus: false,
     })
 
-    // editor?.setEditable(false)
+    editor?.setEditable(isEditable);
     return (
         <>
             <Toolbar editor={editor} />
@@ -58,7 +62,7 @@ export default function Editor() {
                     width: "100%",
                     height: "85%",
                     overflow: "auto",
-                    position:"absolute",
+                    position: "absolute",
                 }} />
 
             {/* {editor && <div className="char-count">

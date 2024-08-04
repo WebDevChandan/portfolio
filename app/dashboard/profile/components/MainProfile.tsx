@@ -1,18 +1,24 @@
 "use client";
 import { MyImage } from "@/app/components";
-import { ChangeEvent, useContext, useRef, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useContext, useRef, useState } from "react";
 import { ImPencil } from "react-icons/im";
 import { MdDelete } from "react-icons/md";
 import { Flip, toast } from "react-toastify";
-import ProfileInfo from "./ProfileInfo";
 import { EditableContext } from "../../context/EditableProvider";
+import { InputField, UpdateBtn } from "../../components";
+import Editor from "../../components/Editor";
 
-export default function MainProfile() {
-    const {setIsEditable} = useContext(EditableContext);
+type MainProfileType = {
+    aboutImage: string,
+    bio: string,
+    setBio: Dispatch<SetStateAction<string>>,
+}
+export default function MainProfile({ aboutImage, bio, setBio }: MainProfileType) {
+    const { isEditable, setIsEditable } = useContext(EditableContext);
+
     const [blobImage, setBlogImage] = useState<string | null>(null);
-    const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const bio = "Hello, My name is Chandan Kumar. I am a Full-Stack Web/Java Developer from Jharkhand, India. I like to code things from scratch and enjoy bringing ideas to life in the browser. I value simple content structure, clean design patterns, and thoughtful interactions. I've done remote work for agencies, consulted for startups, and also worked as a Freelancer in a various online digital platform. I love in turning People's Imagination into Reality. Feel free to take a look at my latest projects on Portfolio Page";
+    const fileInputRef = useRef<HTMLInputElement>(null);
 
     const imageUpload = (e: ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
@@ -61,23 +67,30 @@ export default function MainProfile() {
         <div className="row">
             <div className="profile-img">
 
-                {blobImage && <MdDelete onClick={imageRemove} id="deleteImage" />}
+                {blobImage && isEditable && <MdDelete onClick={imageRemove} id="deleteImage" />}
 
-                <ImPencil onClick={triggerFileInput} id="uploadImage" />
+                {isEditable && <ImPencil onClick={triggerFileInput} id="uploadImage" />}
 
-                <input
+                {isEditable && <input
                     type="file"
                     name="aboutImage"
                     onChange={imageUpload}
                     accept=".webp"
                     ref={fileInputRef}
-                />
+                    disabled={!isEditable}
+                />}
 
-                <MyImage src="Chandan_Kumar.webp" blobImg={blobImage} />
+                <MyImage src={aboutImage} blobImg={blobImage} />
 
             </div>
 
-            <ProfileInfo bio={bio} />
+            <div className="profile-info">
+                <div className={`input-group textarea-group ${isEditable ? "inner-shadow" : "outer-shadow"}`}>
+                    <Editor content={bio} setContent={setBio} isEditable={isEditable} />
+                </div>
+
+                <UpdateBtn label='Update Profile' />
+            </div>
         </div>
     );
 }

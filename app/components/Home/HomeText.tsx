@@ -1,7 +1,6 @@
 import { Button } from "..";
 
 export default function HomeText({ name, roles }: { name: string, roles: string[] }) {
-    console.log();
     return (
         <div className="home-text">
 

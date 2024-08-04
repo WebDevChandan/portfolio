@@ -1,71 +1,50 @@
 "use client";
 import { ChangeEvent, useContext, useState } from 'react';
 import { EditableContext } from '../../context/EditableProvider';
+import { ProfileContext } from '../../context/ProfileProvider';
 
-export default function Skills() {
+type SkillsType = {
+    name: string;
+    level: string;
+}[];
+
+export default function Skills({ skillsProp }: { skillsProp: SkillsType }) {
     const { isEditable } = useContext(EditableContext);
 
-    const [rangeValues, setRangeValues] = useState({
-        html: 90,
-        css: 60,
-        js: 70,
-    });
+    const [skillsRangeValues, setSkillsRangeValues] = useState<SkillsType>(skillsProp);
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>, skill: string) => {
-        setRangeValues({
-            ...rangeValues,
-            [skill]: parseInt(e.target.value, 10),
-        });
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setSkillsRangeValues((skills) =>
+            skills.map((skill) =>
+                skill.name.toLocaleLowerCase() === event.target.name.toLocaleLowerCase()
+                    ? { ...skill, level: event.target.value }
+                    : skill
+            )
+        )
     };
-
 
     return (
         <div className="row">
-            <div className="skill-item">
-                <p>HTML</p>
-                <div className="range-container inner-shadow">
-                    <input
-                        type="range"
-                        className={`range-bar ${!isEditable ? "disabled" : ""}`}
-                        min={0} max={100}
-                        value={rangeValues.html}
-                        onChange={(e) => handleChange(e, "html")}
-                        name='html'
-                        disabled={!isEditable}
-                    />
-                    <span>{`${rangeValues.html}%`}</span>
-                </div>
-            </div>
-            <div className="skill-item">
-                <p>CSS</p>
-                <div className="range-container inner-shadow">
-                    <input
-                        type="range"
-                        className={`range-bar ${!isEditable ? "disabled" : ""}`}
-                        min={0} max={100}
-                        value={rangeValues.css}
-                        onChange={(e) => handleChange(e, "css")}
-                        name='css'
-                        disabled={!isEditable}
-                    />
-                    <span>{`${rangeValues.css}%`}</span>
-                </div>
-            </div>
-            <div className="skill-item">
-                <p>JS</p>
-                <div className="range-container inner-shadow">
-                    <input
-                        type="range"
-                        className={`range-bar ${!isEditable ? "disabled" : ""}`}
-                        min={0} max={100}
-                        value={rangeValues.js}
-                        onChange={(e) => handleChange(e, "js")}
-                        name='js'
-                        disabled={!isEditable}
-                    />
-                    <span>{`${rangeValues.js}%`}</span>
-                </div>
-            </div>
+            {
+                skillsRangeValues.map(({ name, level }) => (
+                    <div className="skill-item" key={name}>
+                        <p>{name}</p>
+                        <div className="range-container inner-shadow">
+                            <input
+                                type="range"
+                                className={`range-bar ${!isEditable ? "disabled" : ""}`}
+                                min={0} max={100}
+                                value={level}
+                                onChange={handleChange}
+                                name={name}
+                                disabled={!isEditable}
+                            />
+                            <span className={!isEditable ? "disabled" : ""}>{`${level}%`}</span>
+                        </div>
+                    </div>
+                ))
+            }
+
         </div>
     )
 }

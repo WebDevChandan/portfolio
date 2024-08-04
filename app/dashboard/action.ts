@@ -1,6 +1,7 @@
 'use server'
 
 export async function updateProfile(formData: FormData) {
+   try {
     const rawFormData = {
         bio: formData.get('bio') as string | null,
         github: formData.get('github') as string | null,
@@ -12,4 +13,8 @@ export async function updateProfile(formData: FormData) {
 
     // console.log(rawFormData.file?.name); // Retrieve and log the file name
     console.log(formData);
+    
+   } catch (error) {
+        console.log(error);
+   }
 }

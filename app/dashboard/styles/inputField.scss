@@ -9,6 +9,10 @@
     padding: 0 15px;
     color: var(--text-black-700);
 
+    &:disabled {
+        color: var(--text-disabled);
+    }
+
     @if $inputField {
         padding-left: 45px;
     }
@@ -58,6 +62,15 @@
 
 }
 
+.input-group.disabled {
+    background: var(--bg-disabled);
+
+    svg {
+        color: var(--text-disabled);
+        cursor: auto;
+    }
+}
+
 .textarea-group {
     height: 80%;
     border-radius: 5px;
@@ -65,90 +78,4 @@
     &::after {
         border-radius: 5px;
     }
-}
-
-.text-editor {
-    width: 100%;
-    height: 100%;
-    padding: 5px 5px;
-    outline: none;
-    border: none;
-    font-size: 18px;
-    color: var(--text-black-600);
-    
-    >ol,
-    ul {
-        margin-left: 40px;
-    }
-
-    ol{
-        list-style-type: decimal;
-    }
-    ul{
-        list-style-type: disc;
-    }
-    
-    u {
-        text-decoration: underline;
-    }
-
-    code {
-        font-size: 16px;
-        background: var(--bg-black-100);
-        border-radius: 2px;
-        padding: 0px 4px;
-    }
-
-    hr {
-        margin-bottom: 5px;
-    }
-
-    a {
-        color: var(--skin-color);
-        text-decoration: underline;
-    }
-
-    h2>strong,
-    h3>strong {
-        font-weight: 600;
-    }
-}
-
-.toolbar-container {
-    width: 100%;
-    padding: 5px 0px 10px;
-    position: relative;
-
-    .toolbar {
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        gap: 10px;
-
-        svg {
-            outline: none;
-            border: none;
-            background: no-repeat;
-            font-size: 25px;
-            cursor: pointer;
-            color: var(--skin-color);
-
-            &.active {
-                border: 1px solid #80808091;
-                border-radius: 5px;
-            }
-        }
-    }
-
-    // &::after {
-    //     content: '';
-    //     position: absolute;
-    //     bottom: 2px;
-    //     left: 50%;
-    //     transform: translateX(-50%);
-    //     width: 100%;
-    //     height: 0.1px;
-    //     z-index: -1;
-    //     box-shadow: 0px 4px 20px 20px rgb(0 0 0 / 1%), 0 2px 3px 0px rgb(0 0 0 / 25%);
-    // }
 }

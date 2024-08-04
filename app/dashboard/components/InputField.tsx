@@ -10,10 +10,9 @@ type InputFieldType = {
     value: string,
     isTextArea: boolean,
     handleChangeInput?: (e: ChangeEvent<HTMLInputElement>) => void;
-    handleChangeText?: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-export default function InputField({ label, icon, value, isTextArea, handleChangeText = () => { }, handleChangeInput = () => { } }: InputFieldType) {
+export default function InputField({ label, icon, value, handleChangeInput = () => { } }: InputFieldType) {
     const { isEditable } = useContext(EditableContext);
 
     return (
@@ -23,10 +22,10 @@ export default function InputField({ label, icon, value, isTextArea, handleChang
                     <label htmlFor={label?.toLocaleLowerCase()}>{label}</label>
                 </div>}
 
-            <div className={`input-group outer-shadow ${isEditable ? "hover-in-shadow" : ""}${isTextArea ? "textarea-group" : ""}`}>
+            <div className={`input-group outer-shadow ${isEditable ? "hover-in-shadow" : "disabled"}`}>
                 {icon && <span className="fa fa-lock">{icon}</span>}
 
-                {!isTextArea && <input
+                <input
                     className="input-control"
                     autoComplete="off"
                     id={label?.toLocaleLowerCase()}
@@ -36,22 +35,7 @@ export default function InputField({ label, icon, value, isTextArea, handleChang
                     onChange={(e) => handleChangeInput(e)}
                     readOnly={!isEditable}
                     disabled={!isEditable}
-                />}
-
-                {/* {isTextArea && <textarea
-                    className="textarea-control"
-                    autoComplete="off"
-                    value={value}
-                    name="bio"
-                    onChange={(e) => handleChangeText(e)}
-                    readOnly={!isEditable}
-                    disabled={!isEditable}
-                />} */}
-
-                {
-                    isTextArea &&
-                    <Editor />
-                }
+                />
             </div>
         </>
     )

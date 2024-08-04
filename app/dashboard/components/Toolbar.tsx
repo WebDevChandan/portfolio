@@ -15,7 +15,7 @@ type ToolbarType = {
 }
 
 export default function Toolbar({ editor }: ToolbarType) {
-    
+
     const setLink = useCallback(() => {
         if (!editor)
             return null;
@@ -23,19 +23,19 @@ export default function Toolbar({ editor }: ToolbarType) {
         const url = window.prompt('URL', previousUrl);
 
         // cancelled
-        // if (url === null) {
-        //     return;
-        // }
+        if (url === null) {
+            return;
+        }
 
-        // // empty
-        // if (url === '') {
-        //     editor.chain().focus().extendMarkRange('link').unsetLink().run();
+        // empty
+        if (url === '') {
+            editor.chain().focus().extendMarkRange('link').unsetLink().run();
 
-        //     return;
-        // }
+            return;
+        }
 
-        // // update link
-        // editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+        // update link
+        editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
 
     }, [editor]);
 
@@ -114,20 +114,20 @@ export default function Toolbar({ editor }: ToolbarType) {
         return null;
 
     return (
-        <div className="toolbar-container outer-shadow">
+        <div className={`toolbar-container ${editor.isEditable ? "inner-shadow" : "outer-shadow disabled"}`}>
             <div className="toolbar">
                 <MdFormatBold
-                    className={editor.isActive("bold") ? "active" : ""}
+                    className={editor.isActive("bold") && editor.isEditable ? "active" : ""}
                     onClick={(e) => handleToolBar(e, "bold")}
                 />
 
                 <MdFormatUnderlined
-                    className={editor.isActive("underline") ? "active" : ""}
+                    className={editor.isActive("underline") && editor.isEditable ? "active" : ""}
                     onClick={(e) => handleToolBar(e, "underline")}
                 />
 
                 <FaLink
-                    className={editor.isActive("link") ? "active" : ""}
+                    className={editor.isActive("link") && editor.isEditable ? "active" : ""}
                     onClick={(e) => {
                         e.preventDefault();
                         setLink();
@@ -135,66 +135,66 @@ export default function Toolbar({ editor }: ToolbarType) {
                 />
 
                 <MdFormatItalic
-                    className={editor.isActive("italic") ? "active" : ""}
+                    className={editor.isActive("italic") && editor.isEditable ? "active" : ""}
                     onClick={(e) => handleToolBar(e, "italic")}
                 />
 
                 <GoListOrdered
-                    className={editor.isActive("orderedList") ? "active" : ""}
+                    className={editor.isActive("orderedList") && editor.isEditable ? "active" : ""}
                     onClick={(e) => handleToolBar(e, "orderedList")}
                 />
 
                 <GoListUnordered
-                    className={editor.isActive("bulletList") ? "active" : ""}
+                    className={editor.isActive("bulletList") && editor.isEditable ? "active" : ""}
                     onClick={(e) => handleToolBar(e, "bulletList")}
                 />
 
                 <MdCode
-                    className={editor.isActive("code") ? "active" : ""}
+                    className={editor.isActive("code") && editor.isEditable ? "active" : ""}
                     onClick={(e) => handleToolBar(e, "code")}
                 />
 
                 <LiaMarkerSolid
-                    className={editor.isActive("mark") ? "active" : ""}
+                    className={editor.isActive("mark") && editor.isEditable ? "active" : ""}
                     onClick={(e) => handleToolBar(e, "mark")}
                 />
 
 
                 <CiTextAlignLeft
-                    className={editor.isActive({ textAlign: "left" }) ? "active" : ""}
+                    className={editor.isActive({ textAlign: "left" }) && editor.isEditable ? "active" : ""}
                     onClick={(e) => handleToolBar(e, "textAlignLeft")}
                 />
 
                 <CiTextAlignJustify
-                    className={editor.isActive({ textAlign: "center" }) ? "active" : ""}
+                    className={editor.isActive({ textAlign: "center" }) && editor.isEditable ? "active" : ""}
                     onClick={(e) => handleToolBar(e, "textAlignCenter")}
                 />
                 <CiTextAlignRight
-                    className={editor.isActive({ textAlign: "right" }) ? "active" : ""}
+                    className={editor.isActive({ textAlign: "right" }) && editor.isEditable ? "active" : ""}
                     onClick={(e) => handleToolBar(e, "textAlignRight")}
                 />
 
                 <BiUndo
-                    className={editor.isActive("undo") ? "active" : ""}
+                    className={editor.isActive("undo") && editor.isEditable ? "active" : ""}
                     onClick={(e) => handleToolBar(e, "undo")}
                 />
 
                 <BiRedo
-                    className={editor.isActive("redo") ? "active" : ""}
+                    className={editor.isActive("redo") && editor.isEditable ? "active" : ""}
                     onClick={(e) => handleToolBar(e, "redo")}
                 />
 
                 <MdOutlineHorizontalRule
-                    className={editor.isActive("horizontalRule") ? "active" : ""}
+                    className={editor.isActive("horizontalRule") && editor.isEditable ? "active" : ""}
                     onClick={(e) => handleToolBar(e, "horizontalRule")}
                 />
                 <LuHeading2
-                    className={editor.isActive('heading', { level: 2 }) ? "active" : ""}
+                    className={editor.isActive('heading', { level: 2 }) && editor.isEditable ? "active" : ""}
                     onClick={(e) => handleToolBar(e, "heading2")}
                 />
 
                 <LuHeading3
-                    className={editor.isActive('heading', { level: 3 }) ? "active" : ""}
+                    className={editor.isActive('heading', { level: 3 }) && editor.isEditable ? "active" : ""}
                     onClick={(e) => handleToolBar(e, "heading3")}
                 />
             </div>
