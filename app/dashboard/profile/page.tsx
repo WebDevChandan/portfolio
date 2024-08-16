@@ -1,5 +1,5 @@
 import { Title } from '@/app/components';
-import { updateProfile } from '../action';
+import { updateProfile } from '../server/action';
 import { SubSectionTitle } from '../components';
 import EditableProvider from '../context/EditableProvider';
 import { MainProfile, ProfileForm, Skills, SocialLinks } from './components';

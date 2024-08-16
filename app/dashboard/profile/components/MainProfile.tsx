@@ -11,9 +11,8 @@ import Editor from "../../components/Editor";
 type MainProfileType = {
     aboutImage: string,
     bio: string,
-    setBio: Dispatch<SetStateAction<string>>,
 }
-export default function MainProfile({ aboutImage, bio, setBio }: MainProfileType) {
+export default function MainProfile({ aboutImage, bio }: MainProfileType) {
     const { isEditable, setIsEditable } = useContext(EditableContext);
 
     const [blobImage, setBlogImage] = useState<string | null>(null);
@@ -51,7 +50,6 @@ export default function MainProfile({ aboutImage, bio, setBio }: MainProfileType
 
     const imageRemove = () => {
         setBlogImage(null);
-        setIsEditable(false);
 
         if (fileInputRef.current)
             fileInputRef.current.value = "";
@@ -71,14 +69,14 @@ export default function MainProfile({ aboutImage, bio, setBio }: MainProfileType
 
                 {isEditable && <ImPencil onClick={triggerFileInput} id="uploadImage" />}
 
-                {isEditable && <input
+                <input
                     type="file"
                     name="aboutImage"
                     onChange={imageUpload}
                     accept=".webp"
                     ref={fileInputRef}
                     disabled={!isEditable}
-                />}
+                />
 
                 <MyImage src={aboutImage} blobImg={blobImage} />
 
@@ -86,7 +84,7 @@ export default function MainProfile({ aboutImage, bio, setBio }: MainProfileType
 
             <div className="profile-info">
                 <div className={`input-group textarea-group ${isEditable ? "inner-shadow" : "outer-shadow"}`}>
-                    <Editor content={bio} setContent={setBio} isEditable={isEditable} />
+                    <Editor content={bio} isEditable={isEditable} />
                 </div>
 
                 <UpdateBtn label='Update Profile' />

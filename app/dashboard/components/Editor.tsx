@@ -1,7 +1,7 @@
 "use client";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import Toolbar from "./Toolbar";
 import Link from "@tiptap/extension-link";
 import Highlight from "@tiptap/extension-highlight";
@@ -11,12 +11,12 @@ import '../styles/Editor.scss';
 
 type EditorContentType = {
     content: string,
-    setContent: Dispatch<SetStateAction<string>>,
     isEditable: boolean,
 }
 
-export default function Editor({ content, setContent, isEditable }: EditorContentType) {
-console.log(content);
+export default function Editor({ content, isEditable }: EditorContentType) {
+    const [editorContent, setEditorContent] = useState(content);
+
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -43,9 +43,9 @@ console.log(content);
                 spellcheck: "false"
             },
         },
-        content: `${content}`,
+        content: `${editorContent}`,
         immediatelyRender: false,
-        onUpdate: ({ editor }) => { editor.isEditable ? setContent(editor.getHTML()) : null },
+        onBlur: ({ editor }) => { editor.isEditable ? setEditorContent(editor.getHTML()) : null },
         editable: false,
         autofocus: false,
     })
@@ -56,7 +56,6 @@ console.log(content);
             <Toolbar editor={editor} />
             <EditorContent
                 editor={editor}
-                // onChange={() => setContent(content)}
                 style={{
                     whiteSpace: "pre-line",
                     width: "100%",
@@ -65,9 +64,7 @@ console.log(content);
                     position: "absolute",
                 }} />
 
-            {/* {editor && <div className="char-count">
-        <p className="count">Character Count: {editor.getCharacterCount()}</p>
-        </div>} */}
+            <input type="text" name="editor" id="editor-text-area" defaultValue={editorContent} hidden />
         </>
     )
 }

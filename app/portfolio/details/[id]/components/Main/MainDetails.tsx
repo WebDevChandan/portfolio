@@ -3,7 +3,6 @@ import { Suspense, useState } from 'react';
 import { FaPlay } from 'react-icons/fa';
 import { LiveBtn, ProjectDetailsCloseBtn, ProjectDetailsOpenBtn, ScreenshotsBtn, WebFrame } from '..';
 import { LargeImage } from '@/app/certificate/details/[id]/components';
-import Loading from '../../loading';
 
 export default function MainDetails({ src, altText, titleText, webFrameLink }: {
     src: string[];

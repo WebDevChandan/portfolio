@@ -94,3 +94,8 @@
         cursor: auto;
     }
 }
+
+#editor-text-area {
+    display: none;
+    pointer-events: none;
+}

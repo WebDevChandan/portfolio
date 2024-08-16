@@ -1,38 +1,30 @@
-"use client";
-import { useContext, useState } from "react";
-import { updateProfile } from "../../action";
+import { updateProfile } from "../../server/action";
 import { SubSectionTitle } from "../../components";
+import { ProfileType } from "../page";
 import MainProfile from "./MainProfile";
 import Skills from "./Skills";
 import SocialLinks from "./SocialLinks";
-import { ProfileType } from "../page";
-import ProfileProvider, { ProfileContext } from "../../context/ProfileProvider";
 
 function ProfileForm({ profileData }: { profileData: ProfileType }) {
-    const [editorContent, setEditorContent] = useState(profileData ? profileData?.about : "");
-
+    const updateProfileData = updateProfile.bind(null, profileData);
     return (
-        <form action={updateProfile}>
-
-            {profileData &&
+        <form action={updateProfileData}>
+            {profileData && (
                 <>
                     <MainProfile
                         aboutImage={profileData?.myImages[1]}
-                        bio={editorContent}
-                        setBio={setEditorContent}
+                        bio={profileData ? profileData?.about : " "}
                     />
 
-                    <SubSectionTitle title='Social Links' />
+                    <SubSectionTitle title="Social Links" />
                     <SocialLinks socialLinksProp={profileData.socialLinks} />
 
-                    <SubSectionTitle title='Skills' />
+                    <SubSectionTitle title="Skills" />
                     <Skills skillsProp={profileData.skills} />
-
                 </>
-            }
-
+            )}
         </form>
-    )
+    );
 }
 
-export default ProfileForm
+export default ProfileForm;

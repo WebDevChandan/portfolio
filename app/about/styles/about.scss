@@ -73,11 +73,16 @@
     max-width: 60%;
     padding: 0 15px;
 
+    .para,
     p {
-        font-size: 16px;
-        line-height: 26px;
+        font-size: 18px;
+        line-height: 1.7;
         margin-bottom: 15px;
         color: var(--text-black-600);
+
+        a {
+            color: var(--skin-color);
+        }
     }
 
     .portfolioPage {

@@ -18,7 +18,7 @@ const fetchHomeDetails = async (): Promise<HomeDataType | null> => {
         roles: true,
       }
     });
-
+ 
     return homeData;
 
   } catch (error) {

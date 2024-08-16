@@ -16,8 +16,8 @@ export default function page() {
                 <Logo />
               </div>
               <h2 className="text">Admin Login</h2>
+              <ToastContainer />
               <AuthContext>
-                <ToastContainer />
                 <AuthForm />
               </AuthContext>
             </div>

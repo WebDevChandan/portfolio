@@ -53,7 +53,7 @@ export default function SocialLinks({ socialLinksProp }: { socialLinksProp: Soci
                         label={label}
                         icon={socialIcons.find(icon => icon.label === label.toLocaleLowerCase())?.icon}
                         value={link}
-                        isTextArea={false}
+                        // specificName="social"
                         handleChangeInput={handleChange} />
                 </div>
             ))}

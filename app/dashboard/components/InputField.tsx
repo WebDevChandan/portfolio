@@ -8,11 +8,11 @@ type InputFieldType = {
     label?: string,
     icon?: ReactElement<IconType>,
     value: string,
-    isTextArea: boolean,
+    specificName?: string,
     handleChangeInput?: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-export default function InputField({ label, icon, value, handleChangeInput = () => { } }: InputFieldType) {
+export default function InputField({ label, icon, value, specificName, handleChangeInput = () => { } }: InputFieldType) {
     const { isEditable } = useContext(EditableContext);
 
     return (
@@ -30,7 +30,7 @@ export default function InputField({ label, icon, value, handleChangeInput = () 
                     autoComplete="off"
                     id={label?.toLocaleLowerCase()}
                     style={!icon ? { paddingLeft: "15px" } : { paddingLeft: "45px" }}
-                    name={label?.toLocaleLowerCase()}
+                    name={specificName ? specificName : label?.toLocaleLowerCase()}
                     defaultValue={value}
                     onChange={(e) => handleChangeInput(e)}
                     readOnly={!isEditable}

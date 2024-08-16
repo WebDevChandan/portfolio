@@ -9,7 +9,6 @@ type mainDetailsType = {
 
 export default function MainDetails({ mainDetails }: { mainDetails: mainDetailsType }) {
 
-
     return (
         <div className="cp-main-inner">
             <CertificateDetailsOpenBtn />

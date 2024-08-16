@@ -5,10 +5,10 @@ import React from 'react'
 export default function AboutMe({ info }: { info: string | TrustedHTML }) {
     return (
         <div className="about-info">
-            <p dangerouslySetInnerHTML={{ __html: info }} />
-            <p>
-                Remotely available UTC-1 to UTC+05:30.
-                <Link href="mailto:hirechandan@gmail.com" className="email">hirechandan@gmail.com</Link>
+            <div dangerouslySetInnerHTML={{ __html: info }} className='para' />
+            <p className='para'>
+                Remotely available UTC-1 to UTC+05:30 -
+                <Link href="mailto:hirechandan@gmail.com" className="email"> hirechandan@gmail.com</Link>
             </p>
 
             <Button href="resume/myResume.pdf" label="Download Resume" target="_blank" />

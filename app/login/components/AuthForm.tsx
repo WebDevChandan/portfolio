@@ -2,12 +2,11 @@
 import { AuthenticationContext } from "@/app/context/AuthContext";
 import useAuth from "@/app/hook/useAuth";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, MouseEventHandler, useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { FaLock, FaUser } from "react-icons/fa";
-import { toast } from "react-toastify";
 
 export default function AuthForm() {
-    const { loading, data, error } = useContext(AuthenticationContext);
+    const { loading, data } = useContext(AuthenticationContext);
     const [inputs, setInputs] = useState({
         email: "",
         password: "",
@@ -35,9 +34,11 @@ export default function AuthForm() {
 
     const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
+        setDisabled(true);
 
         await logIn({ email: inputs.email, password: inputs.password });
 
+        setDisabled(false);
     }
 
     return (

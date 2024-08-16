@@ -38,8 +38,8 @@ export default async function Skill() {
                     <div className="skill-item" key={index}>
                         <p>{name}</p>
                         <div className="progress inner-shadow">
-                            <div className="progress-bar" style={{ width: `calc(${level} - 14px)` }}>
-                                <span>{level}</span>
+                            <div className="progress-bar" style={{ width: `calc(${level}% - 14px)` }}>
+                                <span>{level}%</span>
                             </div>
                         </div>
                     </div>

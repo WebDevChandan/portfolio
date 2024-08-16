@@ -118,17 +118,17 @@ export default function Toolbar({ editor }: ToolbarType) {
             <div className="toolbar">
                 <MdFormatBold
                     className={editor.isActive("bold") && editor.isEditable ? "active" : ""}
-                    onClick={(e) => handleToolBar(e, "bold")}
+                    onClick={(e: React.MouseEvent<HTMLOrSVGElement>) => handleToolBar(e, "bold")}
                 />
 
                 <MdFormatUnderlined
                     className={editor.isActive("underline") && editor.isEditable ? "active" : ""}
-                    onClick={(e) => handleToolBar(e, "underline")}
+                    onClick={(e: React.MouseEvent<HTMLOrSVGElement>) => handleToolBar(e, "underline")}
                 />
 
                 <FaLink
                     className={editor.isActive("link") && editor.isEditable ? "active" : ""}
-                    onClick={(e) => {
+                    onClick={(e: React.MouseEvent<HTMLOrSVGElement>) => {
                         e.preventDefault();
                         setLink();
                     }}
@@ -136,66 +136,66 @@ export default function Toolbar({ editor }: ToolbarType) {
 
                 <MdFormatItalic
                     className={editor.isActive("italic") && editor.isEditable ? "active" : ""}
-                    onClick={(e) => handleToolBar(e, "italic")}
+                    onClick={(e: React.MouseEvent<HTMLOrSVGElement>) => handleToolBar(e, "italic")}
                 />
 
                 <GoListOrdered
                     className={editor.isActive("orderedList") && editor.isEditable ? "active" : ""}
-                    onClick={(e) => handleToolBar(e, "orderedList")}
+                    onClick={(e: React.MouseEvent<HTMLOrSVGElement>) => handleToolBar(e, "orderedList")}
                 />
 
                 <GoListUnordered
                     className={editor.isActive("bulletList") && editor.isEditable ? "active" : ""}
-                    onClick={(e) => handleToolBar(e, "bulletList")}
+                    onClick={(e: React.MouseEvent<HTMLOrSVGElement>) => handleToolBar(e, "bulletList")}
                 />
 
                 <MdCode
                     className={editor.isActive("code") && editor.isEditable ? "active" : ""}
-                    onClick={(e) => handleToolBar(e, "code")}
+                    onClick={(e: React.MouseEvent<HTMLOrSVGElement>) => handleToolBar(e, "code")}
                 />
 
                 <LiaMarkerSolid
                     className={editor.isActive("mark") && editor.isEditable ? "active" : ""}
-                    onClick={(e) => handleToolBar(e, "mark")}
+                    onClick={(e: React.MouseEvent<HTMLOrSVGElement>) => handleToolBar(e, "mark")}
                 />
 
 
                 <CiTextAlignLeft
                     className={editor.isActive({ textAlign: "left" }) && editor.isEditable ? "active" : ""}
-                    onClick={(e) => handleToolBar(e, "textAlignLeft")}
+                    onClick={(e: React.MouseEvent<HTMLOrSVGElement>) => handleToolBar(e, "textAlignLeft")}
                 />
 
                 <CiTextAlignJustify
                     className={editor.isActive({ textAlign: "center" }) && editor.isEditable ? "active" : ""}
-                    onClick={(e) => handleToolBar(e, "textAlignCenter")}
+                    onClick={(e: React.MouseEvent<HTMLOrSVGElement>) => handleToolBar(e, "textAlignCenter")}
                 />
                 <CiTextAlignRight
                     className={editor.isActive({ textAlign: "right" }) && editor.isEditable ? "active" : ""}
-                    onClick={(e) => handleToolBar(e, "textAlignRight")}
+                    onClick={(e: React.MouseEvent<HTMLOrSVGElement>) => handleToolBar(e, "textAlignRight")}
                 />
 
                 <BiUndo
                     className={editor.isActive("undo") && editor.isEditable ? "active" : ""}
-                    onClick={(e) => handleToolBar(e, "undo")}
+                    onClick={(e: React.MouseEvent<HTMLOrSVGElement>) => handleToolBar(e, "undo")}
                 />
 
                 <BiRedo
                     className={editor.isActive("redo") && editor.isEditable ? "active" : ""}
-                    onClick={(e) => handleToolBar(e, "redo")}
+                    onClick={(e: React.MouseEvent<HTMLOrSVGElement>) => handleToolBar(e, "redo")}
                 />
 
                 <MdOutlineHorizontalRule
                     className={editor.isActive("horizontalRule") && editor.isEditable ? "active" : ""}
-                    onClick={(e) => handleToolBar(e, "horizontalRule")}
+                    onClick={(e: React.MouseEvent<HTMLOrSVGElement>) => handleToolBar(e, "horizontalRule")}
                 />
                 <LuHeading2
                     className={editor.isActive('heading', { level: 2 }) && editor.isEditable ? "active" : ""}
-                    onClick={(e) => handleToolBar(e, "heading2")}
+                    onClick={(e: React.MouseEvent<HTMLOrSVGElement>) => handleToolBar(e, "heading2")}
                 />
 
                 <LuHeading3
                     className={editor.isActive('heading', { level: 3 }) && editor.isEditable ? "active" : ""}
-                    onClick={(e) => handleToolBar(e, "heading3")}
+                    onClick={(e: React.MouseEvent<HTMLOrSVGElement>) => handleToolBar(e, "heading3")}
                 />
             </div>
         </div>
