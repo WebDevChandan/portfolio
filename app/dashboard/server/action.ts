@@ -1,53 +1,62 @@
-'use server'
+'use server';
 import axios from "axios";
+import DOMPurify from "isomorphic-dompurify";
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 import { ProfileType } from "../profile/page";
 import { getUpdatedData } from "./getUpdatedData";
-import { cookies, headers } from "next/headers";
-import { getCookie } from "cookies-next";
-import { revalidatePath } from "next/cache";
+import { uploadImage } from "./uploadImage";
 
-// file: formData.get('aboutImage') instanceof File ? formData.get('aboutImage') as File : null
 export async function updateProfile(prevProfileData: ProfileType | null, formData: FormData) {
     if (!prevProfileData)
         return;
 
-    try {
-        const currentProfileData = {
-            myImages: [] as string[],
-            about: '',
-            socialLinks: [] as { label: string; link: string }[],
-            skills: [] as { name: string; level: string }[],
-        };
+    const currentProfileData = {
+        myImages: [] as string[],
+        about: '',
+        socialLinks: [] as { label: string; link: string }[],
+        skills: [] as { name: string; level: string }[],
+    };
 
-        formData.forEach((value, key) => {
+    try {
+        for (const [key, value] of Array.from(formData.entries())) {
             if (key === 'aboutImage' && value instanceof File) {
-                if (value.name !== 'undefined')
-                    currentProfileData.myImages = [prevProfileData.myImages[0], value.name];                    //First image is Home Page Image.
-                else
-                    currentProfileData.myImages = [prevProfileData.myImages[0], prevProfileData.myImages[1]];
+                if (value.name !== 'undefined') {                   //Only enter if any image uploaded
+                    const myImageConfig = {
+                        folderName: "myImages",
+                        width: 405,
+                        height: 405,
+                    }
+
+                    const { secure_url } = await uploadImage(value, myImageConfig) as { secure_url: string };
+                    currentProfileData.myImages = [prevProfileData.myImages[0] ? prevProfileData.myImages[0] : secure_url, secure_url];
+
+                } else
+                    currentProfileData.myImages = [...prevProfileData.myImages];
 
             } else if (key === 'editor') {
-                currentProfileData.about = value as string;
+                currentProfileData.about = DOMPurify.sanitize(value.toString());
 
-            } else if (['linkedin', 'github', 'leetcode', 'twitter'].includes(key)) {
+            } else if (prevProfileData.socialLinks.some(sl => sl.label.toLocaleLowerCase() === key.toLocaleLowerCase())) {
                 currentProfileData.socialLinks.push({ label: key, link: value as string });
 
             } else if (!key.startsWith('$ACTION')) {
                 currentProfileData.skills.push({ name: key, level: value as string });
             }
-        });
+        }
 
+        //Return Only Changed Data that will need to be updated
         const updatedData = getUpdatedData(prevProfileData, currentProfileData);
+
+        // console.log('Previous Data:', prevProfileData.myImages);
+
+        // console.log('Current Data:', currentProfileData);
+
+        // console.log('UpdatedData', updatedData);
 
         if (!Object.keys(updatedData).length)
             return console.log('There are no updates');
         else {
-            // console.log('Previous Data:', prevProfileData.about);
-
-            // console.log('Current Data:', currentProfileData.about);
-
-            // console.log('UpdatedData', updatedData);
-
             const jwtToken = cookies().get('jwt');
 
             const response = await axios.put(`${process.env.NEXT_PUBLIC_URL}/api/dashboard/profile/update`, {
@@ -58,8 +67,8 @@ export async function updateProfile(prevProfileData: ProfileType | null, formDat
                 },
             });
 
+            revalidatePath('/dashboard/profile');
             console.log('Response:', response.data.successMessage);
-            revalidatePath(`${process.env.NEXT_PUBLIC_URL}/about`);
         }
 
     } catch (error) {

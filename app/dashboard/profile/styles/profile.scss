@@ -26,7 +26,7 @@
         top: 20px;
         right: 35px;
         cursor: pointer;
-        color: var(--skin-color);
+        color: rgb(128, 128, 128);
         font-size: 20px;
     }
 
@@ -119,6 +119,7 @@
             &.disabled {
                 cursor: not-allowed;
                 background: var(--text-disabled);
+                pointer-events: none;
                 &::-webkit-slider-thumb{
                     background: var(--text-disabled);
                 }

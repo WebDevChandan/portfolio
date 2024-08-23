@@ -1,21 +1,33 @@
 "use client";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Toolbar from "./Toolbar";
 import Link from "@tiptap/extension-link";
 import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
 import '../styles/Editor.scss';
+import DOMPurify from "isomorphic-dompurify";
 
 type EditorContentType = {
     content: string,
     isEditable: boolean,
+    isUpdateable: boolean,
+    setIsUpdateable: Dispatch<SetStateAction<boolean>>
 }
 
-export default function Editor({ content, isEditable }: EditorContentType) {
-    const [editorContent, setEditorContent] = useState(content);
+export default function Editor({ content, isEditable, isUpdateable, setIsUpdateable }: EditorContentType) {
+    const sanitizedContent: string | TrustedHTML = DOMPurify.sanitize(content);
+    const [editorContent, setEditorContent] = useState(sanitizedContent);
+
+    useEffect(() => {
+        const hasContentChanged = editorContent !== sanitizedContent;
+
+        const hasContent = editorContent.length >= 30;
+
+        setIsUpdateable(hasContentChanged && hasContent);
+    }, [editorContent, sanitizedContent, setIsUpdateable]);
 
     const editor = useEditor({
         extensions: [
@@ -39,21 +51,27 @@ export default function Editor({ content, isEditable }: EditorContentType) {
         ],
         editorProps: {
             attributes: {
-                class: "text-editor",
+                class: 'text-editor',
                 spellcheck: "false"
             },
         },
         content: `${editorContent}`,
         immediatelyRender: false,
-        onBlur: ({ editor }) => { editor.isEditable ? setEditorContent(editor.getHTML()) : null },
+        onUpdate: ({ editor }) => { editor.isEditable ? setEditorContent(DOMPurify.sanitize(editor.getHTML())) : null },
         editable: false,
         autofocus: false,
     })
 
-    editor?.setEditable(isEditable);
+    useEffect(() => {
+        if (editor) {
+            editor.setEditable(isEditable);
+        }
+    }, [isEditable]);
+
     return (
-        <>
-            <Toolbar editor={editor} />
+        <div className={`textarea-group ${isEditable ? "inner-shadow" : "outer-shadow disabled"}`}>
+
+            <Toolbar editor={editor} isEditable={isEditable} />
             <EditorContent
                 editor={editor}
                 style={{
@@ -64,7 +82,14 @@ export default function Editor({ content, isEditable }: EditorContentType) {
                     position: "absolute",
                 }} />
 
-            <input type="text" name="editor" id="editor-text-area" defaultValue={editorContent} hidden />
-        </>
+            <input
+                type="hidden"
+                name="editor"
+                id="editor-text-area"
+                defaultValue={editorContent}
+                hidden
+                readOnly={!isEditable}
+                disabled={!isEditable && !isUpdateable} />
+        </div>
     )
 }

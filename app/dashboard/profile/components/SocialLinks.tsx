@@ -2,7 +2,8 @@
 import { FaFacebook, FaGithub, FaInstagram, FaLinkedinIn, FaTwitter, FaYoutube } from "react-icons/fa";
 import { InputField } from "../../components";
 import { SiLeetcode } from "react-icons/si";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useContext, useEffect, useState } from "react";
+import { EditableContext } from "../../context/EditableProvider";
 
 type SocialLinksType = {
     label: string;
@@ -10,7 +11,24 @@ type SocialLinksType = {
 }[]
 
 export default function SocialLinks({ socialLinksProp }: { socialLinksProp: SocialLinksType }) {
+    const { setIsUpdateable } = useContext(EditableContext);
+
     const [socialLinks, setSocialLinks] = useState<SocialLinksType>(socialLinksProp);
+    const [isValidLink, setIsValidLink] = useState<boolean>(true);
+
+
+    useEffect(() => {
+        const hasLinkChanged = socialLinks.some(({ label, link }) => {
+            const initialLink = socialLinksProp.find(sl => sl.label === label)?.link;
+            return link !== initialLink;
+        });
+
+        const isAllLinkValid = socialLinks.every(sl => sl.link.length >= 20);
+
+        setIsUpdateable(hasLinkChanged && isAllLinkValid);
+    }, [socialLinks, socialLinksProp]);
+
+
     const socialIcons = [{
         label: "linkedin",
         icon: <FaLinkedinIn />,

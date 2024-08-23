@@ -1,0 +1,10 @@
+.render-rich-text > p:not(:empty) {
+    font-size: 20px;
+    line-height: 1.7;
+    margin-bottom: 15px;
+    color: var(--text-black-600);
+
+    a {
+        color: var(--skin-color);
+    }
+}

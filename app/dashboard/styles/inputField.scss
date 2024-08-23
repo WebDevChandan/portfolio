@@ -9,8 +9,9 @@
     padding: 0 15px;
     color: var(--text-black-700);
 
-    &:disabled {
+    &.disabled {
         color: var(--text-disabled);
+        cursor: not-allowed;
     }
 
     @if $inputField {
@@ -23,6 +24,7 @@
 
     label {
         color: var(--text-black-600);
+        text-transform: capitalize;
     }
 }
 
@@ -64,18 +66,10 @@
 
 .input-group.disabled {
     background: var(--bg-disabled);
+    cursor: not-allowed;
 
     svg {
         color: var(--text-disabled);
         cursor: auto;
-    }
-}
-
-.textarea-group {
-    height: 80%;
-    border-radius: 5px;
-
-    &::after {
-        border-radius: 5px;
     }
 }

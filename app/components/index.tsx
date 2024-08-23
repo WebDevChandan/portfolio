@@ -15,7 +15,8 @@ import StyleSwitcher from "./StyleSwitcher/StyleSwitcher";
 import Title from "./Title";
 import WaveLoader from "./Loader/WaveLoader";
 import SpinLoader from "./Loader/SpinLoader";
+import RenderRichText from "./RenderRichText";
 
-export { ColorSwitcher, CopyrightText, Effects, HamburgerButton, Header, HomeText, Logo, MainMenuBar, MainMenuLinks, MyImage, SideMenuLinks, Sidebar, StyleSwitcher, Button, Title, WaveLoader, SpinLoader };
+export { ColorSwitcher, CopyrightText, Effects, HamburgerButton, Header, HomeText, Logo, MainMenuBar, MainMenuLinks, MyImage, SideMenuLinks, Sidebar, StyleSwitcher, Button, Title, WaveLoader, SpinLoader, RenderRichText };
 
 

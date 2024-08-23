@@ -4,7 +4,7 @@ import { useFormStatus } from "react-dom"
 import { EditableContext } from "../context/EditableProvider";
 
 export default function UpdateBtn({ label }: { label: string }) {
-    const { isEditable, setIsEditable } = useContext(EditableContext);
+    const { isEditable, setIsEditable, isUpdateable } = useContext(EditableContext);
     const { pending } = useFormStatus();
 
     const handleEdit = () => {
@@ -23,9 +23,17 @@ export default function UpdateBtn({ label }: { label: string }) {
             </button>
 
             <button
-                className={`btn-1 outer-shadow ${!isEditable ? "btn-disabled" : "hover-in-shadow"}`}
+                className={`btn-1 outer-shadow ${!isUpdateable ? "btn-disabled" : "hover-in-shadow"}`}
+                onClick={(e) => {
+                    const shouldSubmit = confirm(`Sure, Want to Update?`)
+                    if (!shouldSubmit) {
+                        e.preventDefault();
+                    } else {
+                        setIsEditable(false);
+                    }
+                }}
                 type='submit'
-                disabled={!isEditable}
+                disabled={!isUpdateable}
             >
                 {!pending ? label : "Updating..."}
             </button>

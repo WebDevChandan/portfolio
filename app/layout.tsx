@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { Header, MainMenuBar, Sidebar, StyleSwitcher } from './components';
 import './styles/globals.scss';
+import { raleway } from './server/font';
 
 export const metadata: Metadata = {
   title: 'WebDevChandan | Portfolio',
@@ -14,7 +15,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en" data-theme={previousThemeMode ? previousThemeMode : "light"}>
-      <body className={previousThemeColor ? previousThemeColor : ""}>
+      <body className={`${raleway.className} ${previousThemeColor ? previousThemeColor : ""}`}>
         <Header />
         <MainMenuBar />
         <Sidebar />

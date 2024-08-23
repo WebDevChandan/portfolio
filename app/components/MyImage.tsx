@@ -9,7 +9,7 @@ export default function MyImage({ src, blobImg }: MyImageType) {
     return (
         <div className="img-box inner-shadow">
             <Image
-                src={blobImg ? blobImg : `/img/${src}`}
+                src={blobImg ? blobImg : src ? `${src}`: `/img/Chandan_Kumar.webp`}
                 className="outer-shadow"
                 alt="Chandan Kumar"
                 width={405}

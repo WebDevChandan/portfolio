@@ -1,23 +1,29 @@
 "use client";
 import { MyImage } from "@/app/components";
-import { ChangeEvent, Dispatch, SetStateAction, useContext, useRef, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useRef, useState } from "react";
 import { ImPencil } from "react-icons/im";
 import { MdDelete } from "react-icons/md";
 import { Flip, toast } from "react-toastify";
-import { EditableContext } from "../../context/EditableProvider";
-import { InputField, UpdateBtn } from "../../components";
+import { UpdateBtn } from "../../components";
 import Editor from "../../components/Editor";
+import { EditableContext } from "../../context/EditableProvider";
 
 type MainProfileType = {
     aboutImage: string,
     bio: string,
 }
 export default function MainProfile({ aboutImage, bio }: MainProfileType) {
-    const { isEditable, setIsEditable } = useContext(EditableContext);
+    const { isEditable, setIsEditable, setIsUpdateable, isUpdateable } = useContext(EditableContext);
 
     const [blobImage, setBlogImage] = useState<string | null>(null);
 
     const fileInputRef = useRef<HTMLInputElement>(null);
+
+    useEffect(() => {
+        const hasImageChanged = blobImage !== null;
+
+        setIsUpdateable(hasImageChanged);
+    }, [blobImage, setIsUpdateable]);
 
     const imageUpload = (e: ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
@@ -65,7 +71,7 @@ export default function MainProfile({ aboutImage, bio }: MainProfileType) {
         <div className="row">
             <div className="profile-img">
 
-                {blobImage && isEditable && <MdDelete onClick={imageRemove} id="deleteImage" />}
+                {blobImage && (isEditable && isUpdateable) && <MdDelete onClick={imageRemove} id="deleteImage" />}
 
                 {isEditable && <ImPencil onClick={triggerFileInput} id="uploadImage" />}
 
@@ -75,7 +81,7 @@ export default function MainProfile({ aboutImage, bio }: MainProfileType) {
                     onChange={imageUpload}
                     accept=".webp"
                     ref={fileInputRef}
-                    disabled={!isEditable}
+                    disabled={!isEditable && !isUpdateable}
                 />
 
                 <MyImage src={aboutImage} blobImg={blobImage} />
@@ -83,9 +89,7 @@ export default function MainProfile({ aboutImage, bio }: MainProfileType) {
             </div>
 
             <div className="profile-info">
-                <div className={`input-group textarea-group ${isEditable ? "inner-shadow" : "outer-shadow"}`}>
-                    <Editor content={bio} isEditable={isEditable} />
-                </div>
+                <Editor content={bio} isEditable={isEditable} isUpdateable={isUpdateable} setIsUpdateable={setIsUpdateable} />
 
                 <UpdateBtn label='Update Profile' />
             </div>

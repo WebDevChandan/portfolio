@@ -1,20 +1,20 @@
 import { Editor } from "@tiptap/react";
 import { useCallback } from "react";
-import { BiHeading, BiRedo, BiUndo } from "react-icons/bi";
+import { BiRedo, BiUndo } from "react-icons/bi";
 import { CiTextAlignJustify, CiTextAlignLeft, CiTextAlignRight } from "react-icons/ci";
-import { FaHeading, FaItalic, FaLink, FaList, FaListOl, FaStrikethrough } from "react-icons/fa6";
+import { FaLink } from "react-icons/fa6";
 import { GoListOrdered, GoListUnordered } from "react-icons/go";
-import { ImParagraphJustify, ImParagraphLeft, ImParagraphRight } from "react-icons/im";
 import { LiaMarkerSolid } from "react-icons/lia";
-import { LuHeading1, LuHeading2, LuHeading3 } from "react-icons/lu";
-import { MdCode, MdFormatBold, MdFormatItalic, MdFormatQuote, MdFormatUnderlined, MdList, MdOutlineHorizontalRule, MdRedo, MdStrikethroughS, MdUndo } from "react-icons/md";
+import { LuHeading2, LuHeading3 } from "react-icons/lu";
+import { MdCode, MdFormatBold, MdFormatItalic, MdFormatUnderlined, MdOutlineHorizontalRule } from "react-icons/md";
 
 type ToolbarType = {
+
     editor: Editor | null,
-    // content: string,
+    isEditable: boolean,
 }
 
-export default function Toolbar({ editor }: ToolbarType) {
+export default function Toolbar({ editor, isEditable }: ToolbarType) {
 
     const setLink = useCallback(() => {
         if (!editor)
@@ -114,7 +114,7 @@ export default function Toolbar({ editor }: ToolbarType) {
         return null;
 
     return (
-        <div className={`toolbar-container ${editor.isEditable ? "inner-shadow" : "outer-shadow disabled"}`}>
+        <div className={`toolbar-container ${isEditable ? "inner-shadow" : "outer-shadow disabled"}`}>
             <div className="toolbar">
                 <MdFormatBold
                     className={editor.isActive("bold") && editor.isEditable ? "active" : ""}

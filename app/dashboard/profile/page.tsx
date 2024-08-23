@@ -1,10 +1,10 @@
 import { Title } from '@/app/components';
-import { updateProfile } from '../server/action';
+import prisma from '@/utils/prisma';
 import { SubSectionTitle } from '../components';
 import EditableProvider from '../context/EditableProvider';
-import { MainProfile, ProfileForm, Skills, SocialLinks } from './components';
+import { updateProfile } from '../server/action';
+import { MainProfile, Skills, SocialLinks } from './components';
 import './styles/profile.scss';
-import prisma from '@/utils/prisma';
 
 export type ProfileType = {
     myImages: string[];
@@ -40,11 +40,29 @@ const fetchProfileDetails = async (): Promise<ProfileType> => {
 
 const Profile = async () => {
     const profileData = await fetchProfileDetails();
+    const updateProfileData = updateProfile.bind(null, profileData);
 
     return (
         <EditableProvider>
             <Title title="Profile" subTitle="View or Edit Profile" />
-            {profileData && <ProfileForm profileData={profileData} />}
+            {profileData &&
+                <form action={updateProfileData}>
+                    {profileData && (
+                        <>
+                            <MainProfile
+                                aboutImage={profileData?.myImages[1]}
+                                bio={profileData ? profileData?.about : " "}
+                            />
+
+                            <SubSectionTitle title="Social Links" />
+                            <SocialLinks socialLinksProp={profileData.socialLinks} />
+
+                            <SubSectionTitle title="Skills" />
+                            <Skills skillsProp={profileData.skills} />
+                        </>
+                    )}
+                </form>
+            }
         </EditableProvider>
     )
 }

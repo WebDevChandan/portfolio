@@ -13,7 +13,7 @@ type InputFieldType = {
 }
 
 export default function InputField({ label, icon, value, specificName, handleChangeInput = () => { } }: InputFieldType) {
-    const { isEditable } = useContext(EditableContext);
+    const { isEditable, isUpdateable } = useContext(EditableContext);
 
     return (
         <>
@@ -26,15 +26,15 @@ export default function InputField({ label, icon, value, specificName, handleCha
                 {icon && <span className="fa fa-lock">{icon}</span>}
 
                 <input
-                    className="input-control"
+                    className={`input-control ${!isEditable ? "disabled" : ""}`}
                     autoComplete="off"
                     id={label?.toLocaleLowerCase()}
                     style={!icon ? { paddingLeft: "15px" } : { paddingLeft: "45px" }}
                     name={specificName ? specificName : label?.toLocaleLowerCase()}
                     defaultValue={value}
                     onChange={(e) => handleChangeInput(e)}
-                    readOnly={!isEditable}
-                    disabled={!isEditable}
+                    readOnly={!isEditable}         //Here, isEditable help in disabling in UI level (like adding .disabled class)
+                    disabled={!isEditable && !isUpdateable}         //Here, !isUpdateable help in disabling in server level (like disabled input element, when there is no update)  
                 />
             </div>
         </>

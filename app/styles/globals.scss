@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap');
-
 @import "variables";
 
 * {
@@ -7,7 +5,7 @@
     margin: 0;
     box-sizing: border-box;
     outline: none;
-    font-family: 'Raleway', sans-serif;
+    font-family: var(--raleway), sans-serif;
     font-weight: 400;
     text-decoration: none;
 

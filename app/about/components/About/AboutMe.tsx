@@ -1,19 +1,13 @@
-import { Button } from '@/app/components'
-import Link from 'next/link'
-import React from 'react'
+import { Button, RenderRichText } from '@/app/components'
+import '../../../styles/rich-text.scss';
 
-export default function AboutMe({ info }: { info: string | TrustedHTML }) {
+export default function AboutMe({ info }: { info: string }) {
     return (
         <div className="about-info">
-            <div dangerouslySetInnerHTML={{ __html: info }} className='para' />
-            <p className='para'>
-                Remotely available UTC-1 to UTC+05:30 -
-                <Link href="mailto:hirechandan@gmail.com" className="email"> hirechandan@gmail.com</Link>
-            </p>
+            <RenderRichText text={info}/>
 
             <Button href="resume/myResume.pdf" label="Download Resume" target="_blank" />
             <Button href="contact" label="Hire Me" />
-
         </div>
     )
 }

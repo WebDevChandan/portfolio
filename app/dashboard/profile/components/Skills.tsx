@@ -1,7 +1,6 @@
 "use client";
-import { ChangeEvent, useContext, useState } from 'react';
+import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { EditableContext } from '../../context/EditableProvider';
-import { ProfileContext } from '../../context/ProfileProvider';
 
 type SkillsType = {
     name: string;
@@ -9,9 +8,18 @@ type SkillsType = {
 }[];
 
 export default function Skills({ skillsProp }: { skillsProp: SkillsType }) {
-    const { isEditable } = useContext(EditableContext);
+    const { isEditable, setIsUpdateable, isUpdateable } = useContext(EditableContext);
 
     const [skillsRangeValues, setSkillsRangeValues] = useState<SkillsType>(skillsProp);
+
+    useEffect(() => {
+        const hasLevelChanged = skillsRangeValues.some(({ name, level }) => {
+            const initialLevel = skillsProp.find(skl => skl.name === name)?.level;
+            return level !== initialLevel;
+        });
+
+        setIsUpdateable(hasLevelChanged);
+    }, [skillsRangeValues, skillsProp, setIsUpdateable]);
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setSkillsRangeValues((skills) =>
@@ -29,7 +37,7 @@ export default function Skills({ skillsProp }: { skillsProp: SkillsType }) {
                 skillsRangeValues.map(({ name, level }) => (
                     <div className="skill-item" key={name}>
                         <p>{name}</p>
-                        <div className="range-container inner-shadow">
+                        <div className={`range-container`}>
                             <input
                                 type="range"
                                 className={`range-bar ${!isEditable ? "disabled" : ""}`}
@@ -37,7 +45,7 @@ export default function Skills({ skillsProp }: { skillsProp: SkillsType }) {
                                 value={level}
                                 onChange={handleChange}
                                 name={name}
-                                disabled={!isEditable}
+                                disabled={!isEditable && !isUpdateable}
                             />
                             <span className={!isEditable ? "disabled" : ""}>{`${level}%`}</span>
                         </div>

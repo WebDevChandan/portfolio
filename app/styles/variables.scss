@@ -12,7 +12,7 @@
     --inner-shadow-0: inset 0 0 0 #d0d0d0, inset 0 0 0 #f8f8f8;
     --skin-color: #fb839e;
     --bg-disabled: #e0e0e075;
-    --text-disabled: #a1a1a1;
+    --text-disabled: rgb(128, 128, 128);
 }
 
 [data-theme="dark"]:root {
@@ -29,7 +29,7 @@
     --inner-shadow-0: inset 0 0 0 #222327, inset 0 0 0 #363636;
     --skin-color: #1fc586;
     --bg-disabled: #2e2e2e;
-    --text-disabled: #777777;
+    --text-disabled: rgb(128 128 128);
 }
 
 //Dark Mode
