@@ -2,13 +2,13 @@
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import Toolbar from "./Toolbar";
 import Link from "@tiptap/extension-link";
 import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
-import '../styles/Editor.scss';
+import '../../styles/Editor.scss';
 import DOMPurify from "isomorphic-dompurify";
+import Toolbar from "./Toolbar";
 
 type EditorContentType = {
     content: string,

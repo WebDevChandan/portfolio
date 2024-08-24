@@ -4,8 +4,7 @@ import { ChangeEvent, useContext, useEffect, useRef, useState } from "react";
 import { ImPencil } from "react-icons/im";
 import { MdDelete } from "react-icons/md";
 import { Flip, toast } from "react-toastify";
-import { UpdateBtn } from "../../components";
-import Editor from "../../components/Editor";
+import { Editor, UpdateButton } from "../../components";
 import { EditableContext } from "../../context/EditableProvider";
 
 type MainProfileType = {
@@ -91,7 +90,7 @@ export default function MainProfile({ aboutImage, bio }: MainProfileType) {
             <div className="profile-info">
                 <Editor content={bio} isEditable={isEditable} isUpdateable={isUpdateable} setIsUpdateable={setIsUpdateable} />
 
-                <UpdateBtn label='Update Profile' />
+                <UpdateButton label='Update Profile' />
             </div>
         </div>
     );

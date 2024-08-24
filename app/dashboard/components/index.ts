@@ -1,10 +1,16 @@
+import AddButton from "./AddButton";
 import InputField from "./InputField";
 import SubSectionTitle from "./SubSectionTitle";
-import UpdateBtn from "./UpdateBtn";
+import Editor from "./TextEditor/Editor";
+import Toolbar from "./TextEditor/Toolbar";
+import UpdateButton from "./UpdateButton";
 
 export {
     InputField,
     SubSectionTitle,
-    UpdateBtn
+    UpdateButton,
+    Editor,
+    Toolbar,
+    AddButton,
 };
 
