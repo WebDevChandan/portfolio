@@ -22,7 +22,7 @@ export default function MainMenuLinks() {
 
     return (
         <>
-            <div className="close-nav-menu outer-shadow hover-in-shadow"
+            <div className="close-btn outer-shadow hover-in-shadow"
                 onClick={() => toggleMainMenuBar()}
                 tabIndex={0}>&times;
             </div >

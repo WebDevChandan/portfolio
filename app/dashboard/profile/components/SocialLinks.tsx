@@ -1,17 +1,42 @@
 "use client";
+import { ChangeEvent, useEffect, useState } from "react";
 import { FaFacebook, FaGithub, FaInstagram, FaLinkedinIn, FaTwitter, FaYoutube } from "react-icons/fa";
-import { InputField } from "../../components";
 import { SiLeetcode } from "react-icons/si";
-import React, { ChangeEvent, useContext, useEffect, useState } from "react";
-import { EditableContext } from "../../context/EditableProvider";
+import { AddButton, InputField } from "../../components";
+import { useProfile } from "../../context/ProfileProvider";
+import { ManageSocialLinks, ModelButton } from ".";
 
 type SocialLinksType = {
     label: string;
     link: string;
 }[]
 
+export const allSocialLinks = [{
+    label: "linkedin",
+    icon: <FaLinkedinIn />,
+}, {
+    label: "leetcode",
+    icon: <SiLeetcode />,
+}, {
+    label: "github",
+    icon: <FaGithub />,
+}, {
+    label: "twitter",
+    icon: <FaTwitter />,
+}, {
+    label: "facebook",
+    icon: <FaFacebook />,
+}, {
+    label: "instagram",
+    icon: <FaInstagram />,
+}, {
+    label: "youtube",
+    icon: <FaYoutube />,
+}];
+
 export default function SocialLinks({ socialLinksProp }: { socialLinksProp: SocialLinksType }) {
-    const { setIsUpdateable } = useContext(EditableContext);
+    console.log(socialLinksProp);
+    const { setIsUpdateable } = useProfile();
 
     const [socialLinks, setSocialLinks] = useState<SocialLinksType>(socialLinksProp);
     const [isValidLink, setIsValidLink] = useState<boolean>(true);
@@ -29,29 +54,6 @@ export default function SocialLinks({ socialLinksProp }: { socialLinksProp: Soci
     }, [socialLinks, socialLinksProp]);
 
 
-    const socialIcons = [{
-        label: "linkedin",
-        icon: <FaLinkedinIn />,
-    }, {
-        label: "leetcode",
-        icon: <SiLeetcode />,
-    }, {
-        label: "github",
-        icon: <FaGithub />,
-    }, {
-        label: "twitter",
-        icon: <FaTwitter />,
-    }, {
-        label: "facebook",
-        icon: <FaFacebook />,
-    }, {
-        label: "instagram",
-        icon: <FaInstagram />,
-    }, {
-        label: "youtube",
-        icon: <FaYoutube />,
-    }];
-
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         setSocialLinks((socialLinks) =>
             socialLinks.map((socialLink) =>
@@ -60,21 +62,24 @@ export default function SocialLinks({ socialLinksProp }: { socialLinksProp: Soci
                     : socialLink
             )
         );
-
     }
 
     return (
-        <div className="row">
-            {socialLinks.map(({ label, link }) => (
-                <div className="social-item" key={label}>
-                    <InputField
-                        label={label}
-                        icon={socialIcons.find(icon => icon.label === label.toLocaleLowerCase())?.icon}
-                        value={link}
-                        // specificName="social"
-                        handleChangeInput={handleChange} />
-                </div>
-            ))}
-        </div>
+        <>
+            <div className="row">
+                {socialLinks.map(({ label, link }) => (
+                    <div className="social-item" key={label}>
+                        <InputField
+                            label={label}
+                            icon={allSocialLinks.find(icon => icon.label === label.toLocaleLowerCase())?.icon}
+                            value={link}
+                            // specificName="social"
+                            handleChangeInput={handleChange} />
+                    </div>
+                ))}
+
+                <ModelButton label="Edit Links" children={<ManageSocialLinks />}/>
+            </div>
+        </>
     )
 }

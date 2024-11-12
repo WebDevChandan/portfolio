@@ -15,7 +15,7 @@
     }
 
     @if $inputField {
-        padding-left: 45px;
+        padding: 0px 50px;
     }
 }
 
@@ -46,8 +46,19 @@
         position: absolute;
         line-height: 50px;
         color: var(--skin-color);
-        left: 15px;
         font-size: 18px;
+    }
+    .field-icon{
+        left: 15px;
+    }
+    .delete-icon{
+        top:0px;
+        right: 20px;
+        
+        svg{
+            cursor: pointer;
+            color: #cc3a3b;
+        }
     }
 
     textarea {

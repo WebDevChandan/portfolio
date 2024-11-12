@@ -19,26 +19,6 @@
 		transition: all 0.3s ease-in;
 	}
 
-	.close-nav-menu {
-		height: 40px;
-		width: 40px;
-		display: block;
-		font-size: 35px;
-		line-height: 37px;
-		border-radius: 50%;
-		position: absolute;
-		right: 15px;
-		top: 15px;
-		cursor: pointer;
-		text-align: center;
-		color: var(--text-black-600);
-		transition: all 0.3s ease;
-
-		&::after {
-			border-radius: 50%;
-		}
-	}
-
 	&-inner {
 		min-height: 100vh;
 		display: flex;

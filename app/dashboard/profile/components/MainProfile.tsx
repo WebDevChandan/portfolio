@@ -6,13 +6,10 @@ import { MdDelete } from "react-icons/md";
 import { Flip, toast } from "react-toastify";
 import { Editor, UpdateButton } from "../../components";
 import { EditableContext } from "../../context/EditableProvider";
+import { useProfile } from "../../context/ProfileProvider";
 
-type MainProfileType = {
-    aboutImage: string,
-    bio: string,
-}
-export default function MainProfile({ aboutImage, bio }: MainProfileType) {
-    const { isEditable, setIsEditable, setIsUpdateable, isUpdateable } = useContext(EditableContext);
+export default function MainProfile() {
+    const { profileData, isEditable, setIsEditable, setIsUpdateable, isUpdateable } = useProfile();
 
     const [blobImage, setBlogImage] = useState<string | null>(null);
 
@@ -83,12 +80,12 @@ export default function MainProfile({ aboutImage, bio }: MainProfileType) {
                     disabled={!isEditable && !isUpdateable}
                 />
 
-                <MyImage src={aboutImage} blobImg={blobImage} />
+                <MyImage src={profileData?.myImages[1]} blobImg={blobImage} />
 
             </div>
 
             <div className="profile-info">
-                <Editor content={bio} isEditable={isEditable} isUpdateable={isUpdateable} setIsUpdateable={setIsUpdateable} />
+                <Editor content={profileData ? profileData?.about : " "} isEditable={isEditable} isUpdateable={isUpdateable} setIsUpdateable={setIsUpdateable} />
 
                 <UpdateButton label='Update Profile' />
             </div>

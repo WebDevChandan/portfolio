@@ -1,6 +1,6 @@
-"use client";
 import { Dispatch, SetStateAction } from 'react';
 import '../styles/modal.scss';
+import { CloseButton } from '@/app/components';
 
 type ModelType = {
     isPopUpOpen: boolean
@@ -10,9 +10,15 @@ type ModelType = {
 
 export default function Modal({ isPopUpOpen, setTogglePopup, children }: ModelType) {
     return (
-        <div className={`modal outer-shadow ${isPopUpOpen ? 'open' : ''}`}>
-            <div className="cross" onClick={() => setTogglePopup(false)} style={{width:"100px", height:"100px"}}>Click X</div>
-            {children}
+        <div className={`modal-container ${isPopUpOpen ? 'open' : ''}`}>
+            <div className="modal">
+                <div className={`modal-content outer-shadow ${isPopUpOpen ? 'open' : ''}`}>
+                    <div className="model-header">
+                        <CloseButton setTogglePopup={setTogglePopup} />
+                    </div>
+                    {isPopUpOpen && children}
+                </div>
+            </div>
         </div>
     )
 }

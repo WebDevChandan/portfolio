@@ -20,18 +20,16 @@
 
     &-thumb {
         background: var(--skin-color);
-        box-shadow: 0px 1px 5px -4px var(--skin-color), 0px 0px 3px 0px var(--skin-color);
-
-        &:hover {
-            background: var(--skin-color);
-            box-shadow: 0px 1px 5px -4px var(--skin-color), 0px 0px 3px 0px var(--skin-color);
-        }
+        // box-shadow: 0px 1px 5px -4px var(--skin-color), 0px 0px 3px 0px var(--skin-color);
+        border-radius: 50px;
 
     }
 
     &-track {
         background: #eff0f4;
         box-shadow: inset 2px 1px 14px 8px rgb(0 0 0 / 10%);
+        border-radius: 50px;
+
     }
 }
 
@@ -121,6 +119,26 @@ p {
 
     &::after {
         border-radius: 30px;
+    }
+}
+
+.close-btn {
+    height: 40px;
+    width: 40px;
+    display: block;
+    font-size: 35px;
+    line-height: 37px;
+    border-radius: 50%;
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+    text-align: center;
+    color: var(--text-black-600);
+    transition: all 0.3s ease;
+
+    &::after {
+        border-radius: 50%;
     }
 }
 

@@ -75,3 +75,10 @@ export async function updateProfile(prevProfileData: ProfileType | null, formDat
         console.log('Error processing form data:', error);
     }
 }
+
+export async function addSocialLink(formData: FormData) {
+    console.log("profileData");
+    // for (const [key, value] of Array.from(formData.entries())) {
+    //     console.log(key, value);
+    // }
+}

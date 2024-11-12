@@ -2,9 +2,10 @@
 import { useContext } from "react";
 import { useFormStatus } from "react-dom"
 import { EditableContext } from "../context/EditableProvider";
+import { useProfile } from "../context/ProfileProvider";
 
 export default function UpdateBtn({ label }: { label: string }) {
-    const { isEditable, setIsEditable, isUpdateable } = useContext(EditableContext);
+    const { isEditable, setIsEditable, isUpdateable } = useProfile();
     const { pending } = useFormStatus();
 
     const handleEdit = () => {

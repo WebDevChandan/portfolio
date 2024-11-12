@@ -1,23 +1,58 @@
-.modal {
+.modal-container {
     position: fixed;
-    background-color: var(--bg-black-50);
-    padding: 0 15px;
+    padding: 10px 15px;
     left: 0;
     top: 0;
-    width: 50%;
-    height: 50%;
+    width: 100%;
+    height: 100%;
     z-index: -1;
     opacity: 0;
     visibility: hidden;
     overflow-y: auto;
-    transition: all 0.3s ease-out;
-    transform: translate(50%, 50%);
-    border-radius: 10px;
+    transition: all 0.5s ease-out;
+    background-color: var(--bg-modal);
+
+    .modal {
+        width: 100%;
+        height: 100%;
+        padding: 0px 0px 10px 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .modal-content {
+            width: 50%;
+            min-height: 400px;
+            top: -100px;
+            position: relative;
+            background-color: var(--bg-black-50);
+            border-radius: 10px;
+            z-index: -1;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease-out;
+            padding-bottom: 20px;
+
+            &.open {
+                top: 0px;
+                visibility: visible;
+                opacity: 1;
+                z-index: 998;
+                transition: all 0.2s ease-in;
+            }
+
+            .model-header {
+                width: 100%;
+                height: 50px;
+            }
+        }
+    }
+
 
     &.open {
         visibility: visible;
         opacity: 1;
-        z-index: 999;
-        transition: all 0.3s ease-in;
+        z-index: 998;
+        transition: all 0.3s ease-out;
     }
 }

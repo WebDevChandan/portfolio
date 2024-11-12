@@ -16,7 +16,9 @@ import Title from "./Title";
 import WaveLoader from "./Loader/WaveLoader";
 import SpinLoader from "./Loader/SpinLoader";
 import RenderRichText from "./RenderRichText";
+import CloseButton from "./CloseButton";
 
-export { ColorSwitcher, CopyrightText, Effects, HamburgerButton, Header, HomeText, Logo, MainMenuBar, MainMenuLinks, MyImage, SideMenuLinks, Sidebar, StyleSwitcher, Button, Title, WaveLoader, SpinLoader, RenderRichText };
+
+export { ColorSwitcher, CopyrightText, Effects, HamburgerButton, Header, HomeText, Logo, MainMenuBar, MainMenuLinks, MyImage, SideMenuLinks, Sidebar, StyleSwitcher, Button, Title, WaveLoader, SpinLoader, RenderRichText, CloseButton };
 
 

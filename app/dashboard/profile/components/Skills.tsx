@@ -1,6 +1,9 @@
 "use client";
 import { ChangeEvent, useContext, useEffect, useState } from 'react';
 import { EditableContext } from '../../context/EditableProvider';
+import { useProfile } from '../../context/ProfileProvider';
+import { ManageSocialLinks, ModelButton } from '.';
+import ManageSkills from './ManageSkills';
 
 type SkillsType = {
     name: string;
@@ -8,7 +11,7 @@ type SkillsType = {
 }[];
 
 export default function Skills({ skillsProp }: { skillsProp: SkillsType }) {
-    const { isEditable, setIsUpdateable, isUpdateable } = useContext(EditableContext);
+    const { isEditable, setIsUpdateable, isUpdateable } = useProfile();
 
     const [skillsRangeValues, setSkillsRangeValues] = useState<SkillsType>(skillsProp);
 
@@ -53,6 +56,7 @@ export default function Skills({ skillsProp }: { skillsProp: SkillsType }) {
                 ))
             }
 
+            <ModelButton label="Edit Links" children={<ManageSkills />} />
         </div>
     )
 }

@@ -5,6 +5,7 @@ import EditableProvider from '../context/EditableProvider';
 import { updateProfile } from '../server/action';
 import { MainProfile, Skills, SocialLinks } from './components';
 import './styles/profile.scss';
+import { ProfileProvider } from '../context/ProfileProvider';
 
 export type ProfileType = {
     myImages: string[];
@@ -43,16 +44,13 @@ const Profile = async () => {
     const updateProfileData = updateProfile.bind(null, profileData);
 
     return (
-        <EditableProvider>
+        <ProfileProvider profileData={profileData}>
             <Title title="Profile" subTitle="View or Edit Profile" />
             {profileData &&
                 <form action={updateProfileData}>
                     {profileData && (
                         <>
-                            <MainProfile
-                                aboutImage={profileData?.myImages[1]}
-                                bio={profileData ? profileData?.about : " "}
-                            />
+                            <MainProfile />
 
                             <SubSectionTitle title="Social Links" />
                             <SocialLinks socialLinksProp={profileData.socialLinks} />
@@ -63,7 +61,7 @@ const Profile = async () => {
                     )}
                 </form>
             }
-        </EditableProvider>
+        </ProfileProvider>
     )
 }
 
