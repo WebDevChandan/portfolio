@@ -1,0 +1,24 @@
+.model-skill-item {
+    position: relative;
+
+    .delete-icon {
+        position: absolute;
+        font-size: 18px;
+        top: 0px;
+        right: -20px;
+        line-height: 84px;
+    }
+
+}
+
+.skill-not-found-msg {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    p {
+        font-size: 24px;
+        color: var(--text-black-600);
+    }
+}

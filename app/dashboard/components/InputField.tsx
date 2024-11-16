@@ -36,7 +36,7 @@ export default function InputField({ label, icon, deleteIcon, placeholder, value
                     id={label?.toLocaleLowerCase()}
                     style={!icon ? { paddingLeft: "15px" } : { paddingLeft: "45px" }}
                     name={specificName ? specificName.toLocaleLowerCase() : label?.toLocaleLowerCase()}
-                    defaultValue={value}
+                    value={value}
                     onChange={(e) => handleChangeInput(e)}
                     readOnly={!isEditable}         //Here, isEditable help in disabling in UI level (like adding .disabled class)
                     disabled={!isEditable && !isUpdateable}         //Here, !isUpdateable help in disabling in server level (like disabled input element, when there is no update)  

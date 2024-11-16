@@ -55,4 +55,32 @@
         z-index: 998;
         transition: all 0.3s ease-out;
     }
+
+    .add-content-container {
+        padding: 0px 50px;
+
+        .content-header {
+            display: flex;
+            flex-direction: column;
+            margin: 10px 10px 30px;
+        }
+
+        .content-label {
+            font-size: 20px;
+            color: var(--text-black-900);
+            margin: 10px 0px;
+        }
+
+        .add-content {
+            margin: 30px 10px 10px;
+            overflow-y: auto;
+            max-height: 500px;
+            padding: 5px 15px;
+        }
+
+        .model-btn {
+            margin: 10px;
+            float: right;
+        }
+    }
 }

@@ -56,7 +56,7 @@ export default function Skills({ skillsProp }: { skillsProp: SkillsType }) {
                 ))
             }
 
-            <ModelButton label="Edit Links" children={<ManageSkills />} />
+            <ModelButton label="Edit Skills" children={<ManageSkills />} />
         </div>
     )
 }

@@ -1,10 +1,8 @@
 "use client";
-import { ChangeEvent, MouseEvent, MouseEventHandler, useState } from "react";
+import { ChangeEvent, MouseEvent, useState } from "react";
 import { InputField } from "../../components";
 import { useProfile } from "../../context/ProfileProvider";
-import { addSocialLink } from "../../server/action";
 import '../styles/manageSocialLinks.scss';
-import { revalidatePath } from "next/cache";
 import { allSocialLinks } from "./SocialLinks";
 
 
@@ -61,9 +59,9 @@ export default function ManageSocialLinks() {
     // console.log(socialLinks);
 
     return (
-        <div className="add-sociallink-container">
-            <div className="selectSocial">
-                <div className="socialLink-label">Manage social links</div>
+        <div className="add-content-container">
+            <div className="content-header">
+                <div className="content-label">Manage social links</div>
                 <select
                     id="newSocialLabel"
                     onChange={handleNewSocialLink}
@@ -85,7 +83,7 @@ export default function ManageSocialLinks() {
                 </select>
             </div>
 
-            <div className="link-container">
+            <div className="add-content">
                 {socialLinks.map((socialLink, index) => (
                     <InputField
                         key={index}
@@ -100,7 +98,7 @@ export default function ManageSocialLinks() {
                 ))}
             </div>
 
-            <div className="add-link-btn">
+            <div className="model-btn">
                 <button onClick={handleSaveSocialLinks} className="btn-1 outer-shadow hover-in-shadow">Save Links</button>
             </div>
         </div>
