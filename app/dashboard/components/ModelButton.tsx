@@ -16,16 +16,28 @@ type ModelButtonType = {
 
 export default function ModelButton({ label, children }: ModelButtonType) {
     const [togglePopup, setTogglePopup] = useState(false);
+
+    const handleModelPopUp = () => {
+        setTogglePopup(!togglePopup);
+
+        const body = document.querySelector('body') as HTMLElement;
+
+        if (!togglePopup)
+            body.style.overflowY = 'hidden';
+        else
+            body.style.overflowY = 'scroll';
+    }
+
     return (
         <>
             <div className="model-btn-container">
                 <div
-                    className="modelButton open btn-1 outer-shadow hover-in-shadow"
-                    onClick={() => setTogglePopup(true)}>
+                    className="modelButton btn-1 outer-shadow hover-in-shadow"
+                    onClick={handleModelPopUp}>
                     {label}
                 </div>
             </div>
-            {<Modal isPopUpOpen={togglePopup} setTogglePopup={setTogglePopup} children={children} />}
+            {<Modal isPopUpOpen={togglePopup} setTogglePopup={handleModelPopUp} children={children} />}
         </>
 
     )

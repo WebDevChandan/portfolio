@@ -130,49 +130,6 @@
     }
 }
 
-.skills {
-    padding: 0 0 40px;
-
-    .skill-item {
-        flex: 0 0 50%;
-        max-width: 50%;
-        padding: 0 15px;
-        margin-bottom: 40px;
-
-        p {
-            font-size: 16px;
-            color: var(--text-black-600);
-            text-transform: capitalize;
-            margin: 0 0 10px;
-        }
-
-        .progress {
-            height: 20px;
-            border-radius: 10px;
-            position: relative;
-        }
-
-        .progress-bar {
-            background-color: var(--text-black-600);
-            height: 6px;
-            left: 7px;
-            top: 7px;
-            position: absolute;
-            border-radius: 10px;
-        }
-
-        span {
-            position: absolute;
-            right: 0;
-            top: 0;
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--text-black-600);
-            margin-top: -40px;
-        }
-    }
-}
-
 .education,
 .experience {
     padding-bottom: 80px;
@@ -292,3 +249,4 @@
 
 
 @import "./responsive/about";
+@import "./skills"

@@ -1,10 +1,9 @@
-import { Dispatch, SetStateAction } from 'react';
-import '../styles/modal.scss';
 import { CloseButton } from '@/app/components';
+import '../styles/modal.scss';
 
 type ModelType = {
     isPopUpOpen: boolean
-    setTogglePopup: Dispatch<SetStateAction<boolean>>,
+    setTogglePopup: () => void,
     children: React.ReactNode,
 };
 

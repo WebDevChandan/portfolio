@@ -28,7 +28,7 @@ const fetchSkills = async (): Promise<skillDataType | null> => {
     }
 }
 
-export default async function Skill() {
+export default async function Skills() {
     const skillData = await fetchSkills();
 
     return (
@@ -39,7 +39,7 @@ export default async function Skill() {
                         <p>{name}</p>
                         <div className="progress inner-shadow">
                             <div className="progress-bar" style={{ width: `calc(${level}% - 14px)` }}>
-                                <span>{level}%</span>
+                                <span className="progress-level">{level}%</span>
                             </div>
                         </div>
                     </div>

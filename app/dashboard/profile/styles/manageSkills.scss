@@ -1,14 +1,18 @@
-.model-skill-item {
-    position: relative;
-
-    .delete-icon {
-        position: absolute;
-        font-size: 18px;
-        top: 0px;
-        right: -20px;
-        line-height: 84px;
+.add-content{
+    .model-skill-item {
+        position: relative;
+        padding: 0 15px;
+        margin-bottom: 40px;
+    
+        .delete-icon {
+            position: absolute;
+            font-size: 18px;
+            top: 0px;
+            right: -20px;
+            line-height: 84px;
+        }
+    
     }
-
 }
 
 .skill-not-found-msg {

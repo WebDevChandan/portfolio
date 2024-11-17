@@ -11,7 +11,6 @@
 
     &.disabled {
         color: var(--text-disabled);
-        cursor: not-allowed;
     }
 
     @if $inputField {
@@ -30,7 +29,7 @@
 
 .input-group {
     position: relative;
-    margin: 0 0 25px;
+    margin: 0 0 40px;
     transition: all 0.3s ease;
     border-radius: 30px;
 
@@ -76,7 +75,6 @@
 }
 
 .input-group.disabled {
-    background: var(--bg-disabled);
     cursor: not-allowed;
 
     svg {

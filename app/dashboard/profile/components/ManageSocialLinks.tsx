@@ -3,13 +3,18 @@ import { ChangeEvent, MouseEvent, useState } from "react";
 import { InputField } from "../../components";
 import { useProfile } from "../../context/ProfileProvider";
 import '../styles/manageSocialLinks.scss';
-import { allSocialLinks } from "./SocialLinks";
+import { allSocialLinks } from "./ProfileSocialLinks";
+
+type SocialLinksType = {
+    label: string;
+    link: string;
+}[]
 
 
 export default function ManageSocialLinks() {
     const { profileData } = useProfile();
 
-    const [socialLinks, setSocialLinks] = useState(profileData ? profileData.socialLinks : []);
+    const [socialLinks, setSocialLinks] = useState<SocialLinksType>(profileData ? profileData.socialLinks : []);
 
     const handleNewSocialLink = (event: { target: { value: string; }; }) => {
         const { value } = event.target;
@@ -27,14 +32,14 @@ export default function ManageSocialLinks() {
         setSocialLinks((socialLinks) =>
             socialLinks.map((socialLink) =>
                 socialLink.label.toLocaleLowerCase() === event.target.name.toLocaleLowerCase()
-                    ? { ...socialLink, link: event.target.value }
+                    ? { ...socialLink, link: event.target.value.trim() }
                     : socialLink
             )
         );
     }
 
     const handleDeleteSocialLink = (name: string, value: string) => {
-        if (!value)
+        if (!value.trim())
             setSocialLinks((socialLinks) =>
                 socialLinks.filter((socialLink) =>
                     socialLink.label.toLocaleLowerCase() !== name.toLocaleLowerCase()

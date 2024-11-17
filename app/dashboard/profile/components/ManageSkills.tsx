@@ -6,10 +6,15 @@ import { InputField } from "../../components";
 import { useProfile } from "../../context/ProfileProvider";
 import '../styles/manageSkills.scss';
 
+type SkillsType = {
+    name: string;
+    level: string;
+}[];
+
 export default function ManageSocialLinks() {
     const { profileData } = useProfile();
 
-    const [skills, setSkills] = useState(profileData ? profileData.skills : []);
+    const [skills, setSkills] = useState<SkillsType>(profileData ? profileData.skills : []);
 
     const [newSkill, setNewSkill] = useState({
         name: "",
@@ -83,7 +88,6 @@ export default function ManageSocialLinks() {
                     placeholder="Search or Add new skill"
                     icon={<FaSearch />}
                     deleteIcon={false}
-                    specificName="SkillSearchBar"
                     handleChangeInput={handleSearchSkill}
                 />
             </div>
@@ -113,7 +117,7 @@ export default function ManageSocialLinks() {
                 }
 
                 {!fetchedSkill.length && <div className="skill-not-found-msg">
-                    <p>Add this skill to profile!</p>
+                    <p>Add this skill to your profile!</p>
                 </div>}
 
             </div>

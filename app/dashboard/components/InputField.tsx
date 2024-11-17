@@ -1,9 +1,7 @@
-import { ChangeEvent, ReactElement, useContext } from "react";
+import { ChangeEvent, ReactElement } from "react";
 import { IconType } from "react-icons";
-import '../styles/inputField.scss';
-import { EditableContext } from "../context/EditableProvider";
-import { useProfile } from "../context/ProfileProvider";
 import { MdDelete } from "react-icons/md";
+import '../styles/inputField.scss';
 
 type InputFieldType = {
     label?: string,
@@ -12,12 +10,12 @@ type InputFieldType = {
     value: string,
     placeholder?: string
     specificName?: string,
+    disabled?: boolean,
     handleChangeInput?: (e: ChangeEvent<HTMLInputElement>) => void;
     handleDeleteInput?: () => void
 }
 
-export default function InputField({ label, icon, deleteIcon, placeholder, value, specificName, handleChangeInput = () => { }, handleDeleteInput = () => { } }: InputFieldType) {
-    const { isEditable, isUpdateable } = useProfile();
+export default function InputField({ label, icon, deleteIcon, placeholder, value, specificName, disabled = false, handleChangeInput = () => { }, handleDeleteInput = () => { } }: InputFieldType) {
 
     return (
         <>
@@ -26,11 +24,11 @@ export default function InputField({ label, icon, deleteIcon, placeholder, value
                     <label htmlFor={label?.toLocaleLowerCase()}>{label}</label>
                 </div>}
 
-            <div className={`input-group outer-shadow ${isEditable ? "hover-in-shadow" : "disabled"}`}>
+            <div className={`input-group outer-shadow ${disabled ? "disabled" : "hover-in-shadow"}`}>
                 {icon && <span className="field-icon">{icon}</span>}
 
                 <input
-                    className={`input-control ${!isEditable ? "disabled" : ""}`}
+                    className={`input-control ${disabled ? "disabled" : ""}`}
                     autoComplete="off"
                     placeholder={placeholder}
                     id={label?.toLocaleLowerCase()}
@@ -38,8 +36,8 @@ export default function InputField({ label, icon, deleteIcon, placeholder, value
                     name={specificName ? specificName.toLocaleLowerCase() : label?.toLocaleLowerCase()}
                     value={value}
                     onChange={(e) => handleChangeInput(e)}
-                    readOnly={!isEditable}         //Here, isEditable help in disabling in UI level (like adding .disabled class)
-                    disabled={!isEditable && !isUpdateable}         //Here, !isUpdateable help in disabling in server level (like disabled input element, when there is no update)  
+                    readOnly={disabled}
+                    disabled={disabled}
                 />
 
                 {deleteIcon

@@ -1,7 +1,7 @@
 import prisma from "@/utils/prisma";
 import { Suspense } from "react";
 import { MyImage, WaveLoader } from "../components";
-import { AboutMe, AboutTabs, Education, Experience, Skill, SocialLinks, Title } from "./components";
+import { AboutMe, AboutTabs, Education, Experience, Skills, SocialLinks, Title } from "./components";
 import './styles/about.scss';
 
 const fetchAboutDetails = async () => {
@@ -24,7 +24,7 @@ export default async function About() {
     const tabsComponent = [
         {
             label: "skills",
-            component: <Skill />,
+            component: <Skills />,
             active: true,
         },
         {

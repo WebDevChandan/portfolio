@@ -1,12 +1,12 @@
 import ManageSocialLinks from "./ManageSocialLinks";
 import MainProfile from "./MainProfile";
-import Skills from "./Skills";
-import SocialLinks from "./SocialLinks";
+import ProfileSkills from "./ProfileSkills";
+import ProfileSocialLinks from "./ProfileSocialLinks";
 import ModelButton from "../../components/ModelButton";
 
 export{
-    Skills,
-    SocialLinks,
+    ProfileSkills,
+    ProfileSocialLinks,
     MainProfile,
     ManageSocialLinks,
     ModelButton,
