@@ -1,12 +1,17 @@
 "use client";
-import { useContext } from "react";
+import { Dispatch, SetStateAction, useContext } from "react";
 import { useFormStatus } from "react-dom"
 import { EditableContext } from "../context/EditableProvider";
 import { useProfile } from "../context/ProfileProvider";
 
-export default function UpdateBtn({ label }: { label: string }) {
-    const { isEditable, setIsEditable, isUpdateable } = useProfile();
-    const { pending } = useFormStatus();
+type SaveInfoButtonType = {
+    isEditable: boolean,
+    setIsEditable: Dispatch<SetStateAction<boolean>>,
+    isUpdateAble: boolean,
+}
+export default function SaveInfoButton({ isEditable, setIsEditable, isUpdateAble }: SaveInfoButtonType) {
+    // const { isEditable, setIsEditable, isUpdateable } = useProfile();
+    // const { pending } = useFormStatus();
 
     const handleEdit = () => {
         setIsEditable(!isEditable);
@@ -20,10 +25,10 @@ export default function UpdateBtn({ label }: { label: string }) {
                 style={{ margin: "0px 20px" }}
                 onClick={handleEdit}
             >
-                {!isEditable ? "Edit" : "Save"}
+                {!isEditable ? "Edit Info" : "Save Info"}
             </button>
 
-            <button
+            {/* <button
                 className={`btn-1 outer-shadow ${!isUpdateable ? "btn-disabled" : "hover-in-shadow"}`}
                 onClick={(e) => {
                     const shouldSubmit = confirm(`Sure, Want to Update?`)
@@ -37,7 +42,7 @@ export default function UpdateBtn({ label }: { label: string }) {
                 disabled={!isUpdateable}
             >
                 {!pending ? label : "Updating..."}
-            </button>
+            </button> */}
         </div>
     )
 }

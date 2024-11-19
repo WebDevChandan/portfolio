@@ -9,16 +9,14 @@ import Underline from "@tiptap/extension-underline";
 import '../../styles/Editor.scss';
 import DOMPurify from "isomorphic-dompurify";
 import Toolbar from "./Toolbar";
+import { useProfile } from "../../context/ProfileProvider";
+import { ProfileHeaderType } from "../../profile/components/ProfileHeader";
 
-type EditorContentType = {
-    content: string,
-    isEditable: boolean,
-    isUpdateable: boolean,
-    setIsUpdateable: Dispatch<SetStateAction<boolean>>
-}
 
-export default function Editor({ content, isEditable, isUpdateable, setIsUpdateable }: EditorContentType) {
-    const sanitizedContent: string | TrustedHTML = DOMPurify.sanitize(content);
+
+export default function Editor({ isEditable, isUpdateable, setIsUpdateable }: ProfileHeaderType) {
+    const { profileData } = useProfile();
+    const sanitizedContent: string | TrustedHTML = DOMPurify.sanitize(profileData?.about ? profileData.about : "");
     const [editorContent, setEditorContent] = useState(sanitizedContent);
 
     useEffect(() => {
@@ -51,7 +49,7 @@ export default function Editor({ content, isEditable, isUpdateable, setIsUpdatea
         ],
         editorProps: {
             attributes: {
-                class: 'text-editor',
+                class: `text-editor${isEditable ? "" : " disabled"}`,
                 spellcheck: "false"
             },
         },
@@ -89,7 +87,7 @@ export default function Editor({ content, isEditable, isUpdateable, setIsUpdatea
                 defaultValue={editorContent}
                 hidden
                 readOnly={!isEditable}
-                disabled={!isEditable && !isUpdateable} />
+                disabled={!isEditable && !isUpdateable}  />
         </div>
     )
 }

@@ -3,7 +3,7 @@ import prisma from '@/utils/prisma';
 import { SubSectionTitle } from '../components';
 import EditableProvider from '../context/EditableProvider';
 import { updateProfile } from '../server/action';
-import { MainProfile, ProfileSkills, ProfileSocialLinks } from './components';
+import { Profileheader, ProfileSkills, ProfileSocialLinks } from './components';
 import './styles/profile.scss';
 import { ProfileProvider } from '../context/ProfileProvider';
 
@@ -50,7 +50,7 @@ const Profile = async () => {
                 <form action={updateProfileData}>
                     {profileData && (
                         <>
-                            <MainProfile />
+                            <Profileheader />
 
                             <SubSectionTitle title="Social Links" />
                             <ProfileSocialLinks />

@@ -1,16 +1,14 @@
 "use client";
-import { MyImage } from "@/app/components";
-import { ChangeEvent, useContext, useEffect, useRef, useState } from "react";
-import { ImPencil } from "react-icons/im";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { MdDelete } from "react-icons/md";
+import { ProfileHeaderType } from "./ProfileHeader";
 import { Flip, toast } from "react-toastify";
-import { Editor, UpdateButton } from "../../components";
-import { EditableContext } from "../../context/EditableProvider";
+import { MyImage } from "@/app/components";
+import { ImPencil } from "react-icons/im";
 import { useProfile } from "../../context/ProfileProvider";
 
-export default function MainProfile() {
-    const { profileData, isEditable, setIsEditable, setIsUpdateable, isUpdateable } = useProfile();
-
+export default function ProfileImage({ isEditable, setIsEditable, isUpdateable, setIsUpdateable, }: ProfileHeaderType) {
+    const { profileData } = useProfile();
     const [blobImage, setBlogImage] = useState<string | null>(null);
 
     const fileInputRef = useRef<HTMLInputElement>(null);
@@ -63,32 +61,25 @@ export default function MainProfile() {
         }
     }
 
+
     return (
-        <div className="row">
-            <div className="profile-img">
+        <div className="profile-img">
 
-                {blobImage && (isEditable && isUpdateable) && <MdDelete onClick={imageRemove} id="deleteImage" />}
+            {blobImage && (isEditable && isUpdateable) && <MdDelete onClick={imageRemove} id="deleteImage" />}
 
-                {isEditable && <ImPencil onClick={triggerFileInput} id="uploadImage" />}
+            {isEditable && <ImPencil onClick={triggerFileInput} id="uploadImage" />}
 
-                <input
-                    type="file"
-                    name="aboutImage"
-                    onChange={imageUpload}
-                    accept=".webp"
-                    ref={fileInputRef}
-                    disabled={!isEditable && !isUpdateable}
-                />
+            <input
+                type="file"
+                name="aboutImage"
+                onChange={imageUpload}
+                accept=".webp"
+                ref={fileInputRef}
+                disabled={!isEditable && !isUpdateable}
+            />
 
-                <MyImage src={profileData?.myImages[1]} blobImg={blobImage} />
+            <MyImage src={profileData?.myImages[1]} blobImg={blobImage} />
 
-            </div>
-
-            <div className="profile-info">
-                <Editor content={profileData ? profileData?.about : " "} isEditable={isEditable} isUpdateable={isUpdateable} setIsUpdateable={setIsUpdateable} />
-
-                <UpdateButton label='Update Profile' />
-            </div>
         </div>
-    );
+    )
 }

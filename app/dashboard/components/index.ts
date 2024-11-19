@@ -1,16 +1,11 @@
-import AddButton from "./ModelButton";
 import InputField from "./InputField";
+import AddButton from "./ModelButton";
+import SaveInfoButton from "./SaveInfoButton";
 import SubSectionTitle from "./SubSectionTitle";
 import Editor from "./TextEditor/Editor";
 import Toolbar from "./TextEditor/Toolbar";
-import UpdateButton from "./UpdateButton";
 
 export {
-    InputField,
-    SubSectionTitle,
-    UpdateButton,
-    Editor,
-    Toolbar,
-    AddButton,
+    AddButton, Editor, InputField, SaveInfoButton, SubSectionTitle, Toolbar
 };
 
