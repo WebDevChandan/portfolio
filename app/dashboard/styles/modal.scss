@@ -66,9 +66,10 @@
         }
 
         .content-label {
-            font-size: 20px;
-            color: var(--text-black-900);
-            margin: 10px 0px;
+            margin: 10px 0px 15px;
+            color: var(--skin-color);
+            font-size: 24px;
+            font-weight: 500;
         }
 
         .add-content {
@@ -80,8 +81,13 @@
         }
 
         .model-btn {
-            margin: 10px;
-            float: right;
+            margin: 10px 0px;
+            width: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+            padding: 0px 10px;
         }
     }
 }

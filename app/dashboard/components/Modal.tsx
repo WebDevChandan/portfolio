@@ -11,9 +11,14 @@ export default function Modal({ isModelPopUpOpen, setModelPopup, children }: Mod
     const [isModelClosed, setIsModelClosed] = useState(false);
 
     useEffect(() => {
+        const body = document.querySelector('body') as HTMLElement;
+
         if (isModelPopUpOpen) {
+            body.style.overflowY = 'hidden';
+
             setIsModelClosed(false);
         } else {
+            body.style.overflowY = 'scroll';
             const timer = setTimeout(() => {
                 setIsModelClosed(true);
             }, 1000);

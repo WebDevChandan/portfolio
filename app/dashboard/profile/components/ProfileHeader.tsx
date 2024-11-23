@@ -8,6 +8,7 @@ import { Editor, SaveInfoButton } from "../../components";
 import { EditableContext } from "../../context/EditableProvider";
 import { useProfile } from "../../context/ProfileProvider";
 import ProfileImage from "./ProfileImage";
+import UploadResume from "../../components/UploadResume";
 
 export type ProfileHeaderType = {
     // content: string,
@@ -30,8 +31,8 @@ export default function Profileheader() {
 
             <div className="profile-info">
                 <Editor isEditable={isEditable} setIsEditable={setIsEditable} isUpdateable={isUpdateable} setIsUpdateable={setIsUpdateable} />
-
             </div>
+
             <SaveInfoButton isEditable={isEditable} setIsEditable={setIsEditable} isUpdateAble={isUpdateable} />
         </div>
     );

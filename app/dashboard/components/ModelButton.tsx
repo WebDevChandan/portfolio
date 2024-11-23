@@ -19,13 +19,6 @@ export default function ModelButton({ label, children }: ModelButtonType) {
 
     const handleModelPopUp = () => {
         setModelPopup(!modelPopup);
-
-        const body = document.querySelector('body') as HTMLElement;
-
-        if (!modelPopup)
-            body.style.overflowY = 'hidden';
-        else
-            body.style.overflowY = 'scroll';
     }
 
     return (

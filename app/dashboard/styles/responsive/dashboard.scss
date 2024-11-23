@@ -24,6 +24,14 @@
             text-align: center;
         }
     }
+
+    .upload-container {
+        border: 2px dashed #80808091;
+    }
+
+    .file-info-container .file-info .file-progress{
+        height: 18px;
+    }
 }
 
 @media (max-width: 320px) {
@@ -31,7 +39,7 @@
         font-size: 14px;
     }
 
-    select{
+    select {
         font-size: 14px;
     }
 
