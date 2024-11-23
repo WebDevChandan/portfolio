@@ -1,0 +1,48 @@
+@media (max-width: 1024px) {
+    .textarea-group{
+       .text-editor{
+        font-size: 16px;
+       }
+    } 
+}
+
+@media (max-width: 899px) {
+    .textarea-group{
+        .toolbar-container{
+            padding: 5px 0px 5px;
+
+            .toolbar{
+                gap: 8px;
+
+                svg{
+                    font-size: 20px;
+                }
+            }
+        }
+    } 
+}
+
+@media (max-width: 425px) {
+    .textarea-group{
+        .toolbar-container{
+            .toolbar{
+                gap: 6px;
+
+                svg{
+                    font-size: 18px;
+                }
+            }
+        }
+    } 
+}
+
+@media (max-width: 375px) {
+    .textarea-group{
+        .toolbar-container{
+            .toolbar{
+                gap: 2px;
+            }
+        }
+    } 
+}
+

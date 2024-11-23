@@ -95,7 +95,7 @@ export default function ManageSocialLinks() {
             <div className="add-content" style={{ margin: "0px 0px 10px", padding: "5px 0px" }}>
                 {
                     fetchedSkill.map((skill, index) => (
-                        <div className="skill-item model-skill-item" style={{ maxWidth: "95%" }} key={index}>
+                        <div className="skill-item model-skill-item" key={index}>
                             <p>{skill.name}</p>
                             <div className={`range-container`}>
                                 <input

@@ -31,8 +31,8 @@ export default function Profileheader() {
             <div className="profile-info">
                 <Editor isEditable={isEditable} setIsEditable={setIsEditable} isUpdateable={isUpdateable} setIsUpdateable={setIsUpdateable} />
 
-                <SaveInfoButton isEditable={isEditable} setIsEditable={setIsEditable} isUpdateAble={isUpdateable} />
             </div>
+            <SaveInfoButton isEditable={isEditable} setIsEditable={setIsEditable} isUpdateAble={isUpdateable} />
         </div>
     );
 }

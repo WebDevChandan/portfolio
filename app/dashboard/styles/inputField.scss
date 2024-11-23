@@ -9,12 +9,9 @@
     padding: 0 15px;
     color: var(--text-black-600);
 
-    &.disabled {
-        color: var(--text-disabled);
-    }
-
     @if $inputField {
-        padding: 0px 50px;
+        padding: 0px 10px;
+        text-overflow: ellipsis;
     }
 }
 
@@ -32,12 +29,17 @@
     margin: 0 0 40px;
     transition: all 0.3s ease;
     border-radius: 30px;
+    overflow: hidden;
 
     &::after {
         border-radius: 30px;
     }
 
     .input-control {
+        &.disabled {
+            color: var(--text-disabled);
+        }
+
         @include inputControl($inputField: true)
     }
 
@@ -47,17 +49,25 @@
         color: var(--skin-color);
         font-size: 18px;
     }
-    .field-icon{
+
+    .field-icon {
         left: 15px;
     }
-    .delete-icon{
-        top:0px;
-        right: 20px;
-        
-        svg{
+
+    .delete-icon {
+        top: 0px;
+        right: 0px;
+        background: var(--bg-black-50);
+        width: 34px;
+
+        svg {
             cursor: pointer;
             color: #cc3a3b;
         }
+    }
+
+    .input-control:focus + .delete-icon {
+        background: none;
     }
 
     textarea {

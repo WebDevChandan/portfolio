@@ -1,0 +1,26 @@
+@media (max-width: 768px) {
+    .profile-img,
+    .profile-info {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    .profile-img {
+        padding-bottom: 30px;
+    }
+
+    .profile-info {
+        height: 300px;
+    }
+
+}
+
+@media (max-width: 574px) {
+
+    .social-item,
+    .skill-item {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+}

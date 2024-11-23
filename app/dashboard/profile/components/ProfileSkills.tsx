@@ -7,6 +7,7 @@ import ManageSkills from './ManageSkills';
 export default function ProfileSkills() {
     const { profileData } = useProfile();
 
+    console.log(profileData?.skills)
     return (
         <div className="skills">
             <div className="row">

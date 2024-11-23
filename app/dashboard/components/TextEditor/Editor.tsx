@@ -6,7 +6,7 @@ import Link from "@tiptap/extension-link";
 import Highlight from "@tiptap/extension-highlight";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
-import '../../styles/Editor.scss';
+import '../../styles/editor.scss';
 import DOMPurify from "isomorphic-dompurify";
 import Toolbar from "./Toolbar";
 import { useProfile } from "../../context/ProfileProvider";
@@ -75,7 +75,7 @@ export default function Editor({ isEditable, isUpdateable, setIsUpdateable }: Pr
                 style={{
                     whiteSpace: "pre-line",
                     width: "100%",
-                    height: "85%",
+                    height: "89%",
                     overflow: "auto",
                     position: "absolute",
                 }} />

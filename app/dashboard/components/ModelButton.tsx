@@ -15,14 +15,14 @@ type ModelButtonType = {
 }
 
 export default function ModelButton({ label, children }: ModelButtonType) {
-    const [togglePopup, setTogglePopup] = useState(false);
+    const [modelPopup, setModelPopup] = useState(false);
 
     const handleModelPopUp = () => {
-        setTogglePopup(!togglePopup);
+        setModelPopup(!modelPopup);
 
         const body = document.querySelector('body') as HTMLElement;
 
-        if (!togglePopup)
+        if (!modelPopup)
             body.style.overflowY = 'hidden';
         else
             body.style.overflowY = 'scroll';
@@ -37,7 +37,7 @@ export default function ModelButton({ label, children }: ModelButtonType) {
                     {label}
                 </div>
             </div>
-            {<Modal isPopUpOpen={togglePopup} setTogglePopup={handleModelPopUp} children={children} />}
+            {<Modal isModelPopUpOpen={modelPopup} setModelPopup={handleModelPopUp} children={children} />}
         </>
 
     )

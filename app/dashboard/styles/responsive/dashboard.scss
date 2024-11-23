@@ -4,10 +4,38 @@
     }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 768px) {
+    .btn-1 {
+        font-size: 14px;
+    }
+
+    .model-btn-container .modelButton {
+        font-size: 14px;
+    }
+
+    .add-content .model-skill-item {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 574px) {
     .dashboard-section {
         .container .section-title {
             text-align: center;
         }
+    }
+}
+
+@media (max-width: 320px) {
+    .input-group .input-control {
+        font-size: 14px;
+    }
+
+    select{
+        font-size: 14px;
+    }
+
+    .input-group .delete-icon {
+        width: 28px;
     }
 }

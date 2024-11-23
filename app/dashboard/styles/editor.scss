@@ -1,9 +1,9 @@
 .textarea-group {
-    height: 84%;
+    height: 100%;
     border-radius: 5px;
     position: relative;
-    margin: 0 0 40px;
     transition: all 0.3s ease;
+    overflow: hidden;
 
     // &.disabled{
     //     background: var(--bg-disabled);
@@ -22,6 +22,10 @@
         border: none;
         font-size: 18px;
         color: var(--text-black-600);
+
+        ::-webkit-scrollbar-track{
+            background: red;
+        }
 
         >ol,
         ul {
@@ -86,7 +90,7 @@
                 outline: none;
                 // border: none;
                 background: no-repeat;
-                font-size: 25px;
+                font-size: 24px;
                 cursor: pointer;
                 color: var(--text-black-600);
 
@@ -119,3 +123,6 @@
         pointer-events: none;
     }
 }
+
+
+@import "./responsive/editor";

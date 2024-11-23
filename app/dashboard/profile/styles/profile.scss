@@ -72,6 +72,16 @@
 
 }
 
+.update-btn-container {
+    width: 100%;
+    padding: 0px 15px;
+    margin: 40px 0 0;
+
+    button {
+        float: right;
+    }
+}
+
 .social-item,
 .skill-item {
     flex: 0 0 50%;
@@ -120,7 +130,8 @@
                 cursor: not-allowed;
                 background: var(--text-disabled);
                 pointer-events: none;
-                &::-webkit-slider-thumb{
+
+                &::-webkit-slider-thumb {
                     background: var(--text-disabled);
                 }
             }
@@ -135,10 +146,13 @@
             color: var(--text-black-600);
             margin-top: -40px;
 
-            &.disabled{
+            &.disabled {
                 color: var(--text-disabled);
             }
         }
     }
 
 }
+
+@import "../../styles/responsive/dashboard.scss";
+@import "../styles/responsive/profile";
