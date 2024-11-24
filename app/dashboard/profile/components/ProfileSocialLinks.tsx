@@ -1,8 +1,9 @@
 "use client";
 import { FaFacebook, FaGithub, FaInstagram, FaLinkedinIn, FaTwitter, FaYoutube } from "react-icons/fa";
 import { SiLeetcode } from "react-icons/si";
-import { ManageSocialLinks, ModelButton } from ".";
+import { ManageSocialLinks } from ".";
 import { InputField } from "../../components";
+import EditButton from "../../components/EditButton";
 import { useProfile } from "../../context/ProfileProvider";
 
 export const allSocialLinks = [{
@@ -47,7 +48,7 @@ export default function ProfileSocialLinks() {
                         </div>
                     ))}
 
-                <ModelButton label="Edit Links" children={<ManageSocialLinks />} />
+                <EditButton label="Edit Links" children={<ManageSocialLinks />} />
             </div>
         </>
     )

@@ -3,23 +3,25 @@
     font-weight: $fontWeight;
 }
 
-.profile-img {
+.img-box {
+    padding: 15px;
+    border-radius: 5px;
+}
+
+img {
+    width: 100%;
+    border: 10px solid transparent;
+    border-radius: 5px;
+    height: auto;
+}
+
+.profile-img{
     flex: 0 0 40%;
     max-width: 40%;
     padding: 0 15px;
     position: relative;
 
-    .img-box {
-        padding: 15px;
-        border-radius: 5px;
-    }
-
-    img {
-        width: 100%;
-        border: 10px solid transparent;
-        border-radius: 5px;
-        height: auto;
-    }
+    
 
     #uploadImage {
         position: absolute;
@@ -50,6 +52,7 @@
     flex: 0 0 60%;
     max-width: 60%;
     padding: 0 15px;
+    margin-bottom: 60px;
 
     p {
         // font-size: 16px;
@@ -72,14 +75,13 @@
 
 }
 
-.update-btn-container {
+.infoUpdate-btn-container {
     width: 100%;
-    padding: 0px 15px;
-    margin: 40px 0 0;
-
-    button {
-        float: right;
-    }
+    padding: 0px;
+    margin: 20px 0 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .social-item,

@@ -1,39 +1,38 @@
 "use client";
-import { MyImage } from "@/app/components";
-import { ChangeEvent, Dispatch, SetStateAction, useContext, useEffect, useRef, useState } from "react";
-import { ImPencil } from "react-icons/im";
-import { MdDelete } from "react-icons/md";
-import { Flip, toast } from "react-toastify";
-import { Editor, SaveInfoButton } from "../../components";
-import { EditableContext } from "../../context/EditableProvider";
-import { useProfile } from "../../context/ProfileProvider";
+import { useState } from "react";
+import { Editor } from "../../components";
+import { useFileUpload } from "../../hook/useFileUpload";
 import ProfileImage from "./ProfileImage";
-import UploadResume from "../../components/UploadResume";
 
-export type ProfileHeaderType = {
-    // content: string,
-    isEditable: boolean,
-    isUpdateable: boolean,
-    setIsUpdateable: Dispatch<SetStateAction<boolean>>,
-    setIsEditable: Dispatch<SetStateAction<boolean>>
-}
 
 export default function Profileheader() {
-    // const { profileData, isEditable, setIsEditable, setIsUpdateable, isUpdateable } = useProfile();
+    const { uploadPDF } = useFileUpload();
     const [isEditable, setIsEditable] = useState<boolean>(false);
-    const [isUpdateable, setIsUpdateable] = useState<boolean>(false);
-
-
+    const [isUpdated, setIsUpdated] = useState<boolean>(false);
 
     return (
         <div className="row">
-            <ProfileImage isEditable={isEditable} setIsEditable={setIsEditable} isUpdateable={isUpdateable} setIsUpdateable={setIsUpdateable} />
+            <ProfileImage />
 
             <div className="profile-info">
-                <Editor isEditable={isEditable} setIsEditable={setIsEditable} isUpdateable={isUpdateable} setIsUpdateable={setIsUpdateable} />
-            </div>
+                <Editor isEditable={isEditable} isUpdated={isUpdated} setIsUpdated={setIsUpdated} />
 
-            <SaveInfoButton isEditable={isEditable} setIsEditable={setIsEditable} isUpdateAble={isUpdateable} />
+                <div className="infoUpdate-btn-container">
+                    <button
+                        className='btn-1 outer-shadow hover-in-shadow'
+                        type='button'
+                        onClick={() => uploadPDF("Uploard Your Resume")}>
+                        Upload Resume
+                    </button>
+
+                    <button
+                        className={`btn-1 outer-shadow hover-in-shadow`}
+                        type='button'
+                        onClick={() => setIsEditable(!isEditable)}>
+                        {!isEditable ? "Edit Info" : !isUpdated ? "Cancel Edit" : "Save Info"}
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }

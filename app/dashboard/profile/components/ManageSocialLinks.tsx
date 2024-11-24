@@ -103,7 +103,7 @@ export default function ManageSocialLinks() {
                 ))}
             </div>
 
-            <div className="model-btn">
+            <div className="modal-btn">
                 <button onClick={handleSaveSocialLinks} className="btn-1 outer-shadow hover-in-shadow">Save Links</button>
             </div>
         </div>

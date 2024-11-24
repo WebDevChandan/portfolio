@@ -1,24 +1,20 @@
 "use client";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { MdDelete } from "react-icons/md";
-import { ProfileHeaderType } from "./ProfileHeader";
-import { Flip, toast } from "react-toastify";
 import { MyImage } from "@/app/components";
 import { ImPencil } from "react-icons/im";
 import { useProfile } from "../../context/ProfileProvider";
-import Modal from "../../components/Modal";
-import UploadFile, { FileType } from "../../components/UploadFile";
+import { useFileUpload } from "../../hook/useFileUpload";
 import { ProfileType } from "../page";
-import UploadImage from "../../components/UploadImage";
 
-export default function ProfileImage({ isEditable, setIsEditable, isUpdateable, setIsUpdateable, }: ProfileHeaderType) {
+export default function ProfileImage() {
     const { profileData } = useProfile() as { profileData: ProfileType };
+    const { uploadImage } = useFileUpload();
 
     return (
         <div className="profile-img">
+            {/* {blobImage && (isEditable && isUpdateable) && <MdDelete onClick={imageRemove} id="deleteImage" />} */}
             <MyImage src={profileData?.myImages[1]} />
 
-            <UploadImage uploadTitle="Upload Your Image" />
+            <ImPencil onClick={() => uploadImage("Upload Your Image")} id="uploadImage" />
         </div>
     )
 }

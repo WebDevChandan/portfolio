@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction, useContext } from "react";
 import { useFormStatus } from "react-dom"
 import { EditableContext } from "../context/EditableProvider";
 import { useProfile } from "../context/ProfileProvider";
+import { FaFilePdf } from "react-icons/fa";
 
 type SaveInfoButtonType = {
     isEditable: boolean,
@@ -10,19 +11,24 @@ type SaveInfoButtonType = {
     isUpdateAble: boolean,
 }
 export default function SaveInfoButton({ isEditable, setIsEditable, isUpdateAble }: SaveInfoButtonType) {
-    // const { isEditable, setIsEditable, isUpdateable } = useProfile();
-    // const { pending } = useFormStatus();
-
+  
     const handleEdit = () => {
         setIsEditable(!isEditable);
     }
 
     return (
-        <div className="update-btn-container" style={{ float: "right" }}>
+        <div className="infoUpdate-btn-container">
             <button
                 className='btn-1 outer-shadow hover-in-shadow'
                 type='button'
-                style={{ margin: "0px 20px" }}
+                onClick={handleEdit}
+            >
+                Upload Resume
+            </button>
+
+            <button
+                className='btn-1 outer-shadow hover-in-shadow'
+                type='button'
                 onClick={handleEdit}
             >
                 {!isEditable ? "Edit Info" : "Save Info"}

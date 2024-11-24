@@ -1,10 +1,10 @@
-import { FaFilePdf, FaImage } from "react-icons/fa";
-import { MdDelete, MdUpload } from "react-icons/md";
-import '../styles/uploadFile.scss'
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { showToast } from "@/utils/showToast";
+"use client";
 import { MyImage } from "@/app/components";
-// import Error from "next/error";
+import { showToast } from "@/utils/showToast";
+import { ChangeEvent, useRef, useState } from "react";
+import { FaFilePdf, FaImage } from "react-icons/fa";
+import { MdDelete } from "react-icons/md";
+import '../styles/uploadFile.scss';
 
 export enum FileType {
   Image,
@@ -12,7 +12,7 @@ export enum FileType {
 }
 
 export type UploadFileType = {
-  uploadTitle: string,
+  uploadTitle: string | null,
   fileType: FileType,
 }
 
@@ -44,16 +44,8 @@ export default function UploadFile({ uploadTitle, fileType }: UploadFileType) {
     fileProgress: 0,
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const fileDetail = uploadFileDetails[fileType];
+  const fileDetail = uploadFileDetails[fileType] ;
 
-  useEffect(() => {
-    console.log(fileInfo);
-    console.log(blobFile);
-  }, [fileInfo, blobFile])
-
-  // const handleFileUpload = (event) => {
-
-  // }
   const handleClickFileInput = () => {
     if (fileInputRef.current) {
       fileInputRef.current.click();
@@ -213,7 +205,7 @@ export default function UploadFile({ uploadTitle, fileType }: UploadFileType) {
 
       </div>
 
-      <div className="model-btn">
+      <div className="modal-btn">
         {blobFile
           &&
           <>

@@ -1,20 +1,23 @@
 "use client";
-import { EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import Link from "@tiptap/extension-link";
 import Highlight from "@tiptap/extension-highlight";
+import Link from "@tiptap/extension-link";
 import TextAlign from "@tiptap/extension-text-align";
 import Underline from "@tiptap/extension-underline";
-import '../../styles/editor.scss';
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 import DOMPurify from "isomorphic-dompurify";
-import Toolbar from "./Toolbar";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useProfile } from "../../context/ProfileProvider";
-import { ProfileHeaderType } from "../../profile/components/ProfileHeader";
+import '../../styles/editor.scss';
+import Toolbar from "./Toolbar";
 
+ type EditorType = {
+    isEditable: boolean,
+    isUpdated: boolean,
+    setIsUpdated: Dispatch<SetStateAction<boolean>>,
+}
 
-
-export default function Editor({ isEditable, isUpdateable, setIsUpdateable }: ProfileHeaderType) {
+export default function Editor({ isEditable, isUpdated, setIsUpdated }: EditorType) {
     const { profileData } = useProfile();
     const sanitizedContent: string | TrustedHTML = DOMPurify.sanitize(profileData?.about ? profileData.about : "");
     const [editorContent, setEditorContent] = useState(sanitizedContent);
@@ -24,8 +27,8 @@ export default function Editor({ isEditable, isUpdateable, setIsUpdateable }: Pr
 
         const hasContent = editorContent.length >= 30;
 
-        setIsUpdateable(hasContentChanged && hasContent);
-    }, [editorContent, sanitizedContent, setIsUpdateable]);
+        setIsUpdated(hasContentChanged && hasContent);
+    }, [editorContent, sanitizedContent, setIsUpdated]);
 
     const editor = useEditor({
         extensions: [
@@ -68,7 +71,6 @@ export default function Editor({ isEditable, isUpdateable, setIsUpdateable }: Pr
 
     return (
         <div className={`textarea-group ${isEditable ? "inner-shadow" : "outer-shadow disabled"}`}>
-
             <Toolbar editor={editor} isEditable={isEditable} />
             <EditorContent
                 editor={editor}
@@ -87,7 +89,7 @@ export default function Editor({ isEditable, isUpdateable, setIsUpdateable }: Pr
                 defaultValue={editorContent}
                 hidden
                 readOnly={!isEditable}
-                disabled={!isEditable && !isUpdateable}  />
+                disabled={!isEditable && !isUpdated}  />
         </div>
     )
 }

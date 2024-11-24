@@ -1,8 +1,8 @@
 "use client";
 import '@/app/about/styles/skills.scss';
-import { ModelButton } from '.';
 import { useProfile } from '../../context/ProfileProvider';
 import ManageSkills from './ManageSkills';
+import EditButton from '../../components/EditButton';
 
 export default function ProfileSkills() {
     const { profileData } = useProfile();
@@ -23,7 +23,7 @@ export default function ProfileSkills() {
                         </div>
                     ))
                 }
-                <ModelButton label="Edit Skills" children={<ManageSkills />} />
+                <EditButton label="Edit Skills" children={<ManageSkills />} />
             </div>
         </div>
 

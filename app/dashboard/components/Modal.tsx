@@ -1,40 +1,43 @@
+"use client";
 import { CloseButton } from '@/app/components';
 import '../styles/modal.scss';
-import { useEffect, useMemo, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 
-type ModelType = {
-    isModelPopUpOpen: boolean,
-    setModelPopup: () => void,
+type ModalType = {
+    isModalPopUpOpen: boolean,
+    setModalPopup: Dispatch<SetStateAction<boolean>>
     children: React.ReactNode,
 };
-export default function Modal({ isModelPopUpOpen, setModelPopup, children }: ModelType) {
-    const [isModelClosed, setIsModelClosed] = useState(false);
+export default function Modal({ isModalPopUpOpen, setModalPopup, children }: ModalType) {
+    const [isModalClosed, setIsModalClosed] = useState(false);
 
     useEffect(() => {
         const body = document.querySelector('body') as HTMLElement;
 
-        if (isModelPopUpOpen) {
+        if (isModalPopUpOpen) {
             body.style.overflowY = 'hidden';
 
-            setIsModelClosed(false);
+            setIsModalClosed(false);
+
         } else {
             body.style.overflowY = 'scroll';
+
             const timer = setTimeout(() => {
-                setIsModelClosed(true);
+                setIsModalClosed(true);
             }, 1000);
 
             return () => clearTimeout(timer);
         }
-    }, [isModelPopUpOpen]);
+    }, [isModalPopUpOpen]);
 
     return (
-        <div className={`modal-container${isModelPopUpOpen ? ' open' : ''}`}>
+        <div className={`modal-container${isModalPopUpOpen ? ' open' : ''}`}>
             <div className="modal">
-                <div className={`modal-content outer-shadow ${isModelPopUpOpen ? 'open' : ''}`}>
-                    <div className="model-header">
-                        <CloseButton setModelPopup={setModelPopup} />
+                <div className={`modal-content outer-shadow ${isModalPopUpOpen ? 'open' : ''}`}>
+                    <div className="modal-header">
+                        <CloseButton setModalPopup={setModalPopup} />
                     </div>
-                    {!isModelClosed && children}
+                    {!isModalClosed && children}
                 </div>
             </div>
         </div>

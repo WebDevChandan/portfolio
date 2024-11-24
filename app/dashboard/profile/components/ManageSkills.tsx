@@ -11,7 +11,7 @@ type SkillsType = {
     level: string;
 }[];
 
-export default function ManageSocialLinks() {
+export default function ManageSkills() {
     const { profileData } = useProfile();
 
     const [skills, setSkills] = useState<SkillsType>(profileData ? profileData.skills : []);
@@ -95,7 +95,7 @@ export default function ManageSocialLinks() {
             <div className="add-content" style={{ margin: "0px 0px 10px", padding: "5px 0px" }}>
                 {
                     fetchedSkill.map((skill, index) => (
-                        <div className="skill-item model-skill-item" key={index}>
+                        <div className="skill-item modal-skill-item" key={index}>
                             <p>{skill.name}</p>
                             <div className={`range-container`}>
                                 <input
@@ -122,7 +122,7 @@ export default function ManageSocialLinks() {
 
             </div>
 
-            <div className="model-btn">
+            <div className="modal-btn">
                 {
                     fetchedSkill.length
                         ? <button onClick={handleSaveSocialLinks} className="btn-1 outer-shadow hover-in-shadow">Save Skills</button>

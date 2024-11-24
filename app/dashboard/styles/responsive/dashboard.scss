@@ -9,11 +9,11 @@
         font-size: 14px;
     }
 
-    .model-btn-container .modelButton {
+    .edit-btn-container .editButton {
         font-size: 14px;
     }
 
-    .add-content .model-skill-item {
+    .add-content .modal-skill-item {
         max-width: 90%;
     }
 }
@@ -31,6 +31,12 @@
 
     .file-info-container .file-info .file-progress{
         height: 18px;
+    }
+
+    .modal-btn{
+        button{
+            padding: 10px 15px;
+        }
     }
 }
 
