@@ -30,6 +30,20 @@ export default function Modal({ isModalPopUpOpen, setModalPopup, children }: Mod
         }
     }, [isModalPopUpOpen]);
 
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.key === 'Escape') {
+                setModalPopup(false);
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [setModalPopup]);
+
     return (
         <div className={`modal-container${isModalPopUpOpen ? ' open' : ''}`}>
             <div className="modal">

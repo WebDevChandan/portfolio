@@ -6,29 +6,14 @@ import Underline from "@tiptap/extension-underline";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import DOMPurify from "isomorphic-dompurify";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useProfile } from "../../context/ProfileProvider";
 import '../../styles/editor.scss';
 import Toolbar from "./Toolbar";
+import { useEditorAction } from "../../hook/useEditorAction";
 
- type EditorType = {
-    isEditable: boolean,
-    isUpdated: boolean,
-    setIsUpdated: Dispatch<SetStateAction<boolean>>,
-}
-
-export default function Editor({ isEditable, isUpdated, setIsUpdated }: EditorType) {
-    const { profileData } = useProfile();
-    const sanitizedContent: string | TrustedHTML = DOMPurify.sanitize(profileData?.about ? profileData.about : "");
-    const [editorContent, setEditorContent] = useState(sanitizedContent);
-
-    useEffect(() => {
-        const hasContentChanged = editorContent !== sanitizedContent;
-
-        const hasContent = editorContent.length >= 30;
-
-        setIsUpdated(hasContentChanged && hasContent);
-    }, [editorContent, sanitizedContent, setIsUpdated]);
+export default function Editor() {
+    const { isEditable, isUpdated, editorContent, setEditorContent } = useEditorAction();
 
     const editor = useEditor({
         extensions: [
@@ -61,7 +46,7 @@ export default function Editor({ isEditable, isUpdated, setIsUpdated }: EditorTy
         onUpdate: ({ editor }) => { editor.isEditable ? setEditorContent(DOMPurify.sanitize(editor.getHTML())) : null },
         editable: false,
         autofocus: false,
-    })
+    });
 
     useEffect(() => {
         if (editor) {
@@ -71,7 +56,7 @@ export default function Editor({ isEditable, isUpdated, setIsUpdated }: EditorTy
 
     return (
         <div className={`textarea-group ${isEditable ? "inner-shadow" : "outer-shadow disabled"}`}>
-            <Toolbar editor={editor} isEditable={isEditable} />
+            <Toolbar editor={editor} />
             <EditorContent
                 editor={editor}
                 style={{
@@ -89,7 +74,7 @@ export default function Editor({ isEditable, isUpdated, setIsUpdated }: EditorTy
                 defaultValue={editorContent}
                 hidden
                 readOnly={!isEditable}
-                disabled={!isEditable && !isUpdated}  />
+                disabled={!isEditable && !isUpdated} />
         </div>
-    )
+    );
 }

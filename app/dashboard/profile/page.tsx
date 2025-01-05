@@ -1,15 +1,15 @@
-import { Title } from '@/app/components';
+import { Title, WaveLoader } from '@/app/components';
 import prisma from '@/utils/prisma';
 import { SubSectionTitle } from '../components';
-import EditableProvider from '../context/EditableProvider';
-import { updateProfile } from '../server/action';
+import { EditorActionProvider } from '../context/EditorProvider';
+import FileUploadProvider from '../context/FileUploadProvider';
+import { ProfileProvider } from '../context/ProfileProvider';
 import { Profileheader, ProfileSkills, ProfileSocialLinks } from './components';
 import './styles/profile.scss';
-import { ProfileProvider } from '../context/ProfileProvider';
-import FileUploadProvider from '../context/FileUploadProvider';
+import { Suspense } from 'react';
 
 export type ProfileType = {
-    myImages: string[];
+    aboutImage: string;
     about: string;
     socialLinks: {
         label: string;
@@ -25,7 +25,7 @@ const fetchProfileDetails = async (): Promise<ProfileType> => {
     try {
         const profileData = await prisma.personalInfo.findFirst({
             select: {
-                myImages: true,
+                aboutImage: true,
                 about: true,
                 socialLinks: true,
                 skills: true
@@ -42,28 +42,32 @@ const fetchProfileDetails = async (): Promise<ProfileType> => {
 
 const Profile = async () => {
     const profileData = await fetchProfileDetails();
-    const updateProfileData = updateProfile.bind(null, profileData);
 
     return (
         <>
             <Title title="Profile" subTitle="View or Edit Profile" />
-            <ProfileProvider profileData={profileData}>
-                {profileData &&
-                    <form action={updateProfileData}>
-                        {profileData && (
-                            <FileUploadProvider>
-                                <Profileheader />
+            <Suspense fallback={<WaveLoader />}>
+                <ProfileProvider profileData={profileData}>
+                    {profileData &&
+                        <>
+                            {profileData && (
+                                <FileUploadProvider>
+                                    <EditorActionProvider defaultContent={profileData.about}>
 
-                                <SubSectionTitle title="Social Links" />
-                                <ProfileSocialLinks />
+                                        <Profileheader />
 
-                                <SubSectionTitle title="Skills" />
-                                <ProfileSkills />
-                            </FileUploadProvider>
-                        )}
-                    </form>
-                }
-            </ProfileProvider>
+                                        <SubSectionTitle title="Social Links" />
+                                        <ProfileSocialLinks />
+
+                                        <SubSectionTitle title="Skills" />
+                                        <ProfileSkills />
+                                    </EditorActionProvider>
+                                </FileUploadProvider>
+                            )}
+                        </>
+                    }
+                </ProfileProvider>
+            </Suspense>
         </>
     )
 }

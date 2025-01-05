@@ -7,6 +7,11 @@
 @media (max-width: 768px) {
     .btn-1 {
         font-size: 14px;
+        padding: 10px 20px;
+    }
+
+    .btn-disabled{
+        padding-left: 40px;
     }
 
     .edit-btn-container .editButton {
@@ -29,18 +34,30 @@
         border: 2px dashed #80808091;
     }
 
+    .file-info-container {
+        height: 120px;
+    }
+
+    .file-info-container .file-info {
+        height: 100px;
+    }
+
     .file-info-container .file-info .file-progress{
         height: 18px;
     }
-
+    
+    
     .modal-btn{
         button{
             padding: 10px 15px;
         }
+        .btn-disabled{
+            padding-left: 40px;
+        }
     }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 350px) {
     .input-group .input-control {
         font-size: 14px;
     }
@@ -52,4 +69,11 @@
     .input-group .delete-icon {
         width: 28px;
     }
+
+    .file-info-container .file-info .file-progress .progress-bar{
+        height: 4px;
+    }
+
+
+    
 }

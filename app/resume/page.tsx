@@ -12,7 +12,9 @@ const fetchResume = async () => {
                 resume: true,
             }
         })
-        return resumeFile;
+        
+        return resumeFile?.resume;
+
     } catch (error) {
         console.log("Error Fetching Resume Data: ", error)
         return null;

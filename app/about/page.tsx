@@ -9,7 +9,7 @@ const fetchAboutDetails = async () => {
         const aboutData = await prisma.personalInfo.findFirst({
             select: {
                 about: true,
-                myImages: true,
+                aboutImage: true,
             }
         });
 
@@ -51,7 +51,7 @@ export default async function About() {
                         aboutData && (
                             <div className="row">
                                 <div className="about-img">
-                                    <MyImage src={aboutData?.myImages[1]} />
+                                    <MyImage src={aboutData.aboutImage} />
                                     <SocialLinks />
                                 </div>
                                 <AboutMe info={aboutData!.about} />

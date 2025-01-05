@@ -20,7 +20,7 @@
         padding: 5px 10px;
         outline: none;
         border: none;
-        font-size: 18px;
+        font-size: 16px;
         color: var(--text-black-600);
 
         ::-webkit-scrollbar-track{
@@ -66,6 +66,7 @@
 
         &.disabled{
             color: var(--text-disabled);
+            pointer-events: none;
 
             a{
                 color: var(--text-disabled);
@@ -102,6 +103,12 @@
                 &:hover {
                     border: 1px solid var(--text-disabled);
                     border-radius: 5px;
+                }
+            }
+
+            &.disabled{
+                svg{
+                    cursor: auto;
                 }
             }
         }

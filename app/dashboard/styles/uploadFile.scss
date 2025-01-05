@@ -42,7 +42,7 @@
     gap: 10px;
     margin: 0px 0px 30px;
 
-    &:last-of-type{
+    &:last-of-type {
         margin: 0px 0px 40px;
     }
 
@@ -72,7 +72,7 @@
         width: 80%;
         margin: 0px 10px;
 
-        .file-info-header{
+        .file-info-header {
             width: 100%;
             display: flex;
             justify-content: space-between;
@@ -95,13 +95,22 @@
             overflow: hidden;
 
             .progress-bar {
-                width: 60%;
                 background-color: var(--text-black-600);
                 height: 6px;
                 left: 7px;
                 top: 6px;
                 position: absolute;
                 border-radius: 10px;
+                transition: 0.3s all ease-in-out;
+
+            }
+
+            .success-bar {
+                background-color: var(--skin-color);
+            }
+
+            .failed-bar {
+                background-color: #cc3a3b;
             }
         }
 

@@ -80,8 +80,9 @@ img {
     padding: 0px;
     margin: 20px 0 40px;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
+    gap:20px;
 }
 
 .social-item,
@@ -115,8 +116,9 @@ img {
             width: 97%;
             appearance: none;
             -webkit-appearance: none;
-            background-color: var(--text-black-600);
+            background-color: transparent;
             cursor: grab;
+            z-index: 0;
 
             &::-webkit-slider-thumb {
                 -webkit-appearance: none;
@@ -126,6 +128,7 @@ img {
                 border-radius: 50%;
                 box-shadow: var(--outer-shadow);
                 transition: box-shadow 0.2s ease-in-out;
+                // z-index: 100;
             }
 
             &.disabled {

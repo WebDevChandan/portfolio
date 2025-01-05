@@ -116,6 +116,7 @@ p {
     transition: all 0.3s ease;
     display: inline-block;
     border: none;
+    position: relative;
 
     &::after {
         border-radius: 30px;
@@ -195,6 +196,13 @@ p {
 }
 
 .btn-disabled {
+    position: relative;
+    color: var(--text-disabled);
+    cursor: not-allowed;
+    padding-left: 40px;
+}
+.btn-disabled-withoutLoading {
+    position: relative;
     color: var(--text-disabled);
     cursor: not-allowed;
 }

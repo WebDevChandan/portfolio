@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@prisma/client": "^5.15.1",
+    "@prisma/client": "^6.1.0",
     "@tiptap/extension-highlight": "^2.5.8",
     "@tiptap/extension-horizontal-rule": "^2.5.8",
     "@tiptap/extension-link": "^2.5.8",
@@ -43,7 +43,7 @@
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/react-speech-recognition": "^3.9.4",
-    "prisma": "^5.15.1",
+    "prisma": "^6.1.0",
     "typescript": "^5"
   }
 }

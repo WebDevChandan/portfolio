@@ -69,7 +69,8 @@ type PortfolioMainDetail {
 model PersonalInfo {
   id          String       @id @default(auto()) @map("_id") @db.ObjectId
   name        String
-  myImages    String[]
+  mainImage   String
+  aboutImage  String
   roles       String[]
   about       String
   resume      String

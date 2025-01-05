@@ -1,6 +1,6 @@
 import { Flip, toast } from "react-toastify";
 
-export const showToast = (type: "error" | "success", message: string) => {
+export const showToast = (type: "error" | "success" | "info", message: string) => {
     const toastConfig = {
         position: "top-center" as const,
         autoClose: 1500,
@@ -12,10 +12,17 @@ export const showToast = (type: "error" | "success", message: string) => {
         transition: Flip,
     };
 
-    if (type === "error") {
-        return toast.error(message, {...toastConfig});
-    } else if (type === "success") {
-        return toast.success(message, {...toastConfig});
+    switch (type) {
+        case "error":
+            return toast.error(message, { ...toastConfig });
+
+        case "success":
+            return toast.success(message, { ...toastConfig });
+
+        case "info":
+            return toast.info(message, { ...toastConfig });
+
+        default:
+            break;
     }
-    return null;
 };

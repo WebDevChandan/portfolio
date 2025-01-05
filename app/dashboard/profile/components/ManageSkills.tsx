@@ -1,18 +1,23 @@
 "use client";
-import { ChangeEvent, MouseEvent, useMemo, useState } from "react";
+import { ChangeEvent, KeyboardEvent, MouseEvent, useMemo, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { InputField } from "../../components";
 import { useProfile } from "../../context/ProfileProvider";
 import '../styles/manageSkills.scss';
+import { saveSkills } from "../server/profileAction";
+import { showToast } from "@/utils/showToast";
+import ServerSpinLoader from "@/app/components/Loader/ServerSpinLoader";
+import { useModalAction } from "@/app/hook/useModalAction";
 
-type SkillsType = {
+export type SkillsType = {
     name: string;
     level: string;
 }[];
 
 export default function ManageSkills() {
-    const { profileData } = useProfile();
+    const { profileData, isProfileUpdating, setIsProfileUpdating } = useProfile();
+    const { setModalPopup } = useModalAction();
 
     const [skills, setSkills] = useState<SkillsType>(profileData ? profileData.skills : []);
 
@@ -25,9 +30,31 @@ export default function ManageSkills() {
         return skills.filter(skill => skill.name.toLocaleLowerCase().startsWith(newSkill.name.toLocaleLowerCase()));
     }, [skills, newSkill])
 
-    const handleSaveSocialLinks = async (event: MouseEvent<HTMLButtonElement>) => {
+    const handleSaveSkills = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        //Will Handle Skill Save...
+
+        if (event.type !== "click") return;
+
+        if (isProfileUpdating) return;
+
+        if (!skills.length) return;
+
+        setIsProfileUpdating(true);
+
+        const { message, errorMessage } = await saveSkills(skills) as { message?: string, errorMessage?: string };
+
+        if (message) {
+            setIsProfileUpdating(false);
+            setModalPopup(false);
+            showToast("success", message);
+            return;
+        }
+
+        if (errorMessage) {
+            showToast("error", errorMessage)
+            setIsProfileUpdating(false);
+            return;
+        }
     }
 
     const handleSearchSkill = (event: ChangeEvent<HTMLInputElement>) => {
@@ -37,12 +64,13 @@ export default function ManageSkills() {
         })
     }
 
-    const handleAddNewSkill = () => {
+    const handleAddNewSkill = (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+
         if (!newSkill.name.trim()) return;
 
         const isDuplicateSkill = skills.some(skill => skill.name.toLocaleLowerCase() === newSkill.name.trim().toLocaleLowerCase());
 
-        console.log(isDuplicateSkill);
         if (isDuplicateSkill) return;
 
         setSkills([newSkill, ...skills]);
@@ -70,6 +98,8 @@ export default function ManageSkills() {
     }
 
     const handleEditSkill = (skillName: string, event: ChangeEvent<HTMLInputElement>) => {
+        event.preventDefault();
+
         setSkills((skills) =>
             skills.map((skill) =>
                 skill.name.toLocaleLowerCase() === skillName.toLocaleLowerCase()
@@ -90,6 +120,7 @@ export default function ManageSkills() {
                     deleteIcon={false}
                     handleChangeInput={handleSearchSkill}
                 />
+
             </div>
 
             <div className="add-content" style={{ margin: "0px 0px 10px", padding: "5px 0px" }}>
@@ -97,7 +128,8 @@ export default function ManageSkills() {
                     fetchedSkill.map((skill, index) => (
                         <div className="skill-item modal-skill-item" key={index}>
                             <p>{skill.name}</p>
-                            <div className={`range-container`}>
+                            <div className="range-container inner-shadow">
+                                <div className="progress-meter" style={{ width: `calc(${skill.level}% - 14px)` }}></div>
                                 <input
                                     type="range"
                                     className={`range-bar`}
@@ -117,7 +149,7 @@ export default function ManageSkills() {
                 }
 
                 {!fetchedSkill.length && <div className="skill-not-found-msg">
-                    <p>Add this skill to your profile!</p>
+                    <p>Add this <span>skill</span> to your profile!</p>
                 </div>}
 
             </div>
@@ -125,8 +157,9 @@ export default function ManageSkills() {
             <div className="modal-btn">
                 {
                     fetchedSkill.length
-                        ? <button onClick={handleSaveSocialLinks} className="btn-1 outer-shadow hover-in-shadow">Save Skills</button>
-                        : <button onClick={handleAddNewSkill} className="btn-1 outer-shadow hover-in-shadow">Add Skill</button>
+                        ? <button onClick={handleSaveSkills} className={`btn-1 outer-shadow ${isProfileUpdating ? "btn-disabled" : "hover-in-shadow"}`}>{isProfileUpdating && <ServerSpinLoader />} Save Skills</button>
+                        : <button onClick={handleAddNewSkill}
+                            className={`btn-1 outer-shadow hover-in-shadow`}> Add Skill</button>
                 }
 
             </div>

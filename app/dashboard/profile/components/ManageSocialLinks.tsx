@@ -4,15 +4,21 @@ import { InputField } from "../../components";
 import { useProfile } from "../../context/ProfileProvider";
 import '../styles/manageSocialLinks.scss';
 import { allSocialLinks } from "./ProfileSocialLinks";
+import { saveSocialLinks } from "../server/profileAction";
+import { showToast } from "@/utils/showToast";
+import ServerSpinLoader from "@/app/components/Loader/ServerSpinLoader";
+import { useModalAction } from "@/app/hook/useModalAction";
 
-type SocialLinksType = {
+export type SocialLinksType = {
     label: string;
     link: string;
 }[]
 
 
 export default function ManageSocialLinks() {
-    const { profileData } = useProfile();
+    const { profileData, isProfileUpdating, setIsProfileUpdating } = useProfile();
+    const { setModalPopup } = useModalAction();
+
 
     const [socialLinks, setSocialLinks] = useState<SocialLinksType>(profileData ? profileData.socialLinks : []);
 
@@ -57,11 +63,28 @@ export default function ManageSocialLinks() {
 
     const handleSaveSocialLinks = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        //Handle Save...
+        if (isProfileUpdating) return;
 
+        if (!socialLinks.length) return;
+
+        setIsProfileUpdating(true);
+
+        const { message, errorMessage } = await saveSocialLinks(socialLinks) as { message?: string, errorMessage?: string };
+
+        if (message) {
+            setIsProfileUpdating(false);
+            setModalPopup(false);
+            showToast("success", message)
+            return;
+        }
+
+        if (errorMessage) {
+            showToast("error", errorMessage)
+            setIsProfileUpdating(false);
+            return;
+        }
     }
 
-    // console.log(socialLinks);
 
     return (
         <div className="add-content-container">
@@ -104,7 +127,7 @@ export default function ManageSocialLinks() {
             </div>
 
             <div className="modal-btn">
-                <button onClick={handleSaveSocialLinks} className="btn-1 outer-shadow hover-in-shadow">Save Links</button>
+                <button onClick={handleSaveSocialLinks} className={`btn-1 outer-shadow hover-in-shadow ${isProfileUpdating ? "btn-disabled" : ""}`}>{isProfileUpdating && <ServerSpinLoader />} Save Links</button>
             </div>
         </div>
     )

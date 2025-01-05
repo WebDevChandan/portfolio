@@ -1,11 +1,21 @@
 "use client";
-import React, { createContext, Dispatch, SetStateAction, useState } from "react"
+import React, { createContext, Dispatch, MouseEvent, SetStateAction, useState } from "react"
 import { Modal, UploadFile } from "../components";
-import { FileType } from "../components/UploadFile";
+import { FileInfoType, FileType } from "../components/UploadFile";
+import { UploadedFileForDB } from "../profile/components/ProfileImage";
+
+export type FileConfig = {
+    folderName: string,
+    width?: number,
+    height?: number,
+}
 
 interface UploadFileType {
     uploadTitle: string | null;
     fileType: FileType;
+    fileConfig: FileConfig | null;
+    isMultiFileNeeded?: boolean;
+    onSave: (param: UploadedFileForDB) => Promise<object | undefined>,
 }
 
 interface FileUploadContextType extends UploadFileType {
@@ -17,6 +27,9 @@ interface FileUploadContextType extends UploadFileType {
 export const FileUploadContext = createContext<FileUploadContextType>({
     fileType: FileType.Image,
     uploadTitle: null,
+    fileConfig: null,
+    isMultiFileNeeded: false,
+    onSave: (param: UploadedFileForDB) => Promise.resolve(undefined),
     setfileUploadInfo: () => { },
     isFileUploadPopUp: false,
     setIsFileUploadPopUp: () => { },
@@ -27,8 +40,10 @@ export default function FileUploadProvider({ children }: { children: React.React
     const [fileUploadInfo, setfileUploadInfo] = useState<UploadFileType>({
         uploadTitle: null,
         fileType: FileType.Image,
+        fileConfig: null,
+        isMultiFileNeeded: false,
+        onSave: (param: UploadedFileForDB) => Promise.resolve(undefined),
     });
-
 
     return (
         <FileUploadContext.Provider value={{
@@ -45,6 +60,9 @@ export default function FileUploadProvider({ children }: { children: React.React
                 {<UploadFile
                     uploadTitle={fileUploadInfo.uploadTitle}
                     fileType={fileUploadInfo.fileType}
+                    fileConfig={fileUploadInfo.fileConfig}
+                    isMultiFileNeeded={fileUploadInfo.isMultiFileNeeded}
+                    saveFile={fileUploadInfo.onSave}
                 />}
             />
         </FileUploadContext.Provider>

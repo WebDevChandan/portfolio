@@ -1,4 +1,4 @@
-import { ChangeEvent, ReactElement } from "react";
+import { ChangeEvent, KeyboardEvent, MouseEvent, ReactElement } from "react";
 import { IconType } from "react-icons";
 import { MdDelete } from "react-icons/md";
 import '../styles/inputField.scss';
@@ -15,7 +15,8 @@ type InputFieldType = {
     handleDeleteInput?: () => void
 }
 
-export default function InputField({ label, icon, deleteIcon, placeholder, value, specificName, disabled = false, handleChangeInput = () => { }, handleDeleteInput = () => { } }: InputFieldType) {
+export default function InputField({ label, icon, deleteIcon, placeholder, value, specificName, disabled = false,
+    handleChangeInput = () => { }, handleDeleteInput = () => { } }: InputFieldType) {
 
     return (
         <>
@@ -35,7 +36,7 @@ export default function InputField({ label, icon, deleteIcon, placeholder, value
                     style={!icon ? { paddingLeft: "15px" } : { paddingLeft: "45px" }}
                     name={specificName ? specificName.toLocaleLowerCase() : label?.toLocaleLowerCase()}
                     value={value}
-                    onChange={(e) => handleChangeInput(e)}
+                    onChange={handleChangeInput}
                     readOnly={disabled}
                     disabled={disabled}
                 />

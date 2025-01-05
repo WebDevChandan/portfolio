@@ -5,7 +5,7 @@ import './styles/home.scss';
 
 interface HomeDataType {
   name: string,
-  myImages: string[],
+  mainImage: string,
   roles: string[],
 }
 
@@ -14,11 +14,11 @@ const fetchHomeDetails = async (): Promise<HomeDataType | null> => {
     const homeData = await prisma.personalInfo.findFirst({
       select: {
         name: true,
-        myImages: true,
+        mainImage: true,
         roles: true,
       }
     });
- 
+
     return homeData;
 
   } catch (error) {
@@ -43,7 +43,7 @@ export default async function Home() {
                 <HomeText name={homeData.name} roles={homeData.roles} />
 
                 <div className="home-img">
-                  <MyImage src={homeData?.myImages[0]} />
+                  <MyImage src={homeData.mainImage} />
                 </div>
               </>
             )}

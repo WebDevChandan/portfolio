@@ -8,6 +8,8 @@ type ProfileContextType = {
     setIsEditable: Dispatch<SetStateAction<boolean>>;
     isUpdateable: boolean;
     setIsUpdateable: Dispatch<SetStateAction<boolean>>;
+    isProfileUpdating: boolean;
+    setIsProfileUpdating: Dispatch<SetStateAction<boolean>>;
 };
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
@@ -24,9 +26,10 @@ export const useProfile = () => {
 export const ProfileProvider = ({ children, profileData }: { children: React.ReactNode; profileData: ProfileType }) => {
     const [isEditable, setIsEditable] = useState<boolean>(false);
     const [isUpdateable, setIsUpdateable] = useState<boolean>(false);
+    const [isProfileUpdating, setIsProfileUpdating] = useState<boolean>(false);
 
     return (
-        <ProfileContext.Provider value={{ isEditable, setIsEditable, isUpdateable, setIsUpdateable, profileData }}>
+        <ProfileContext.Provider value={{ isEditable, setIsEditable, isUpdateable, setIsUpdateable, profileData, isProfileUpdating, setIsProfileUpdating }}>
             {children}
         </ProfileContext.Provider>
     );

@@ -5,6 +5,7 @@ import { ManageSocialLinks } from ".";
 import { InputField } from "../../components";
 import EditButton from "../../components/EditButton";
 import { useProfile } from "../../context/ProfileProvider";
+import ModalProvider from "@/app/context/ModalProvider";
 
 export const allSocialLinks = [{
     label: "linkedin",
@@ -33,7 +34,7 @@ export default function ProfileSocialLinks() {
     const { profileData } = useProfile();
 
     return (
-        <>
+        <ModalProvider>
             <div className="row">
                 {profileData?.socialLinks &&
                     profileData.socialLinks.map(({ label, link }) => (
@@ -50,6 +51,6 @@ export default function ProfileSocialLinks() {
 
                 <EditButton label="Edit Links" children={<ManageSocialLinks />} />
             </div>
-        </>
+        </ModalProvider>
     )
 }
