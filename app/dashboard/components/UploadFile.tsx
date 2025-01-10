@@ -4,9 +4,9 @@ import ServerSpinLoader from "@/app/components/Loader/ServerSpinLoader";
 import { showToast } from "@/utils/showToast";
 import { ChangeEvent, MouseEvent, MouseEventHandler, useEffect, useRef, useState } from "react";
 import { FaFilePdf, FaImage } from "react-icons/fa";
-import { MdDelete, MdOutlineDelete } from "react-icons/md";
+import { MdDelete, MdOutlineDelete, MdOutlinePauseCircle, MdOutlinePauseCircleFilled } from "react-icons/md";
 import { FileConfig } from "../context/FileUploadProvider";
-import { signUploadFile, uploadImageAction, uploadImageWithProgress, uploadPDFAction } from "../server/uploadFileAction";
+import { deleteFile, signUploadFile, uploadImageAction, uploadImageWithProgress, uploadPDFAction } from "../server/uploadFileAction";
 import '../styles/uploadFile.scss';
 import axios from "axios";
 import { RxReload } from "react-icons/rx";
@@ -31,7 +31,10 @@ export type FileInfoType = {
   file: File | null,
   fileName: string,
   fileSize: string,
-  fileUploadURL: string,
+  fileUpload: {
+    URL: string,
+    public_id: string,
+  },
   fileProgress: number,
   status: {
     isFileUploading: boolean,
@@ -73,6 +76,7 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
     isFileUploading: false,
     fileUploaded: false,
     fileUploadFailed: false,
+    isFileDeleting: false,
   });
   const [fileInfo, setFileInfo] = useState<FileInfoType>([]);
   const completedUploadsRef = useRef<number[]>([]);
@@ -97,7 +101,12 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
     // Direct Upload for File Upload or Image/File for Multimedia
     if (FileType.Document === fileType || isMultiFileNeeded) {
       if (blobFile.length) { //&& fileInfo.file instanceof File
-        uploadFile(undefined, fileInfo[fileInfo.length - 1]);
+        // uploadFile(undefined, fileInfo[fileInfo.length - 1]);
+
+        fileInfo.map((newFile) => {
+          if (!newFile.fileUpload.URL && !newFile.status.fileUploadFailed)
+            fetchFileToUpload(undefined, newFile);
+        })
       }
     }
   }, [blobFile]);
@@ -106,6 +115,10 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
     const newlyCompleted = fileInfo
       .map((info, index) => (info.fileProgress === 100 ? index : null))
       .filter((index) => index !== null && !completedUploadsRef.current.includes(index));
+
+    console.log("newlyCompleted");
+
+    console.log(newlyCompleted);
 
     if (newlyCompleted.length > 0) {
       setFileInfo((prevFileInfo) =>
@@ -123,6 +136,11 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
       );
 
       completedUploadsRef.current = [...completedUploadsRef.current, ...newlyCompleted.filter((index): index is number => index !== null)];
+
+      console.log("completedUploadsRef.current");
+
+      console.log(completedUploadsRef.current);
+
       setFileUploading((prev) => ({
         ...prev,
         isFileUploading: false,
@@ -130,7 +148,20 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
         fileUploaded: true,
       }));
     }
-  }, [fileInfo]);
+
+    //If all files got Removed or Deleted before Saved
+    if (!fileInfo.length) {
+      setBlobFile([]);
+
+      if (fileInputRef.current)
+        fileInputRef.current.value = "";
+
+      setFileUploading({
+        ...fileUploading,
+        fileUploadFailed: false,
+      })
+    }
+  }, [fileInfo, fileInfo.length]);
 
 
   const handleClickFileInput = () => {
@@ -159,10 +190,15 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
             file: file,
             fileName: fileName,
             fileSize: `${fileSizeInBytes.toFixed(1)} Bytes`,
-            fileUploadURL: "",
+            fileUpload: {
+              URL: "",
+              public_id: "",
+            },
             fileProgress: 0,
             status: {
-              ...fileUploading,
+              isFileUploading: false,
+              fileUploaded: false,
+              fileUploadFailed: false,
             }
           }])
 
@@ -174,10 +210,15 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
             file: file,
             fileName: fileName,
             fileSize: `${sizeInKB.toFixed(1)} Bytes`,
-            fileUploadURL: "",
+            fileUpload: {
+              URL: "",
+              public_id: "",
+            },
             fileProgress: 0,
             status: {
-              ...fileUploading,
+              isFileUploading: false,
+              fileUploaded: false,
+              fileUploadFailed: false,
             }
           }])
 
@@ -198,10 +239,15 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
               file: file,
               fileName: fileName,
               fileSize: `${sizeInMB.toFixed(1)} Bytes`,
-              fileUploadURL: "",
+              fileUpload: {
+                URL: "",
+                public_id: "",
+              },
               fileProgress: 0,
               status: {
-                ...fileUploading,
+                isFileUploading: false,
+                fileUploaded: false,
+                fileUploadFailed: false,
               }
             }])
 
@@ -224,6 +270,12 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
         }
 
         try {
+          if (!isMultiFileNeeded) {
+            setBlobFile([]);
+
+            setFileInfo([]);
+          }
+
           if (FileType.Image === fileType) {
             if (_UploadImageFileType.includes(file.type)) {
               handleFileInfo(file, file.name, file.size);
@@ -266,8 +318,7 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
   console.log("fileInfo");
   console.log(fileInfo);
 
-  const pauseUploadingFile = (event: MouseEvent<HTMLDivElement>, [fileInfo]: FileInfoType) => {
-    event.preventDefault();
+  const pauseUploadingFile = ([fileInfo]: FileInfoType) => {
     console.log("pauseUploadingFile Fn - FileInfo");
     console.log(fileInfo);
 
@@ -275,76 +326,125 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
 
     //Stopping Upload Process, Only while uploading to Cloud
     if (fileInfo.fileProgress !== 100 && !fileInfo.status.fileUploaded) {
-      console.log("Hidding After Upload");
       abortController.current.abort();
-
-      // setFileUploading({
-      //   ...fileUploading,
-      //   fileUploadFailed: true,
-      //   isFileUploading: false,
-      // });
-    }
-
-    //Need to Delete the Successfully Uploaded File
-    if (fileInfo.fileProgress === 100 && fileInfo.status.fileUploaded) {
-
     }
   }
 
-  const removeFile = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
+  const removeFile = async ([currentFile]: FileInfoType) => {
+    if (currentFile.status.isFileUploading) return;
 
-    if (fileUploading.isFileUploading || fileUploading.fileUploaded) return;
+    // Removing the Uploaded Failed File
+    if (currentFile.status.fileUploadFailed && !currentFile.fileUpload.URL) {
+      setFileInfo((prevFileInfo) =>
+        prevFileInfo.filter(fileInfo => fileInfo.file !== currentFile.file)
+      )
+    }
 
-    if (fileUploading.fileUploadFailed) {
-      setBlobFile([]);
+    //Deleting the Successfully Uploaded File
+    if (currentFile.fileProgress === 100 && currentFile.status.fileUploaded && currentFile.fileUpload.public_id) {
+      if (confirm("Want to delete this File?")) {
+        setFileInfo((prevFileInfo) =>
+          prevFileInfo.map(fileInfo =>
+            fileInfo.file === currentFile.file ? {
+              ...fileInfo,
+              status: {
+                ...fileInfo.status,
+                isFileUploading: true,
+              }
+            } : fileInfo
+          )
+        )
 
-      if (fileInputRef.current)
-        fileInputRef.current.value = "";
+        setFileUploading((prev) => ({
+          ...prev,
+          isFileUploading: true,
+          isFileDeleting: true,
+        }));
 
-      setFileUploading({
-        ...fileUploading,
-        fileUploadFailed: false,
-      })
+        try {
+          const { message, info, errorMessage } = await deleteFile(currentFile.fileUpload.public_id) as { message?: string, info?: string, errorMessage?: string };
+
+          if (message) {
+            showToast("success", message);
+
+            setFileInfo((prevFileInfo) =>
+              prevFileInfo.filter(fileInfo => fileInfo.file !== currentFile.file)
+            )
+          }
+
+          if (info)
+            showToast("info", info);
+
+          if (errorMessage)
+            showToast("error", errorMessage);
+
+        } catch (error) {
+          showToast("error", "Error Deleting File");
+
+        } finally {
+          setFileInfo((prevFileInfo) =>
+            prevFileInfo.map(fileInfo =>
+              fileInfo.file === currentFile.file ? {
+                ...fileInfo,
+                status: {
+                  ...fileInfo.status,
+                  isFileUploading: false,
+                  fileUploaded: false,
+                }
+              } : fileInfo
+            )
+          )
+
+          setFileUploading((prev) => ({
+            ...prev,
+            isFileUploading: false,
+            isFileDeleting: false,
+          }));
+        }
+      }
     }
   }
 
   console.log(fileUploading);
-  // const saveFileToDB = async () => {
-  //   if (fileUploading.isFileUploading) return;
+  const saveFileToDB = async () => {
+    if (fileUploading.isFileUploading || fileUploading.isFileDeleting) return;
 
-  //   if (fileInfo.fileUploadURL) {
-  //     setFileUploading((prev) => ({
-  //       ...prev,
-  //       isFileUploading: true,
-  //     }));
+    for (let i = 0; i < fileInfo.length; i++) {
+      const currentFile = fileInfo[i];
 
-  //     try {
-  //       if (fileInfo.file instanceof File) {
-  //         const { message, errorMessage } = await saveFile({ file: fileInfo.file, uploadedFileURL: fileInfo.fileUploadURL }) as { message?: string, errorMessage?: string };
+      if (currentFile.fileUpload.URL) {
+        setFileUploading((prev) => ({
+          ...prev,
+          isFileUploading: true,
+        }));
 
-  //         if (message) showToast("success", message);
-  //         if (errorMessage) showToast("error", errorMessage);
+        try {
+          if (currentFile.file instanceof File) {
+            const { message, errorMessage } = await saveFile({ file: currentFile.file, uploadedFileURL: currentFile.fileUpload.URL }) as { message?: string, errorMessage?: string };
 
-  //         setFileUploading((prev) => ({
-  //           ...prev,
-  //           isFileUploading: false,
-  //         }));
+            if (message) showToast("success", message);
+            if (errorMessage) showToast("error", errorMessage);
 
-  //       } else {
-  //         showToast("error", "No File Uploaded");
-  //       }
+            setFileUploading((prev) => ({
+              ...prev,
+              isFileUploading: false,
+            }));
 
-  //     } catch (error) {
-  //       showToast("error", "Error Saving File");
+          } else {
+            showToast("error", "No File Uploaded");
+          }
 
-  //       setFileUploading((prev) => ({
-  //         ...prev,
-  //         isFileUploading: false,
-  //       }));
-  //     }
-  //   }
-  // }
+        } catch (error) {
+          showToast("error", "Error Saving File");
+
+          setFileUploading((prev) => ({
+            ...prev,
+            isFileUploading: false,
+          }));
+        }
+      }
+    }
+  }
 
   const uploadFileToCloud = async ({ ...CloudFileConfig }: UploadFileToCloudType) => {
     if (abortController.current)
@@ -363,7 +463,7 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
     formData.append('timestamp', `${CloudFileConfig.timestamp}`);
 
     try {
-      const { secure_url } = await axios.post(`https://api.cloudinary.com/v1_1/dnwf21zlv/image/upload`, formData, {
+      const { secure_url, public_id } = await axios.post(`https://api.cloudinary.com/v1_1/dnwf21zlv/image/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -381,12 +481,14 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
       }).then(res => res.data);
 
       if (secure_url) {
-
         setFileInfo((prevFileInfo: FileInfoType) =>
           prevFileInfo.map((info) =>
             info.file === CloudFileConfig.file ? {
               ...info,
-              fileUploadURL: secure_url,
+              fileUpload: {
+                URL: secure_url,
+                public_id: public_id,
+              },
               status: {
                 ...fileUploading,
                 isFileUploading: false,
@@ -426,7 +528,9 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
         showToast("info", "File Not Uploaded!");
 
       } else {
-        showToast("info", "File Upload Failed!");
+        console.error("Error Loged: File Failed")
+        showToast("error", "File Upload Failed!");
+
       }
 
       setFileInfo((prevFileInfo: FileInfoType) =>
@@ -435,6 +539,7 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
             ...info,
             status: {
               ...fileUploading,
+              fileUploaded: false,
               fileUploadFailed: true,
               isFileUploading: false,
             }
@@ -444,13 +549,14 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
 
       setFileUploading({
         ...fileUploading,
+        fileUploaded: false,
         fileUploadFailed: true,
         isFileUploading: false,
       });
     }
   }
 
-  const uploadFile = async (event?: MouseEvent<HTMLButtonElement | HTMLDivElement>, currentFile?: FileInfoType[number]) => {
+  const fetchFileToUpload = async (event?: MouseEvent<HTMLButtonElement | HTMLDivElement>, currentFile?: FileInfoType[number]) => {
 
     if (event) {
       event.preventDefault();
@@ -459,11 +565,13 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
       if (fileUploading.fileUploaded || currentFile?.status.isFileUploading) return;
     }
 
-    //For reUploading File
+    //For Manual Uploading File
     if (!currentFile) {
+      console.log("Direct Upload");
+
       setFileUploading({
         ...fileUploading,
-        isFileUploading: !fileUploading.isFileUploading,
+        isFileUploading: true,
         fileUploadFailed: false,
         fileUploaded: false,
       });
@@ -479,10 +587,12 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
         }))
       )
 
-    } else {
+    } else { //For Direct or Re-Uploading File
+      console.log("Reuploading");
+
       setFileUploading({
         ...fileUploading,
-        isFileUploading: !fileUploading.isFileUploading,
+        isFileUploading: true,
         fileUploadFailed: false,
         fileUploaded: false,
       });
@@ -495,6 +605,7 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
               ...fileUploading,
               isFileUploading: !info.status.isFileUploading,
               fileUploadFailed: false,
+              fileUploaded: false,
             }
           } : info)
       )
@@ -510,7 +621,7 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
       }
 
       try {
-        if (currentFileInfo.file instanceof File && !currentFileInfo.fileUploadURL) {
+        if (currentFileInfo.file instanceof File && !currentFileInfo.fileUpload.URL) {
           console.log("File Block Executed");
 
           const imageFileName = currentFileInfo.fileName.match(/^([^\.]+)/)?.[0] ?? null;
@@ -592,15 +703,11 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
     }
   }
 
-  const reloadToUploadFile = async ([currentFile]: FileInfoType, event?: MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
-    if (event) {
-      event.preventDefault();
+  const reloadToUploadFile = async ([currentFile]: FileInfoType) => {
+    if (currentFile.status.isFileUploading) return;
+    if (currentFile.status.fileUploaded) return;
 
-      if (currentFile.status.isFileUploading) return;
-      if (currentFile.status.fileUploaded) return;
-    }
-
-    uploadFile(undefined, currentFile);
+    fetchFileToUpload(undefined, currentFile);
   }
 
   return (
@@ -637,8 +744,8 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
                 <div className="file-info-header">
                   <p className="file-name">{fileInfo.fileName}</p>
 
-                  {(fileInfo.status.isFileUploading && !fileInfo.fileUploadURL) && (<div className="file-uploadpause-icon" onClick={(event) => pauseUploadingFile(event, [fileInfo])}><MdOutlineDelete color="#cc3a3b" cursor="pointer" /></div>)}
-                  {(fileInfo.status.fileUploadFailed && !fileInfo.status.isFileUploading && !fileInfo.fileUploadURL) && (!fileInfo.status.fileUploaded && fileInfo.fileProgress !== 100) && (<div className="file-reupload-icon" onClick={(event) => reloadToUploadFile([fileInfo], event)}><RxReload color="#808080" cursor="pointer" /></div>)}
+                  {(fileInfo.status.isFileUploading && !fileInfo.fileUpload.URL) && (<div className="file-uploadpause-icon" onClick={() => pauseUploadingFile([fileInfo])}><MdOutlinePauseCircle color="#808080" cursor="pointer" /></div>)}
+                  {(fileInfo.status.fileUploadFailed && !fileInfo.status.isFileUploading && !fileInfo.fileUpload.URL) && (!fileInfo.status.fileUploaded && fileInfo.fileProgress !== 100) && (<div className="file-reupload-icon" onClick={() => reloadToUploadFile([fileInfo])}><RxReload color="#808080" cursor="pointer" /></div>)}
                 </div>
 
                 <div className="file-progress progress inner-shadow">
@@ -651,8 +758,9 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
                 </div>
               </div>
 
-              {(fileInfo.status.fileUploaded || fileInfo.fileProgress === 100) && <div className="file-delete-icon"><MdDelete color="#cc3a3b" cursor="pointer" /></div>}
-
+              {fileInfo.status.isFileUploading && fileInfo.status.fileUploaded
+                ? <div className="file-delete-loader"><ServerSpinLoader defaultPosition="static" /></div>
+                : (fileInfo.status.fileUploadFailed || fileInfo.status.fileUploaded || fileInfo.fileProgress === 100) && <div className="file-delete-icon" onClick={() => removeFile([fileInfo])}><MdDelete color="#cc3a3b" cursor="pointer" /></div>}
             </div>
           ))
         }
@@ -675,7 +783,7 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
           &&
           <>
             <button
-              className={`btn-1 outer-shadow ${fileUploading.isFileUploading ? "btn-disabled-withoutLoading" : "hover-in-shadow"}`}
+              className={`btn-1 outer-shadow ${fileUploading.isFileUploading ? "btn-disabled-without-loader" : "hover-in-shadow"}`}
               onClick={handleClickFileInput}
               disabled={fileUploading.isFileUploading}
             >
@@ -683,38 +791,29 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
               {FileType.Image === fileType ? " Image" : " File"}
             </button>
 
-            {(fileUploading.fileUploaded) ? (
+            {(fileUploading.fileUploaded || fileUploading.fileUploadFailed) ? (
               <button
-                className={`btn-1 outer-shadow ${fileUploading.isFileUploading ? "btn-disabled" : "hover-in-shadow"}`}
-                disabled={fileUploading.isFileUploading || !fileUploading.fileUploaded}
-              // onClick={saveFileToDB}
+                className={`btn-1 outer-shadow ${(!fileUploading.isFileUploading && fileUploading.fileUploaded && !fileUploading.isFileDeleting) ? "hover-in-shadow" : fileUploading.isFileDeleting ? "btn-disabled-without-loader" : "btn-disabled"}`}
+                disabled={!fileUploading.fileUploaded}
+                onClick={saveFileToDB}
               >
-                {fileUploading.isFileUploading && <ServerSpinLoader />}
+                {fileUploading.isFileUploading && fileUploading.fileUploaded && !fileUploading.isFileDeleting && <ServerSpinLoader />}
                 Save
                 {FileType.Image === fileType ? " Image" : " File"}
               </button>
             ) : (
               <>
-                {!fileUploading.fileUploadFailed
-                  ? <button
+                {!fileUploading.fileUploadFailed &&
+                  <button
                     className={`btn-1 outer-shadow ${fileUploading.isFileUploading ? "btn-disabled" : "hover-in-shadow"}`}
                     disabled={fileUploading.isFileUploading || fileUploading.fileUploaded}
-                    onClick={uploadFile}
+                    onClick={fetchFileToUpload}
                   >
                     {fileUploading.isFileUploading && <ServerSpinLoader />}
                     Upload
                     {FileType.Image === fileType ? " Image" : " File"}
                   </button>
-
-                  : <button
-                    className={`btn-1 outer-shadow ${fileUploading.isFileUploading ? "btn-disabled" : "hover-in-shadow"}`}
-                    disabled={fileUploading.isFileUploading || fileUploading.fileUploaded}
-                    onClick={removeFile}
-                  >
-                    {fileUploading.isFileUploading && <ServerSpinLoader />}
-                    Remove
-                    {FileType.Image === fileType ? " Image" : " File"}
-                  </button>}
+                }
               </>
             )}
 

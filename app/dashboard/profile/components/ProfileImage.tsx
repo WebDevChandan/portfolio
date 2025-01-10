@@ -48,7 +48,7 @@ export default function ProfileImage() {
                         folderName: "myImages/aboutImage",
                         height: 405,
                         width: 405,
-                    }, true, handleSaveAboutImage)}
+                    }, false, handleSaveAboutImage)}
                 id="uploadImage"
             />
         </div>

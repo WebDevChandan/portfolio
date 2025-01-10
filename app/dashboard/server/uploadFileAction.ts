@@ -171,6 +171,19 @@ export async function signUploadFile(folder: string, upload_preset: string, file
 }
 
 
+export async function deleteFile(public_id: string) {
+    return await cloudinary.uploader.destroy(public_id)
+        .then(resolve => {
+            if (resolve.result === "ok")
+                return { message: "File Deleted Successfully!" };
+            else
+                return { info: "File Not Found!" };
+        })
+        .catch(error => {
+            console.error(error);
+            return { errorMessage: "Error Deleting File!" };
+        });
+}
 
 //-- Upload Image by URL Path:-
 // const imagePath = 'https://cloudinary-devs.github.io/cld-docs-assets/assets/images/happy_people.jpg';
