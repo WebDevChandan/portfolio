@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, MouseEvent, useState } from "react";
+import { ChangeEvent, MouseEvent, useEffect, useState } from "react";
 import { InputField } from "../../components";
 import { useProfile } from "../../context/ProfileProvider";
 import '../styles/manageSocialLinks.scss';
@@ -19,8 +19,28 @@ export default function ManageSocialLinks() {
     const { profileData, isProfileUpdating, setIsProfileUpdating } = useProfile();
     const { setModalPopup } = useModalAction();
 
-
     const [socialLinks, setSocialLinks] = useState<SocialLinksType>(profileData ? profileData.socialLinks : []);
+
+    const [hasContentChanged, setHasContentChanged] = useState(false);
+
+    useEffect(() => {
+        if (!socialLinks.length)
+            setHasContentChanged(false)
+
+        else if (profileData?.socialLinks.length !== socialLinks.length)
+            setHasContentChanged(true);
+
+        else {
+            const hasSkillsChanged = socialLinks.some(socialLink =>
+                profileData?.socialLinks.some(prevSocialLink =>
+                    prevSocialLink.label.toLocaleLowerCase() === socialLink.label.toLocaleLowerCase() && prevSocialLink.link !== socialLink.link
+                )
+            );
+
+            setHasContentChanged(hasSkillsChanged);
+        }
+
+    }, [socialLinks]);
 
     const handleNewSocialLink = (event: { target: { value: string; }; }) => {
         const { value } = event.target;
@@ -127,7 +147,7 @@ export default function ManageSocialLinks() {
             </div>
 
             <div className="modal-btn">
-                <button onClick={handleSaveSocialLinks} className={`btn-1 outer-shadow hover-in-shadow ${isProfileUpdating ? "btn-disabled" : ""}`}>{isProfileUpdating && <ServerSpinLoader />} Save Links</button>
+                <button onClick={handleSaveSocialLinks} disabled={isProfileUpdating || !hasContentChanged} className={`btn-1 outer-shadow ${isProfileUpdating ? "btn-disabled" : !hasContentChanged ? "btn-disabled-without-loader" : "hover-in-shadow"}`}>{isProfileUpdating && <ServerSpinLoader />} Save Links</button>
             </div>
         </div>
     )

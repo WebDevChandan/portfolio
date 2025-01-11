@@ -1,5 +1,5 @@
 "use client";
-import { ChangeEvent, KeyboardEvent, MouseEvent, useMemo, useState } from "react";
+import { ChangeEvent, KeyboardEvent, MouseEvent, useEffect, useMemo, useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { InputField } from "../../components";
@@ -26,16 +26,38 @@ export default function ManageSkills() {
         level: "0",
     });
 
+    const [hasContentChanged, setHasContentChanged] = useState(false);
+
     const fetchedSkill = useMemo(() => {
         return skills.filter(skill => skill.name.toLocaleLowerCase().startsWith(newSkill.name.toLocaleLowerCase()));
     }, [skills, newSkill])
+
+    useEffect(() => {
+        if (!skills.length)
+            setHasContentChanged(false);
+
+        else if (profileData?.skills.length !== skills.length)
+            setHasContentChanged(true);
+
+        else {
+            const hasSkillsChanged = skills.some(skill =>
+                profileData?.skills.some(prevSkill =>
+                    prevSkill.name.toLocaleLowerCase() === skill.name.toLocaleLowerCase() && prevSkill.level !== skill.level
+                )
+            );
+
+            setHasContentChanged(hasSkillsChanged);
+        }
+
+    }, [skills]);
+
 
     const handleSaveSkills = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
 
         if (event.type !== "click") return;
 
-        if (isProfileUpdating) return;
+        if (isProfileUpdating || !hasContentChanged) return;
 
         if (!skills.length) return;
 
@@ -157,9 +179,8 @@ export default function ManageSkills() {
             <div className="modal-btn">
                 {
                     fetchedSkill.length
-                        ? <button onClick={handleSaveSkills} className={`btn-1 outer-shadow ${isProfileUpdating ? "btn-disabled" : "hover-in-shadow"}`}>{isProfileUpdating && <ServerSpinLoader />} Save Skills</button>
-                        : <button onClick={handleAddNewSkill}
-                            className={`btn-1 outer-shadow hover-in-shadow`}> Add Skill</button>
+                        ? <button onClick={handleSaveSkills} disabled={isProfileUpdating || !hasContentChanged} className={`btn-1 outer-shadow ${isProfileUpdating ? "btn-disabled" : !hasContentChanged ? "btn-disabled-without-loader" : "hover-in-shadow"}`}>{isProfileUpdating && <ServerSpinLoader />} Save Skills</button>
+                        : <button onClick={handleAddNewSkill} className={`btn-1 outer-shadow hover-in-shadow`}> Add Skill</button>
                 }
 
             </div>

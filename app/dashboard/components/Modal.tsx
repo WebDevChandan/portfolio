@@ -37,12 +37,26 @@ export default function Modal({ isModalPopUpOpen, setModalPopup, children }: Mod
             }
         };
 
+        //Close Modal on click Outside - Removed for now
+        const handleClick = (event: MouseEvent) => {
+            if (isModalPopUpOpen) {
+                const modalElement = document.querySelector('.modal-container .open') as HTMLElement | null;
+                const isInsideModalClick = modalElement?.contains(event.target as Node);
+
+                if (!isInsideModalClick ) {
+                    setModalPopup(false);
+                }
+            }
+        };
+
         document.addEventListener('keydown', handleKeyDown);
+        // document.addEventListener('click', handleClick);
 
         return () => {
             document.removeEventListener('keydown', handleKeyDown);
+            // document.removeEventListener('click', handleClick);
         };
-    }, [setModalPopup]);
+    }, [isModalPopUpOpen, setModalPopup]);
 
     return (
         <div className={`modal-container${isModalPopUpOpen ? ' open' : ''}`}>

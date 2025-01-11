@@ -172,6 +172,11 @@ export async function signUploadFile(folder: string, upload_preset: string, file
 
 
 export async function deleteFile(public_id: string) {
+    const isTokenValid = await isValidToken();
+
+    if (!isTokenValid)
+        return { "errorMessage": "Invalid Token!" };
+    
     return await cloudinary.uploader.destroy(public_id)
         .then(resolve => {
             if (resolve.result === "ok")

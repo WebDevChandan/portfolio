@@ -163,6 +163,44 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
     }
   }, [fileInfo, fileInfo.length]);
 
+  useEffect(() => {
+    const uploadContainer = document.querySelector('.upload-container') as HTMLDivElement;
+
+    const handleDragOver = (e: DragEvent) => {
+      e.preventDefault();
+      console.log("DragOver called");
+      uploadContainer.style.backgroundColor = 'var(--bg-disabled)';
+
+      if (e.dataTransfer) {
+        e.dataTransfer.dropEffect = "copy";
+      }
+    }
+
+    const handleDragLeave = (e: DragEvent) => {
+      e.preventDefault();
+      uploadContainer.style.backgroundColor = 'transparent';
+    }
+
+    const handleDrop = (event: DragEvent) => {
+      event.preventDefault();
+      console.log("File Dropped");
+      uploadContainer.style.backgroundColor = 'none';
+
+      const files = event.dataTransfer?.files;
+      handleInitialUploadFile(undefined, files);
+    }
+
+    uploadContainer.addEventListener("dragover", handleDragOver);
+    uploadContainer.addEventListener("dragleave", handleDragLeave);
+    uploadContainer.addEventListener("drop", handleDrop);
+
+    return () => {
+      uploadContainer.removeEventListener("dragover", handleDragOver);
+      uploadContainer.removeEventListener("dragleave", handleDragLeave);
+      uploadContainer.removeEventListener("drop", handleDrop);
+    }
+  }, []);
+
 
   const handleClickFileInput = () => {
     if (fileUploading.isFileUploading) return;
@@ -179,9 +217,18 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
       fileInputRef.current.value = "";
   }
 
-  const handleInitialUploadFile = (event: ChangeEvent<HTMLInputElement>) => {
-    const files = event.target.files;
-    console.log(files);
+  const handleInitialUploadFile = (event?: ChangeEvent<HTMLInputElement>, dropFiles?: FileList) => {
+    let files: FileList | null | undefined = null;
+
+    if (event) {
+      event.preventDefault();
+
+      files = event.target.files;
+      console.log(files);
+
+    } else {
+      files = dropFiles;
+    }
 
     const handleFileInfo = (file: File, fileName: string, fileSizeInBytes: number) => {
       if (fileSizeInBytes < 1024) {
