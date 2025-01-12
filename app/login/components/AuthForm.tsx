@@ -1,12 +1,13 @@
 "use client";
 import { AuthenticationContext } from "@/app/context/AuthContext";
 import useAuth from "@/app/hook/useAuth";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import { FaLock, FaUser } from "react-icons/fa";
 
 export default function AuthForm() {
     const { loading, data } = useContext(AuthenticationContext);
+    const searchParams = useSearchParams();
     const [inputs, setInputs] = useState({
         email: "",
         password: "",
@@ -16,7 +17,15 @@ export default function AuthForm() {
     const router = useRouter();
 
     useEffect(() => {
-        if (data) router.push('/dashboard');
+        if (data) {
+            const returnURL = searchParams.get("returnUrl") as string;
+            console.log(returnURL);
+
+            if (!returnURL)
+                router.push('/dashboard');
+            else
+                router.push(`${decodeURIComponent(returnURL)}`);
+        }
 
         if (inputs.email.length > 15 && inputs.password.length > 6)
             return setDisabled(false);

@@ -3,17 +3,24 @@ import type { NextRequest } from 'next/server';
 import * as jose from 'jose';
 
 export async function middleware(request: NextRequest) {
-    const { pathname } = request.nextUrl;
+    const returnUrl = encodeURIComponent(request.nextUrl.pathname);
+    console.log(returnUrl);
+
+    console.log("Decoded");
+    console.log(decodeURIComponent(returnUrl));
+
+    // const { pathname } = request.nextUrl;
+    // console.log(pathname);
 
     // Check if the request is for the login page
-    const isLoginPage = pathname === '/login' || pathname.startsWith('/login/');
+    const isLoginPage = decodeURIComponent(returnUrl) === '/login';
 
     try {
         const jwtCookie = request.cookies.get("jwt");
 
         if (!jwtCookie) {
             if (!isLoginPage) {
-                return NextResponse.redirect(new URL('/login', request.url));
+                return NextResponse.redirect(new URL(`/login?returnUrl=${returnUrl}`, request.url));
             }
             return NextResponse.next();
         }
@@ -24,7 +31,7 @@ export async function middleware(request: NextRequest) {
 
         if (!payload.id || !payload.firstName || !payload.lastName || !payload.email) {
             if (!isLoginPage) {
-                return NextResponse.redirect(new URL('/login', request.url));
+                return NextResponse.redirect(new URL(`/login?returnUrl=${returnUrl}`, request.url));
             }
             return NextResponse.next();
         }
@@ -38,7 +45,7 @@ export async function middleware(request: NextRequest) {
 
     } catch (error) {
         if (!isLoginPage) {
-            return NextResponse.redirect(new URL('/login', request.url));
+            return NextResponse.redirect(new URL(`/login?returnUrl=${returnUrl}`, request.url));
         }
         return NextResponse.next();
     }
