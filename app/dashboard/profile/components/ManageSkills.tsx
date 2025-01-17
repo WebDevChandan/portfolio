@@ -51,6 +51,20 @@ export default function ManageSkills() {
 
     }, [skills]);
 
+    useEffect(() => {
+        const handleKeyDown = (event: globalThis.KeyboardEvent) => {
+            if (event.key === 'Enter' && newSkill.name.length) {
+                handleAddNewSkill(event);
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [newSkill]);
+
 
     const handleSaveSkills = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
@@ -86,7 +100,7 @@ export default function ManageSkills() {
         })
     }
 
-    const handleAddNewSkill = (event: MouseEvent<HTMLButtonElement>) => {
+    const handleAddNewSkill = (event: MouseEvent<HTMLButtonElement> | globalThis.KeyboardEvent) => {
         event.preventDefault();
 
         if (!newSkill.name.trim()) return;
