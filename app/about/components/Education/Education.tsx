@@ -8,7 +8,7 @@ const fetchEducationDetail = async () => {
             select: {
                 to: true,
                 from: true,
-                level: true,
+                degree: true,
                 info: true,
                 institution: {
                     select: {
@@ -25,18 +25,18 @@ const fetchEducationDetail = async () => {
     }
 }
 export default async function Education() {
-
     const educationDetails = await fetchEducationDetail();
+    
     return (
         <div className="timeline">
             <div className="row">
                 {educationDetails &&
-                    (educationDetails?.map(({ from, to, level, info, institution }, index) => (
+                    (educationDetails?.map(({ from, to, degree, info, institution }, index) => (
                         <div className="timeline-item" key={index}>
                             <div className="timeline-item-inner outer-shadow">
                                 <i className="icon"><FaGraduationCap /></i>
                                 <span>{from} - {to}</span>
-                                <h3>{level}</h3>
+                                <h3>{degree}</h3>
                                 <h4>{institution.title}, {institution.location}</h4>
                                 <p dangerouslySetInnerHTML={{ __html: info }} />
 

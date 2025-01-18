@@ -1,0 +1,118 @@
+.education,
+.experience {
+    padding-bottom: 80px;
+}
+
+.timeline {
+    flex: 0 0 100%;
+    max-width: 100%;
+    position: relative;
+
+    &::before {
+        content: '';
+        width: 1px;
+        height: 100%;
+        left: 50%;
+        top: 0;
+        background-color: var(--bg-black-100);
+        position: absolute;
+    }
+
+    .timeline-item {
+        flex: 0 0 100%;
+        max-width: 100%;
+        padding: 0 15px;
+
+        &:nth-child(odd) {
+            padding-right: calc(50% + 50px);
+            text-align: right;
+        }
+
+        &:nth-child(even) {
+            padding-left: calc(50% + 50px);
+        }
+
+        &-inner {
+            padding: 30px;
+            border-radius: 5px;
+            position: relative;
+
+            &::before {
+                content: '';
+                position: absolute;
+                width: 30px;
+                height: 1px;
+                background-color: var(--bg-black-100);
+                top: 37px;
+                z-index: -1;
+            }
+
+            .icon {
+                height: 40px;
+                width: 40px;
+                background-color: var(--bg-black-50);
+                text-align: center;
+                border: 1px solid var(--bg-black-100);
+                line-height: 40px;
+                border-radius: 50%;
+                font-size: 16px;
+                color: var(--skin-color);
+                position: absolute;
+                top: 18px;
+            }
+
+            span {
+                font-weight: 500;
+                color: var(--skin-color);
+                display: block;
+                margin: 0 0 10px;
+                text-transform: capitalize;
+            }
+
+            h3 {
+                font-size: 20px;
+                color: var(--text-black-700);
+                font-weight: 600;
+                margin: 0 0 5px;
+                text-transform: capitalize;
+            }
+
+            h4 {
+                font-size: 16px;
+                font-style: italic;
+                color: var(--text-black-600);
+                margin: 0;
+            }
+
+            p {
+                font-size: 16px;
+                color: var(--text-black-600);
+                line-height: 26px;
+                margin: 15px 0 0;
+
+                a,
+                label {
+                    @include link-item(600);
+                }
+            }
+        }
+
+        &:nth-child(odd) .timeline-item-inner:before {
+            right: -30px;
+        }
+
+        &:nth-child(even) .timeline-item-inner:before {
+            left: -30px;
+        }
+
+        &:nth-child(odd) .icon {
+            right: -70px;
+        }
+
+        &:nth-child(even) .icon {
+            left: -70px;
+        }
+    }
+}
+
+@import "./responsive/about";

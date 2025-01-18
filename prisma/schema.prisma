@@ -85,7 +85,7 @@ model Education {
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
   to          String
   from        String
-  level       String
+  degree       String
   info        String
   institution Institution
   created_at  DateTime    @default(now())

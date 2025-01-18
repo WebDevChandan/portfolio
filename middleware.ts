@@ -4,15 +4,7 @@ import * as jose from 'jose';
 
 export async function middleware(request: NextRequest) {
     const returnUrl = encodeURIComponent(request.nextUrl.pathname);
-    console.log(returnUrl);
 
-    console.log("Decoded");
-    console.log(decodeURIComponent(returnUrl));
-
-    // const { pathname } = request.nextUrl;
-    // console.log(pathname);
-
-    // Check if the request is for the login page
     const isLoginPage = decodeURIComponent(returnUrl) === '/login';
 
     try {

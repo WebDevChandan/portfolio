@@ -9,7 +9,7 @@ type ModalButtonType = {
     children: React.ReactNode
 }
 
-export default function EditButton({ label, children }: ModalButtonType) {
+export default function ModalButton({ label, children }: ModalButtonType) {
     const { modalPopup, setModalPopup } = useModalAction();
 
     return (
