@@ -2,8 +2,9 @@
 import '@/app/about/styles/skills.scss';
 import { useProfile } from '../../context/ProfileProvider';
 import ManageSkills from './ManageSkills';
-import EditButton from '../../components/EditButton';
+import EditButton from '../../components/ModalButton';
 import ModalProvider from '@/app/context/ModalProvider';
+import ModalButton from '../../components/ModalButton';
 
 export default function ProfileSkills() {
     const { profileData } = useProfile();
@@ -24,7 +25,7 @@ export default function ProfileSkills() {
                             </div>
                         ))
                     }
-                    <EditButton label="Edit Skills" children={<ManageSkills />} />
+                    <ModalButton label="Edit Skills" children={<ManageSkills />} />
                 </div>
             </div>
         </ModalProvider>

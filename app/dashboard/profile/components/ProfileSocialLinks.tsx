@@ -1,11 +1,11 @@
 "use client";
+import ModalProvider from "@/app/context/ModalProvider";
 import { FaFacebook, FaGithub, FaInstagram, FaLinkedinIn, FaTwitter, FaYoutube } from "react-icons/fa";
 import { SiLeetcode } from "react-icons/si";
 import { ManageSocialLinks } from ".";
 import { InputField } from "../../components";
-import EditButton from "../../components/EditButton";
+import ModalButton from "../../components/ModalButton";
 import { useProfile } from "../../context/ProfileProvider";
-import ModalProvider from "@/app/context/ModalProvider";
 
 export const allSocialLinks = [{
     label: "linkedin",
@@ -49,7 +49,7 @@ export default function ProfileSocialLinks() {
                         </div>
                     ))}
 
-                <EditButton label="Edit Links" children={<ManageSocialLinks />} />
+                <ModalButton label="Edit Links" children={<ManageSocialLinks />} />
             </div>
         </ModalProvider>
     )
