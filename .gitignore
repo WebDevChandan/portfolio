@@ -40,3 +40,7 @@ next-env.d.ts
 .env.*
 
 /.vscode/
+
+# For Development Purpose
+Improvement.txt
+app/api/seed/route.ts
