@@ -1,5 +1,5 @@
 import { CopyrightText, MainMenuLinks } from '..';
-import '../../styles/mainMenu.scss';
+import '../../styles/MainMenu.scss';
 
 export default function MainMenuBar() {
     return (
