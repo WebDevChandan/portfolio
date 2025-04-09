@@ -42,5 +42,5 @@ next-env.d.ts
 /.vscode/
 
 # For Development Purpose
-app/api/seed/route.ts
+app/api/seed
 Improvement.txt
