@@ -93,8 +93,23 @@ This portfolio serves as:
 
 ## 📂 Project Structure
 
-├── app │ ├── components # Reusable components (UI & Layout) │ ├── api # API routes (Login, Dashboard CMS) │ ├── dashboard # Admin dashboard routes (protected) │ └── page.tsx # Main Landing Page │ ├── public # Static assets ├── prisma # Prisma schema & migrations ├── styles # Global SCSS styles ├── utils # Utility files (Prisma, Auth) ├── .env # Environment Variables
-
+```bash
+📁 Root Directory
+├── app
+│   ├── components        # Reusable components (UI & Layout)
+│   ├── api               # API routes (Login, Dashboard CMS)
+│   ├── dashboard         # Admin dashboard routes (protected)
+│   └── page.tsx          # Main Landing Page
+│
+├── public                # Static assets (images, favicons, etc.)
+├── prisma                # Prisma schema & migrations
+├── styles                # Global SCSS styles
+├── utils                 # Utility files (Prisma, Auth)
+├── .env                  # Environment Variables
+├── package.json
+├── next.config.js
+└── README.md
+```
 
 ---
 
@@ -154,9 +169,9 @@ This project is deployed on **Vercel**, a platform optimized for frontend projec
 
 Feel free to reach out to me for any queries or collaboration opportunities:
 
-- **Email**: [hirechandan@gmail.com](mailto:hirechandan@gmail.com)
 - **LinkedIn**: [in/webdevchandan](https://www.linkedin.com/in/webdevchandan/)
 - **Github**: [@WebDevChandan](https://github.com/WebDevChandan)
+- **Email**: [hirechandan@gmail.com](mailto:hirechandan@gmail.com)
 
 ---
 
