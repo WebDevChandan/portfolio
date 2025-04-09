@@ -36,7 +36,7 @@ export const showValidMsg = (validationStatus: boolean) => {
 
 const closeValidMsg = () => {
     const validMsgContainer = document.querySelector('.valid-msg-container')! as HTMLElement;
-    validMsgContainer.classList.remove('show');
+    validMsgContainer?.classList.remove('show');
 }
 
 export default function ValidationMessage() {
