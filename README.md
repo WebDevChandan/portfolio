@@ -155,7 +155,7 @@ This project is deployed on **Vercel**, a platform optimized for frontend projec
 Feel free to reach out to me for any queries or collaboration opportunities:
 
 - **Email**: [hirechandan@gmail.com](mailto:hirechandan@gmail.com)
-- **LinkedIn**: [in/webdevchandan/](https://www.linkedin.com/in/webdevchandan/)
+- **LinkedIn**: [in/webdevchandan](https://www.linkedin.com/in/webdevchandan/)
 - **Github**: [@WebDevChandan](https://github.com/WebDevChandan)
 
 ---
