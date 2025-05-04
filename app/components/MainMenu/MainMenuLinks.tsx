@@ -1,13 +1,11 @@
 "use client";
+import useAuth from "@/app/hook/useAuth";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { toggleMainMenuBar } from '../Header/HamburgerButton';
 import { dashboardNavLinks as dashboardMainMenuLinks, navLinks as mainMenuLinks } from "../Sidebar/SideMenuLinks";
-import { usePathname } from "next/navigation";
-import useAuth from "@/app/hook/useAuth";
-import { useRouter } from "next/navigation";
 
 export default function MainMenuLinks() {
-    const router = useRouter();
     const { logOut } = useAuth();
     const pathName = usePathname();
     const isDashboard = pathName === "/dashboard" || pathName.startsWith("/dashboard");
@@ -17,7 +15,6 @@ export default function MainMenuLinks() {
         await logOut();
         const mainMenu = document.querySelector('.nav-menu');
         mainMenu?.classList.toggle("open");
-        router.push("/");
     }
 
     return (
@@ -42,7 +39,7 @@ export default function MainMenuLinks() {
                             label === "Logout"
                                 ? (<li key={index}>
                                     <Link href={"#"}
-                                        className={`${active ? "active inner-shadow " : "outer-shadow"}`}
+                                        className={`${active ? "active inner-shadow " : "outer-shadow hover-in-shadow"}`}
                                         onClick={(e) => handleLogout(e)}
                                     >
                                         {label}

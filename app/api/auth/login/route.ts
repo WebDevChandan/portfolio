@@ -1,122 +1,91 @@
-import prisma from "@/utils/prisma";
-import validator from 'validator';
-import * as jose from 'jose';
-import bcrypt from 'bcrypt';
+import { verifyCSRFToken } from "@/app/server/auth.action";
+import { createSessionCookie, getCookieToken } from "@/app/server/cookies.action";
+import { firebaseConfig } from "@/constant/firebase/firebaseConfig";
+import { isFirebaseAuthError } from "@/utils/firebaseAuthError";
+import { getCookie } from "cookies-next";
+import { getApps, initializeApp } from "firebase/app";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { cookies } from "next/headers";
-import jwt from 'jsonwebtoken';
+import validator from 'validator';
 
 export async function POST(req: Request) {
     try {
-        if (req.method === "POST") {
-            const { email, password } = await req.json();
-            const errors: string[] = [];
+        const csrfCookie = await getCookieToken('csrf');
 
-            const validationSchema = [
-                {
-                    valid: validator.isLength(email, { min: 10 }),
-                    errorMessage: "Enter Valid Email",
-                },
-                {
-                    valid: validator.isStrongPassword(password),
-                    errorMessage: "Enter Valid Password",
-                },
-                {
-                    valid: validator.isEmail(email),
-                    errorMessage: "Invalid Email",
-                },
-                {
-                    valid: validator.isStrongPassword(password),
-                    errorMessage: "Invalid Passoword",
-                },
-            ]
+        const { email, password, clientCSRFToken } = await req.json();
 
-            validationSchema.forEach(check => {
-                if (!check.valid)
-                    errors.push(check.errorMessage);
-            })
+        const errors: string[] = [];
 
-            if (errors.length)
-                return Response.json(
-                    { errorMessage: errors[0] },
-                    { status: 401 }
-                );
+        // Validation
+        const validationSchema = [
+            {
+                valid: validator.isLength(email, { min: 10 }),
+                errorMessage: "Invalid Email",
+            },
+            {
+                valid: validator.isEmail(email),
+                errorMessage: "Invalid email format",
+            },
+            {
+                valid: validator.isStrongPassword(password),
+                errorMessage: "Password must be strong",
+            },
+        ];
 
-            try {
-                const token = cookies().get("jwt")?.value as string;
+        validationSchema.forEach(check => {
+            if (!check.valid) errors.push(check.errorMessage);
+        });
 
-                if (token) {
-                    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { email: string };
-
-                    if (decoded.email === email)
-                        return Response.json(
-                            { errorMessage: "Already Logged In!" },
-                            { status: 409 }
-                        );
-                }
-
-            } catch (error: any) {
-                cookies().delete("jwt");
-                return Response.json(
-                    { errorMessage: error.message },
-                    { status: 401 }
-                );
-            }
-
-            const admin = await prisma.admin.findUnique({
-                where: {
-                    email,
-                },
-                select: {
-                    id: true,
-                    email: true,
-                    password: true,
-                    firstName: true,
-                    lastName: true,
-                }
-            })
-
-            if (!admin)
-                return Response.json(
-                    { errorMessage: "Unauthorized Access!" },
-                    { status: 401 }
-                )
-
-            const isMatch = await bcrypt.compare(password, admin.password);
-
-            if (!isMatch)
-                return Response.json(
-                    { errorMessage: "Unauthorized Access!" },
-                    { status: 401 }
-                )
-
-
-            const alg = "HS256";
-
-            const secret = new TextEncoder().encode(process.env.JWT_SECRET);
-
-            const token = await new jose.SignJWT({ id: admin.id, firstName: admin.firstName, lastName: admin.lastName, email: admin.email })
-                .setProtectedHeader({ alg })
-                .setExpirationTime("2h")
-                .sign(secret);
-
-            cookies().set("jwt", token, {
-                maxAge: 60 * 60 * 2,
-                httpOnly: true,
-                secure: process.env.NODE_ENV === "production",
-                path: "/",
-                sameSite: "lax",
-            });
-
-            return Response.json(
-                { admin: { firstName: admin.firstName, lastName: admin.lastName, email: admin.email }, successMessage: "Login Successfull" },
-                { status: 200 }
-            );
+        if (errors.length > 0) {
+            return Response.json({ errorMessage: errors[0] }, { status: 401 });
         }
 
+        // CSRF PROTECTION
+        const isValidCSRFToken = await verifyCSRFToken(clientCSRFToken, csrfCookie);
+        if (!isValidCSRFToken) {
+            return Response.json({ errorMessage: "CSRF Expolition Found" }, { status: 401 });
+        }
+
+        // Initialize Firebase
+        if (getApps().length === 0) {
+            initializeApp(firebaseConfig);
+        }
+
+        const auth = getAuth();
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+
+        const { claims } = await user.getIdTokenResult();
+
+        // Check admin  verification
+        if (claims.user_id !== process.env.ADMIN_USER_UID || !claims.email_verified || !claims.isAdmin) {
+            return Response.json({ errorMessage: "Unauthorized Access!" }, { status: 401 });
+        }
+
+        const idToken = await user.getIdToken();
+
+        const expiresIn = 60 * 60 * 2 * 1000; // 2 hours in ms
+        const sessionCookie = await createSessionCookie(idToken, expiresIn);
+
+        const options = { maxAge: expiresIn, httpOnly: true, secure: true, path: '/' };
+        (await cookies()).set('session', sessionCookie, {
+            ...options,
+            sameSite: "strict",
+        });
+
+        return Response.json({ message: "Login Successful" }, { status: 200 });
+
     } catch (error) {
-        return Response.json(
-            { error: "Internal Server Error" },
-            { status: 503 },
-        );
+        if (isFirebaseAuthError(error)) {
+            if (["auth/invalid-email", "auth/invalid-password", "auth/invalid-credential"].includes(error.code)) {
+                return Response.json({ errorMessage: "Invalid email or password" }, { status: 401 });
+            }
+
+            if (["auth/too-many-requests"].includes(error.code)) {
+                return Response.json({ errorMessage: "Too Many Requests" }, { status: 403 });
+            }
+        }
+
+        return Response.json({ errorMessage: "Internal Server Error" }, { status: 503 });
     }
 }

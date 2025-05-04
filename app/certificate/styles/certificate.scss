@@ -1,3 +1,4 @@
+@use "sass:meta";
 .certificate-item {
     flex: 0 0 33.33%;
     max-width: 100%;
@@ -67,4 +68,4 @@
 
 
 
-@import "./responsive/certificate";
+@include meta.load-css("responsive/certificate");

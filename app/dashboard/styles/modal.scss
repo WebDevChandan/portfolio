@@ -1,3 +1,4 @@
+@use "sass:meta";
 .modal-container {
     position: fixed;
     padding: 10px 15px;
@@ -92,4 +93,4 @@
     }
 }
 
-@import "./responsive/modal"
+@include meta.load-css("responsive/modal")

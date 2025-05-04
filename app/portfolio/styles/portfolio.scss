@@ -1,3 +1,4 @@
+@use "sass:meta";
 .portfolio-filter {
     padding: 0 15px;
     flex: 0 0 100%;
@@ -97,4 +98,4 @@
 }
 
 
-@import "./responsive/portfolio"
+@include meta.load-css("responsive/portfolio")

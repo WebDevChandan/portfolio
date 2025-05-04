@@ -1,13 +1,10 @@
-@mixin link-item($fontWeight) {
-    color: var(--text-black-600);
-    font-weight: $fontWeight;
-}
+@use "sass:meta";
+@use "../../styles/mixins";  
 
 .about-img {
     flex: 0 0 40%;
     max-width: 40%;
     padding: 0 15px;
-
 
     .img-box {
         padding: 15px;
@@ -26,6 +23,7 @@
         text-align: center;
 
         a {
+            position: relative; // Added for correct positioning of SVG
             display: inline-block;
             height: 40px;
             width: 40px;
@@ -43,7 +41,15 @@
             }
 
             &::after {
+                content: '';
+                display: block;
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
                 border-radius: 50%;
+                z-index: -1;
             }
 
             &:hover {
@@ -60,7 +66,6 @@
                 left: 11px;
                 margin: 0 auto;
                 text-align: center;
-                line-height: 10px;
                 color: white;
                 fill: var(--text-black-600);
             }
@@ -74,11 +79,11 @@
     padding: 0 15px;
 
     .portfolioPage {
-        @include link-item(bold);
+        @include mixins.link-item(bold);
     }
 
     .email {
-        @include link-item(600);
+        @include mixins.link-item(900);
     }
 
     span {
@@ -130,9 +135,7 @@
     }
 }
 
-
-
-
-@import "./responsive/about";
-@import "./skills";
-@import "./education-experience.scss";
+// Responsive and modular SCSS partials
+@include meta.load-css("responsive/about");
+@include meta.load-css("skills");
+@include meta.load-css("education-experience"); // Removed .scss extension for consistency

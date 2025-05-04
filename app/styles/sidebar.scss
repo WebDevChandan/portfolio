@@ -1,3 +1,4 @@
+@use "sass:meta";
 .sidebar {
     position: fixed;
     top: 0;
@@ -216,4 +217,4 @@
 //     border-radius: 6px;
 // }
 
-@import "./responsive/sidebar";
+@include meta.load-css("responsive/sidebar");

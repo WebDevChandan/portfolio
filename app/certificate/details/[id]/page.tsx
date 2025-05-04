@@ -7,11 +7,10 @@ import Loading from '../../../components/Loader/SpinLoader';
 import SpinLoader from '../../../components/Loader/SpinLoader';
 
 export type DetailPropsType = {
-    params: {
+    params: Promise<{
         id: string;
-    };
+    }>;
 }
-
 
 const fetchCertificateDetails = async (slug: string) => {
     try {
@@ -45,7 +44,11 @@ const fetchCertificateDetails = async (slug: string) => {
     }
 }
 
-export default async function CertificateDetails({ params: { id } }: DetailPropsType) {
+export default async function CertificateDetails(props: DetailPropsType) {
+    const params = await props.params;
+
+    const { id } = params;
+
     const certificateDetails = await fetchCertificateDetails(id);
 
     return (

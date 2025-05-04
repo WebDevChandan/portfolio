@@ -2,16 +2,16 @@ import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { Header, MainMenuBar, Sidebar, StyleSwitcher } from './components';
 import './styles/globals.scss';
-import { raleway } from './server/font';
+import { raleway } from '../lib/font';
 
 export const metadata: Metadata = {
   title: 'WebDevChandan | Portfolio',
-  description: 'Rebuilding Personal Portfolio',
+  description: 'Software Developer | Frontend Enginner',
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const previousThemeMode = cookies().get("theme")?.value;
-  const previousThemeColor = cookies().get("themeColor")?.value;
+  const previousThemeMode = (await cookies()).get("theme")?.value;
+  const previousThemeColor = (await cookies()).get("themeColor")?.value;
 
   return (
     <html lang="en" data-theme={previousThemeMode ? previousThemeMode : "light"}>

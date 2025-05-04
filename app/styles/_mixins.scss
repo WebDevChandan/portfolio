@@ -1,0 +1,4 @@
+@mixin link-item($fontWeight) {
+    color: var(--text-black-600);
+    font-weight: $fontWeight;
+  }

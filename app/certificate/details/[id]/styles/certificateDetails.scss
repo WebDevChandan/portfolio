@@ -1,3 +1,4 @@
+@use "sass:meta";
 .certificate-popup {
     background-color: var(--bg-black-50);
     position: fixed;
@@ -250,4 +251,4 @@
 
 }
 
-@import "./responsive/certificateDetails"
+@include meta.load-css("responsive/certificateDetails");

@@ -1,3 +1,4 @@
+@use "sass:meta";
 .textarea-group {
     height: 100%;
     border-radius: 5px;
@@ -132,4 +133,4 @@
 }
 
 
-@import "./responsive/editor";
+@include meta.load-css("responsive/editor");

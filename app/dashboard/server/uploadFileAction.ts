@@ -1,5 +1,4 @@
 'use server';
-
 import { v2 as cloudinary } from 'cloudinary';
 import { FileConfig } from "../context/FileUploadProvider";
 import axios from 'axios';

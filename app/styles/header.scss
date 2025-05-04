@@ -1,3 +1,4 @@
+@use "sass:meta";
 .header {
     @mixin widthCalc($length){
         width: $length;
@@ -59,4 +60,4 @@
     }
 }
 
-@import "./responsive/header";
+@include meta.load-css("responsive/header");

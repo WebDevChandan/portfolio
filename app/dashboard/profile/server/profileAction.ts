@@ -1,11 +1,10 @@
 'use server';
 import prisma from "@/utils/prisma";
+import DOMPurify from 'isomorphic-dompurify';
 import { revalidatePath } from "next/cache";
 import { isValidToken } from "../../server/isValidToken";
 import { SkillsType } from "../components/ManageSkills";
 import { SocialLinksType } from "../components/ManageSocialLinks";
-import DOMPurify from 'isomorphic-dompurify';
-import { UploadedFileForDB } from "../components/ProfileImage";
 
 export async function saveSkills(updatedSkills: SkillsType) {
     const isTokenValid = await isValidToken();

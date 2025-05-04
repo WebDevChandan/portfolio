@@ -8,7 +8,7 @@ const nextConfig = {
                 hostname: 'localhost',
                 port: '3000',
                 pathname: '/img/**'
-            },{
+            }, {
                 protocol: 'https',
                 hostname: 'res.cloudinary.com',
                 pathname: '/dnwf21zlv/image/**'

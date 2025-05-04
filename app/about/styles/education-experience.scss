@@ -1,3 +1,5 @@
+@use "sass:meta";
+@use "../../styles/mixins";  
 .education,
 .experience {
     padding-bottom: 80px;
@@ -92,7 +94,7 @@
 
                 a,
                 label {
-                    @include link-item(600);
+                    @include mixins.link-item(900);
                 }
             }
         }
@@ -115,4 +117,4 @@
     }
 }
 
-@import "./responsive/about";
+@include meta.load-css("responsive/about");

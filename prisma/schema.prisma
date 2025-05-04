@@ -166,11 +166,3 @@ model PortfolioDetail {
   created_at            DateTime              @default(now())
   update_at             DateTime              @updatedAt
 }
-
-model Admin {
-  id        String @id @default(auto()) @map("_id") @db.ObjectId
-  firstName String
-  lastName  String
-  email     String @unique
-  password  String
-}

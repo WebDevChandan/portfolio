@@ -1,3 +1,4 @@
+@use "sass:meta";
 @mixin link-item($fontWeight) {
     color: var(--text-black-600);
     font-weight: $fontWeight;
@@ -159,5 +160,5 @@ img {
 
 }
 
-@import "../../styles/responsive/dashboard.scss";
-@import "../styles/responsive/profile";
+@include meta.load-css("../../styles/responsive/dashboard.scss");
+@include meta.load-css("../styles/responsive/profile");

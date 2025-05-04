@@ -1,22 +1,19 @@
 'use server';
-import { cookies } from "next/headers";
-import jwt from 'jsonwebtoken';
+import { getCookieToken, verifySessionCookie } from "@/app/server/cookies.action";
 
 export async function isValidToken() {
-    const jwtToken = cookies().get('jwt')?.value as string;
+    const sessionCookie = await getCookieToken('session');
 
-    if (!jwtToken)
-        return false;
-    
     try {
-        jwt.verify(jwtToken, `${process.env.JWT_SECRET}`);
+        const decodedClaims = await verifySessionCookie(sessionCookie);
 
-        return true;
+        if (decodedClaims.uid === process.env.ADMIN_USER_UID && decodedClaims.email_verified && decodedClaims.isAdmin)
+            return true;
+        else
+            return false;
+
     } catch (error: any) {
-        console.log("Reached Catch block")
         console.error(error?.message);
-        return false;
+        throw new Error("Invalid session cookie");
     }
-
-
 }

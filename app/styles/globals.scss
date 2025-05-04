@@ -1,4 +1,5 @@
-@import "variables";
+@use "sass:meta";
+@use "variables";
 
 * {
     padding: 0;
@@ -270,4 +271,4 @@ p {
     }
 }
 
-@import "./responsive.scss";
+@include meta.load-css("responsive.scss");

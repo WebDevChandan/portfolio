@@ -1,3 +1,4 @@
+@use "sass:meta";
 .skills,
 .add-content {
     padding: 0 0 40px;
@@ -42,4 +43,4 @@
     }
 }
 
-@import "./responsive/about";
+@include meta.load-css("responsive/about");

@@ -141,7 +141,7 @@ export default function SideNavLinks({ pathName }: { pathName: string }) {
                             : (dashboardNavLinks.map(({ label, icon, active }, index) => (
                                 label === "Logout"
                                     ? (<li
-                                        className={`nav-link ${active ? "active" : ""} outer-shadow`}
+                                        className={`nav-link ${active ? "active" : ""} outer-shadow hover-in-shadow`}
                                         key={index}
                                         onClick={(e) => { handleLogout(e) }}
                                         title={label}

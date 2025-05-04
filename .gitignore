@@ -44,3 +44,4 @@ next-env.d.ts
 # For Development Purpose
 app/api/seed
 Improvement.txt
+/constant

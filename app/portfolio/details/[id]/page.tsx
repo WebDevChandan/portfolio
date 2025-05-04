@@ -25,7 +25,11 @@ const fetchPortfolioDetails = async (slug: string) => {
     }
 }
 
-export default async function ProjectDetails({ params: { id } }: DetailPropsType) {
+export default async function ProjectDetails(props: DetailPropsType) {
+    const params = await props.params;
+
+    const { id } = params;
+
     const portfolioDetailsData = await fetchPortfolioDetails(id);
 
     return (

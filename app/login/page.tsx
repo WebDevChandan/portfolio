@@ -1,11 +1,12 @@
 import { Logo } from "@/app/components";
-import AuthForm from "./components/AuthForm";
-import './styles/login.scss';
-import AuthContext from "../context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import AuthForm from "./components/AuthForm";
+import './styles/login.scss';
 
-export default function page() {
+
+export default async function page() {
+  
   return (
     <>
       <section className="other-section login-section" id="about">
@@ -17,9 +18,7 @@ export default function page() {
               </div>
               <h2 className="text">Admin Login</h2>
               <ToastContainer />
-              <AuthContext>
                 <AuthForm />
-              </AuthContext>
             </div>
           </div>
         </div>
