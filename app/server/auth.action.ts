@@ -1,5 +1,5 @@
 "use server";
-import authAdmin from "@/utils/firebase-admin";
+import authAdmin from "@/utils/firebaseAdmin";
 
 export async function verifyIdToken(idToken: string) {
     try {

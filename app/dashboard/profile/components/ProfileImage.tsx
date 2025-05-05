@@ -6,7 +6,6 @@ import { _UploadImageFileType } from "../../components/UploadFile";
 import { useProfile } from "../../context/ProfileProvider";
 import { useFileUpload } from "../../hook/useFileUpload";
 import { saveAboutImage } from "../server/profileAction";
-import ModalProvider from "@/app/context/ModalProvider";
 
 export type UploadedFileForDB = {
     file: File,
@@ -33,6 +32,7 @@ export default function ProfileImage() {
             return { message, errorMessage };
 
         } catch (error) {
+            console.error("Error saving about image: ", error);
             showToast("error", "Unexpected error occurred!");
         }
     };

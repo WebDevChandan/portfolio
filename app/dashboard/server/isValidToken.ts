@@ -12,8 +12,8 @@ export async function isValidToken() {
         else
             return false;
 
-    } catch (error: any) {
-        console.error(error?.message);
+    } catch (error) {
+        console.error("Error Token Validation: " + error);
         throw new Error("Invalid session cookie");
     }
 }

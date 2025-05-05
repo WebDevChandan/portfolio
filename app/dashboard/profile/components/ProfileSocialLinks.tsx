@@ -49,7 +49,9 @@ export default function ProfileSocialLinks() {
                         </div>
                     ))}
 
-                <ModalButton label="Edit Links" children={<ManageSocialLinks />} />
+                <ModalButton label="Edit Links">
+                    <ManageSocialLinks />
+                </ModalButton>
             </div>
         </ModalProvider>
     )

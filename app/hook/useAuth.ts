@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { setCookie } from "cookies-next";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
@@ -7,6 +7,10 @@ import { Flip, toast } from "react-toastify";
 interface LogInParams {
     email: string;
     password: string;
+}
+
+interface ErrorResponse {
+    errorMessage: string;
 }
 
 export default function useAuth() {
@@ -58,8 +62,9 @@ export default function useAuth() {
 
            
 
-        } catch (error: any) {
-            const errorMessage = error.response?.data?.errorMessage || "An unexpected error occurred";
+        } catch (error: unknown) {
+            const axiosError = error as AxiosError<ErrorResponse>;
+            const errorMessage = axiosError.response?.data?.errorMessage || "An unexpected error occurred";
 
             toast.error(errorMessage, {
                 position: "top-center",
@@ -98,8 +103,9 @@ export default function useAuth() {
             });
 
 
-        } catch (error: any) {
-            const errorMessage = error.response?.data?.errorMessage || "An unexpected error occurred";
+        } catch (error: unknown) {
+            const axiosError = error as AxiosError<ErrorResponse>;
+            const errorMessage = axiosError.response?.data?.errorMessage || "An unexpected error occurred";
 
             toast.error(errorMessage, {
                 position: "top-center",

@@ -1,7 +1,6 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { PortfolioThumbImage } from ".";
 import { ThumbImage } from "@/app/certificate/components";
+import { useRouter } from "next/navigation";
 
 export type portfolioCardDataType = {
     title: string;

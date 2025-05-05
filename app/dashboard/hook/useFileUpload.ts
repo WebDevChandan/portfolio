@@ -1,8 +1,7 @@
-import { useContext } from "react"
-import { FileConfig, FileUploadContext } from "../context/FileUploadProvider"
+import { useContext } from "react";
 import { FileType } from "../components/UploadFile";
+import { FileConfig, FileUploadContext } from "../context/FileUploadProvider";
 import { UploadedFileForDB } from "../profile/components/ProfileImage";
-import { useModalAction } from "@/app/hook/useModalAction";
 
 export const useFileUpload = () => {
     const { isFileUploadPopUp, setIsFileUploadPopUp, setfileUploadInfo } = useContext(FileUploadContext);

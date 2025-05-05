@@ -1,10 +1,9 @@
 "use client";
 import '@/app/about/styles/skills.scss';
-import { useProfile } from '../../context/ProfileProvider';
-import ManageSkills from './ManageSkills';
-import EditButton from '../../components/ModalButton';
 import ModalProvider from '@/app/context/ModalProvider';
 import ModalButton from '../../components/ModalButton';
+import { useProfile } from '../../context/ProfileProvider';
+import ManageSkills from './ManageSkills';
 
 export default function ProfileSkills() {
     const { profileData } = useProfile();
@@ -25,7 +24,9 @@ export default function ProfileSkills() {
                             </div>
                         ))
                     }
-                    <ModalButton label="Edit Skills" children={<ManageSkills />} />
+                    <ModalButton label="Edit Skills">
+                        <ManageSkills />
+                    </ModalButton>
                 </div>
             </div>
         </ModalProvider>

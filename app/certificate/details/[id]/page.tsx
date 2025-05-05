@@ -1,10 +1,9 @@
 import prisma from '@/utils/prisma';
 import { notFound } from 'next/navigation';
+import { Suspense } from 'react';
+import SpinLoader from '../../../components/Loader/SpinLoader';
 import { HeaderDetails, MainDetails } from './components';
 import './styles/certificateDetails.scss';
-import { Suspense } from 'react';
-import Loading from '../../../components/Loader/SpinLoader';
-import SpinLoader from '../../../components/Loader/SpinLoader';
 
 export type DetailPropsType = {
     params: Promise<{

@@ -1,4 +1,5 @@
 import prisma from '@/utils/prisma';
+import Image from 'next/image';
 import { FaQuoteLeft, FaQuoteRight } from 'react-icons/fa';
 
 export const fetchTestimonialData = async () => {
@@ -31,7 +32,7 @@ export default async function TestimonialCard() {
                         <i className="left"> <FaQuoteLeft /></i>
                         <i className="right"><FaQuoteRight /></i>
                         <p>{feedback}</p>
-                        <img src={`img/testimonial/${img}`} alt="female" />
+                        <Image src={`img/testimonial/${img}`} alt="female" />
                         <span>{name}</span>
                         <label className="client_region">
                             {region}

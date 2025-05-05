@@ -1,5 +1,4 @@
 import prisma from "@/utils/prisma";
-import { PrismaClient } from "@prisma/client"
 
 type skillDataType = {
     skills: {

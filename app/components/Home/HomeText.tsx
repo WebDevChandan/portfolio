@@ -5,7 +5,7 @@ export default function HomeText({ name, roles }: { name: string, roles: string[
         <div className="home-text">
 
             <p>Hello</p>
-            <h2>I'm <label id="myName">{name}</label>
+            <h2>I&apos;m <label id="myName">{name}</label>
             </h2>
             <h1>
                 {

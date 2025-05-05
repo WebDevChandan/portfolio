@@ -1,13 +1,5 @@
 "use client";
-import { ChangeEvent, KeyboardEvent, MouseEvent, useEffect, useMemo, useState } from "react";
-import { FaSearch } from "react-icons/fa";
-import { MdDelete } from "react-icons/md";
-import { InputField } from "../../components";
-import { useProfile } from "../../context/ProfileProvider";
 import '../../profile/styles/manageSkills.scss';
-import { showToast } from "@/utils/showToast";
-import ServerSpinLoader from "@/app/components/Loader/ServerSpinLoader";
-import { useModalAction } from "@/app/hook/useModalAction";
 
 export type SkillsType = {
     name: string;

@@ -1,11 +1,7 @@
+import { ProfileType } from "@/app/dashboard/profile/page";
 import prisma from "@/utils/prisma";
-import validator from 'validator';
-import * as jose from 'jose';
-import bcrypt from 'bcrypt';
-import { cookies } from "next/headers";
 import jwt from 'jsonwebtoken';
 import { NextResponse } from "next/server";
-import { ProfileType } from "@/app/dashboard/profile/page";
 
 export async function PUT(req: Request) {
     try {
@@ -28,9 +24,9 @@ export async function PUT(req: Request) {
         try {
             jwt.verify(token, `${process.env.JWT_SECRET}`);
 
-        } catch (error: any) {
+        } catch (error: unknown) {
             return NextResponse.json(
-                { errorMessage: error?.message },
+                { errorMessage: (error as Error)?.message },
                 { status: 401 },
             );
         }
@@ -43,14 +39,13 @@ export async function PUT(req: Request) {
             }
         })
 
-
         return Response.json(
-            // { admin: { firstName: admin.firstName, lastName: admin.lastName, email: admin.email }, successMessage: "Login Successfull" },
             { successMessage: "Profile Updated Successfully" },
             { status: 200 }
         );
 
     } catch (error) {
+        console.error("Error updating profile: ", error);
         return Response.json(
             { error: "Internal Server Error" },
             { status: 503 },

@@ -1,8 +1,7 @@
 import { verifyCSRFToken } from "@/app/server/auth.action";
 import { createSessionCookie, getCookieToken } from "@/app/server/cookies.action";
-import { firebaseConfig } from "@/constant/firebase/firebaseConfig";
+import { firebaseConfig } from "@/utils/firebaseConfig";
 import { isFirebaseAuthError } from "@/utils/firebaseAuthError";
-import { getCookie } from "cookies-next";
 import { getApps, initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { cookies } from "next/headers";

@@ -2,7 +2,7 @@ import { revokeAllSession } from "@/app/server/cookies.action";
 import { isFirebaseAuthError } from "@/utils/firebaseAuthError";
 import { cookies } from "next/headers";
 
-export async function POST(req: Request) {
+export async function POST() {
     try {
         const cookieStore = await cookies();
         const session = cookieStore.get('session')?.value as string;
@@ -13,6 +13,7 @@ export async function POST(req: Request) {
         cookieStore.delete('session');
 
         const hasAllSessionRevoked = await revokeAllSession(session).catch((error) => {
+            console.log("Error Revoking AllSession" + error);
             return Response.json({ errorMessage: "Logout Failed!" }, { status: 401 });
         });
 

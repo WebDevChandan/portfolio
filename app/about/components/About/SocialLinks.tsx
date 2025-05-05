@@ -19,7 +19,12 @@ const fetchSocialLinks = async () => {
 
 export default async function SocialLinks() {
     const { socialLinks } = await fetchSocialLinks();
-    const socialIcons = [<FaLinkedinIn />, <SiLeetcode />, <FaGithub />, <FaTwitter />]
+    const socialIcons = [
+        <FaLinkedinIn key="linkedin" />,
+        <SiLeetcode key="leetcode" />,
+        <FaGithub key="github" />,
+        <FaTwitter key="twitter" />
+    ];
 
 
     return (
@@ -28,7 +33,6 @@ export default async function SocialLinks() {
                 <Link href={link} target="_blank" key={index}
                     className="outer-shadow hover-in-shadow" title={label}><i>{socialIcons[index]}</i></Link>
             ))}
-
         </div>
     )
 }

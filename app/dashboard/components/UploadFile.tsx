@@ -2,17 +2,15 @@
 import { MyImage } from "@/app/components";
 import ServerSpinLoader from "@/app/components/Loader/ServerSpinLoader";
 import { showToast } from "@/utils/showToast";
-import { ChangeEvent, MouseEvent, MouseEventHandler, useEffect, useRef, useState } from "react";
-import { FaFilePdf, FaImage } from "react-icons/fa";
-import { MdDelete, MdOutlineDelete, MdOutlinePauseCircle, MdOutlinePauseCircleFilled } from "react-icons/md";
-import { FileConfig } from "../context/FileUploadProvider";
-import { deleteFile, signUploadFile, uploadImageAction, uploadImageWithProgress, uploadPDFAction } from "../server/uploadFileAction";
-import '../styles/uploadFile.scss';
 import axios from "axios";
+import { ChangeEvent, MouseEvent, useEffect, useRef, useState } from "react";
+import { FaFilePdf, FaImage } from "react-icons/fa";
+import { MdDelete, MdOutlinePauseCircle } from "react-icons/md";
 import { RxReload } from "react-icons/rx";
-import { useFileUpload } from "../hook/useFileUpload";
+import { FileConfig } from "../context/FileUploadProvider";
 import { UploadedFileForDB } from "../profile/components/ProfileImage";
-import { useModalAction } from "@/app/hook/useModalAction";
+import { deleteFile, signUploadFile } from "../server/uploadFileAction";
+import '../styles/uploadFile.scss';
 
 export enum FileType {
   Image,
@@ -51,7 +49,7 @@ type UploadFileToCloudType = {
   timestamp: string,
   signature: string,
   file_metadata: string
-  transformationString?: string,
+  transformationString: string,
 }
 
 export const _UploadImageFileType = ["image/webp", "image/png", "image/jpg", "image/jpeg"];
@@ -354,8 +352,12 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
               handleUnsupportedFile("Unsupported File Type");
           }
 
-        } catch (error: any) {
-          showToast("error", error.message);
+        } catch (error: unknown) {
+          if (error instanceof Error) {
+            showToast("error", error.message);
+          } else {
+            showToast("error", "An unknown error occurred");
+          }
         }
       }
 
@@ -426,6 +428,7 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
             showToast("error", errorMessage);
 
         } catch (error) {
+          console.error("Error Deleting File: ", error);
           showToast("error", "Error Deleting File");
 
         } finally {
@@ -452,7 +455,6 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
     }
   }
 
-  console.log(fileUploading);
   const saveFileToDB = async () => {
     if (fileUploading.isFileUploading || fileUploading.isFileDeleting) return;
 
@@ -482,6 +484,7 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
           }
 
         } catch (error) {
+          console.error("Error Saving File: ", error);
           showToast("error", "Error Saving File");
 
           setFileUploading((prev) => ({
@@ -501,7 +504,7 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
 
     formData.append('folder', `${fileConfig?.folderName}`);
     formData.append("upload_preset", CloudFileConfig.upload_preset);
-    CloudFileConfig.transformationString ? formData.append('transformation', CloudFileConfig.transformationString) : null;
+    formData.append('transformation', CloudFileConfig.transformationString);
     formData.append('context', CloudFileConfig.file_metadata);
     formData.append("file", CloudFileConfig.file);
     formData.append("cloud_name", `${process.env.CLOUDINARY_CLOUD_NAME}`);
@@ -571,6 +574,7 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
       return secure_url;
 
     } catch (error) {
+      console.error("Error Uploading File: ", error);
       if (axios.Cancel) {
         showToast("info", "File Not Uploaded!");
 
@@ -700,15 +704,13 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
               } else
                 console.log("Unauthorized access")
 
-            } catch (error: any) {
-              console.error("Upload failed", error?.response?.data.error.message);
+            } catch (error) {
+              console.error("Upload failed", error);
             }
 
           }
 
           if (FileType.Document === fileType) {
-            console.log("Document Block Executed");
-
             const upload_preset = 'my_pdf_preset';
             const file_metadata = `caption=${imageFileName} | alt=${imageFileName}`;
 
@@ -723,14 +725,15 @@ export default function UploadFile({ uploadTitle, fileType, fileConfig, isMultiF
                   api_key: api_key,
                   timestamp: `${timestamp}`,
                   signature: signature,
-                  file_metadata: file_metadata
+                  file_metadata: file_metadata,
+                  transformationString: ""
                 });
 
               } else
                 console.log("Unauthorized access")
 
-            } catch (error: any) {
-              console.error("Upload failed", error?.response?.data.error.message);
+            } catch (error) {
+              console.error("Upload failed", error);
             }
           }
         }

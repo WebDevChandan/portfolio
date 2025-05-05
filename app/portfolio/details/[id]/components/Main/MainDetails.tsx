@@ -1,8 +1,8 @@
 "use client";
-import { Suspense, useState } from 'react';
+import { LargeImage } from '@/app/certificate/details/[id]/components';
+import { useState } from 'react';
 import { FaPlay } from 'react-icons/fa';
 import { LiveBtn, ProjectDetailsCloseBtn, ProjectDetailsOpenBtn, ScreenshotsBtn, WebFrame } from '..';
-import { LargeImage } from '@/app/certificate/details/[id]/components';
 
 export default function MainDetails({ src, altText, titleText, webFrameLink }: {
     src: string[];
@@ -16,13 +16,23 @@ export default function MainDetails({ src, altText, titleText, webFrameLink }: {
     const playPrev = () => count > 0 ? setCount(count - 1) : null;
     const playNext = () => count >= 0 && count < src.length - 1 ? setCount(count + 1) : null;
 
+    const handleSwitchToFrame = () => {
+        if (!switchFrameToPic)
+            setSwitchFrameToPic(true);
+    }
+
+    const handleSwitchToPic = () => {
+        if (switchFrameToPic)
+            setSwitchFrameToPic(false);
+    }
+
     return (
         <div className="pp-main">
             <div className="pp-main-inner">
                 <ProjectDetailsOpenBtn />
                 <ProjectDetailsCloseBtn />
-                {(src[count] && webFrameLink) && <LiveBtn active={switchFrameToPic} onClick={() => { !switchFrameToPic ? setSwitchFrameToPic(true) : null }} />}
-                {(src[count] && webFrameLink) && <ScreenshotsBtn active={!switchFrameToPic} onClick={() => { switchFrameToPic ? setSwitchFrameToPic(false) : null }} />}
+                {(src[count] && webFrameLink) && <LiveBtn active={switchFrameToPic} onClick={handleSwitchToFrame} />}
+                {(src[count] && webFrameLink) && <ScreenshotsBtn active={!switchFrameToPic} onClick={handleSwitchToPic} />}
 
 
                 {src[count] && !switchFrameToPic &&

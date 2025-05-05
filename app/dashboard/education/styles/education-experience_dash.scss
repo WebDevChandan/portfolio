@@ -1,3 +1,4 @@
+@use "sass:meta";
 @mixin link-item($fontWeight) {
     color: var(--text-black-600);
     font-weight: $fontWeight;
@@ -7,5 +8,5 @@
     margin-bottom: 100px;
 }
 
-@import "../../../about/styles/education-experience.scss";
-@import "./responsive/edu-exp_dah.scss";
+@include meta.load-css("../../../about/styles/education-experience.scss");
+@include meta.load-css("responsive/edu-exp_dah.scss");

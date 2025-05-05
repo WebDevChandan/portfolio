@@ -1,7 +1,7 @@
 "use client";
 import { CloseButton } from '@/app/components';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import '../styles/modal.scss';
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react';
 
 type ModalType = {
     isModalPopUpOpen: boolean,
@@ -38,16 +38,16 @@ export default function Modal({ isModalPopUpOpen, setModalPopup, children }: Mod
         };
 
         //Close Modal on click Outside - Removed for now
-        const handleClick = (event: MouseEvent) => {
-            if (isModalPopUpOpen) {
-                const modalElement = document.querySelector('.modal-container .open') as HTMLElement | null;
-                const isInsideModalClick = modalElement?.contains(event.target as Node);
+        // const handleClick = (event: MouseEvent) => {
+        //     if (isModalPopUpOpen) {
+        //         const modalElement = document.querySelector('.modal-container .open') as HTMLElement | null;
+        //         const isInsideModalClick = modalElement?.contains(event.target as Node);
 
-                if (!isInsideModalClick ) {
-                    setModalPopup(false);
-                }
-            }
-        };
+        //         if (!isInsideModalClick ) {
+        //             setModalPopup(false);
+        //         }
+        //     }
+        // };
 
         document.addEventListener('keydown', handleKeyDown);
         // document.addEventListener('click', handleClick);

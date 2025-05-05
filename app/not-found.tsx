@@ -1,7 +1,7 @@
 import { Button } from "./components";
 import './styles/not-found.scss';
 
-export default function NotFound({ error }: { error: Error }) {
+export default function NotFound() {
     return (
         <div className="not-found">
             <h1>Opps! Error</h1>

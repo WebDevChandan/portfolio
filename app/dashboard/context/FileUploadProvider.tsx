@@ -1,7 +1,7 @@
 "use client";
-import React, { createContext, Dispatch, MouseEvent, SetStateAction, useState } from "react"
+import React, { createContext, useState } from "react";
 import { Modal, UploadFile } from "../components";
-import { FileInfoType, FileType } from "../components/UploadFile";
+import { FileType } from "../components/UploadFile";
 import { UploadedFileForDB } from "../profile/components/ProfileImage";
 
 export type FileConfig = {
@@ -29,7 +29,7 @@ export const FileUploadContext = createContext<FileUploadContextType>({
     uploadTitle: null,
     fileConfig: null,
     isMultiFileNeeded: false,
-    onSave: (param: UploadedFileForDB) => Promise.resolve(undefined),
+    onSave: () => Promise.resolve(undefined),
     setfileUploadInfo: () => { },
     isFileUploadPopUp: false,
     setIsFileUploadPopUp: () => { },
@@ -42,7 +42,7 @@ export default function FileUploadProvider({ children }: { children: React.React
         fileType: FileType.Image,
         fileConfig: null,
         isMultiFileNeeded: false,
-        onSave: (param: UploadedFileForDB) => Promise.resolve(undefined),
+        onSave: () => Promise.resolve(undefined),
     });
 
     return (
@@ -56,15 +56,15 @@ export default function FileUploadProvider({ children }: { children: React.React
             <Modal
                 isModalPopUpOpen={isFileUploadPopUp}
                 setModalPopup={setIsFileUploadPopUp}
-                children=
-                {<UploadFile
+            >
+                <UploadFile
                     uploadTitle={fileUploadInfo.uploadTitle}
                     fileType={fileUploadInfo.fileType}
                     fileConfig={fileUploadInfo.fileConfig}
                     isMultiFileNeeded={fileUploadInfo.isMultiFileNeeded}
                     saveFile={fileUploadInfo.onSave}
-                />}
-            />
+                />
+            </Modal>
         </FileUploadContext.Provider>
     )
 }

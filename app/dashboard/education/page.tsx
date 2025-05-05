@@ -1,10 +1,8 @@
-import { Education } from "@/app/about/components";
-import { Button, Title } from "@/app/components";
-import "./styles/education-experience_dash.scss";
-import { fetchEducationDetails } from "./server/educationAction";
-import { FaGraduationCap, FaPlus } from "react-icons/fa";
+import { Title } from "@/app/components";
 import NewEducation from "./components/NewEducation";
 import RenderEducation from "./components/RenderEducation";
+import { fetchEducationDetails } from "./server/educationAction";
+import "./styles/education-experience_dash.scss";
 
 export default async function EducationDash() {
     const educationDetails = await fetchEducationDetails();

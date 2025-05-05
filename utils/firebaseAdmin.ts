@@ -1,12 +1,13 @@
-import { initializeApp } from "firebase-admin/app";
+import { cert, initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
-import { cert } from "firebase-admin/app";
-import serviceAccount from '../constant/firebase/serviceAccountKey.json';
-import type { ServiceAccount } from "firebase-admin";
 
 const firebaseSingleton = () => {
     const admin = initializeApp({
-        credential: cert(serviceAccount as ServiceAccount),
+        credential: cert({
+            projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+            clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+            privateKey: `${process.env.FIREBASE_PRIVATE_KEY}`.replace(/\\n/g, '\n'),
+        }),
     });
 
     const authAdmin = getAuth(admin);

@@ -1,7 +1,7 @@
 "use server";
-import authAdmin from "@/utils/firebase-admin";
-import { verifyIdToken } from "./auth.action";
+import authAdmin from "@/utils/firebaseAdmin";
 import { cookies } from "next/headers";
+import { verifyIdToken } from "./auth.action";
 
 export async function createSessionCookie(idToken: string, expiresIn: number) {
     try {
@@ -51,7 +51,7 @@ export async function revokeAllSession(sessionCookie: string) {
         return true;
 
     } catch (error) {
-        console.error("revokeSessionCookie error:");
+        console.error("revokeSessionCookie error:" + error);
         throw new Error("Invalid session cookie");
     }
 }

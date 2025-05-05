@@ -1,6 +1,5 @@
 import prisma from '@/utils/prisma';
-import { PrismaClient } from '@prisma/client';
-import { FaGraduationCap } from 'react-icons/fa'
+import { FaGraduationCap } from 'react-icons/fa';
 
 const fetchEducationDetail = async () => {
     try {

@@ -1,6 +1,6 @@
 "use client";
 
-const switchTab = (tab: HTMLElement, tabList: any, idx: number) => {
+const switchTab = (tab: HTMLElement, tabList: NodeListOf<HTMLElement>, idx: number) => {
     if (tab.classList.contains("active")) return;
 
     const tabContentList = document.querySelectorAll('.tab-content');
@@ -34,7 +34,7 @@ export default function AboutTabsSwitcher() {
     return (
         <>
             {aboutTabs.map(({ label, active }, index) => (
-                <span key={index} className={`${active ? "active outer-shadow " : ""}tab-item`} data-target={`.${label}`} onClick={(e) => switchTab(e.currentTarget, e.currentTarget.parentElement?.childNodes, index)}>{label}</span>
+                <span key={index} className={`${active ? "active outer-shadow " : ""}tab-item`} data-target={`.${label}`} onClick={(e) => switchTab(e.currentTarget, e.currentTarget.parentElement?.childNodes as NodeListOf<HTMLElement>, index)}>{label}</span>
             ))}
         </>
     )

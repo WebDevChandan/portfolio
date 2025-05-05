@@ -1,7 +1,6 @@
 "use client";
 import useAuth from '@/app/hook/useAuth';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { BiSolidMessageRoundedDetail } from "react-icons/bi";
 import { FaBriefcase, FaFileAlt, FaGraduationCap, FaHome, FaUser, FaUserCircle, FaUsers } from "react-icons/fa";
 import { MdDashboard, MdWorkHistory } from 'react-icons/md';
@@ -108,12 +107,10 @@ export const dashboardNavLinks = [
 export default function SideNavLinks({ pathName }: { pathName: string }) {
     const isDashboard = pathName === "/dashboard" || pathName.startsWith("/dashboard");
     const { logOut } = useAuth();
-    const router = useRouter();
 
     const handleLogout = async (event: React.FormEvent) => {
         event.preventDefault();
         await logOut();
-        router.push("/");
     }
 
     return (

@@ -1,8 +1,7 @@
 "use client";
-import { useState } from "react";
+import { useModalAction } from "@/app/hook/useModalAction";
 import '../styles/editButton.scss';
 import Modal from "./Modal";
-import { useModalAction } from "@/app/hook/useModalAction";
 
 type ModalButtonType = {
     label: string,
@@ -21,7 +20,9 @@ export default function ModalButton({ label, children }: ModalButtonType) {
                     {label}
                 </div>
             </div>
-            <Modal isModalPopUpOpen={modalPopup} setModalPopup={setModalPopup} children={children} />
+            <Modal isModalPopUpOpen={modalPopup} setModalPopup={setModalPopup} >
+                {children}
+            </Modal>
         </>
 
     )

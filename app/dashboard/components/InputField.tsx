@@ -1,4 +1,4 @@
-import { ChangeEvent, KeyboardEvent, MouseEvent, ReactElement } from "react";
+import { ChangeEvent, ReactElement } from "react";
 import { IconType } from "react-icons";
 import { MdDelete } from "react-icons/md";
 import '../styles/inputField.scss';

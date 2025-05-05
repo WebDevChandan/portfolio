@@ -7,13 +7,25 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import DOMPurify from "isomorphic-dompurify";
 import { useEffect } from "react";
-import { useProfile } from "../../context/ProfileProvider";
+import { useEditorAction } from "../../hook/useEditorAction";
 import '../../styles/editor.scss';
 import Toolbar from "./Toolbar";
-import { useEditorAction } from "../../hook/useEditorAction";
+
+interface HandleEditorUpdateProps {
+    editor: {
+        isEditable: boolean;
+        getHTML: () => string;
+    };
+}
 
 export default function Editor() {
     const { isEditable, isUpdated, editorContent, setEditorContent } = useEditorAction();
+
+    
+    const handleEditorUpdate = ({ editor }: HandleEditorUpdateProps) => {
+        if (editor.isEditable)
+            setEditorContent(DOMPurify.sanitize(editor.getHTML()));
+    };
 
     const editor = useEditor({
         extensions: [
@@ -43,7 +55,7 @@ export default function Editor() {
         },
         content: `${editorContent}`,
         immediatelyRender: false,
-        onUpdate: ({ editor }) => { editor.isEditable ? setEditorContent(DOMPurify.sanitize(editor.getHTML())) : null },
+        onUpdate: (editor) => handleEditorUpdate(editor),
         editable: false,
         autofocus: false,
     });
@@ -52,7 +64,7 @@ export default function Editor() {
         if (editor) {
             editor.setEditable(isEditable);
         }
-    }, [isEditable]);
+    }, [isEditable, editor]);
 
     return (
         <div className={`textarea-group ${isEditable ? "inner-shadow" : "outer-shadow disabled"}`}>

@@ -7,7 +7,6 @@ import { useEditorAction } from "../../hook/useEditorAction";
 import { useFileUpload } from "../../hook/useFileUpload";
 import { saveAboutInfo, saveResume } from "../server/profileAction";
 import ProfileImage, { UploadedFileForDB } from "./ProfileImage";
-import ModalProvider from "@/app/context/ModalProvider";
 
 
 export default function Profileheader() {
@@ -51,6 +50,7 @@ export default function Profileheader() {
             return { message, errorMessage };
 
         } catch (error) {
+            console.error("Error saving resume: ", error);
             showToast("error", "Unexpected error occurred!");
         }
     };

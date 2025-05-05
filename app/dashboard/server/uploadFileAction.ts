@@ -1,7 +1,6 @@
 'use server';
 import { v2 as cloudinary } from 'cloudinary';
 import { FileConfig } from "../context/FileUploadProvider";
-import axios from 'axios';
 import { isValidToken } from './isValidToken';
 
 cloudinary.config({
@@ -102,41 +101,41 @@ export async function uploadPDFAction(formData: FormData, pdfConfig: FileConfig 
 }
 
 
-export async function uploadImageWithProgress(
-    formData: FormData,
-) {
+// export async function uploadImageWithProgress(
+//     formData: FormData,
+// ) {
 
-    try {
-        //   const imageFileName = imageFile?.name.match(/^([^\.]+)/)?.[0] ?? null;
+//     try {
+//         //   const imageFileName = imageFile?.name.match(/^([^\.]+)/)?.[0] ?? null;
 
-        // Append required fields to formData
+//         // Append required fields to formData
 
-        // API call
-        const uploadResponse = await axios.post(
-            'https://api.cloudinary.com/v1_1/dnwf21zlv/image/upload',
-            formData,
-            {
-                onUploadProgress: (event) => {
-                    if (event.total) {
-                        const progress = Math.round((event.loaded / event.total) * 100);
-                        return progress;
-                    }
-                },
-            },
+//         // API call
+//         // const uploadResponse = await axios.post(
+//         //     'https://api.cloudinary.com/v1_1/dnwf21zlv/image/upload',
+//         //     formData,
+//         //     {
+//         //         onUploadProgress: (event) => {
+//         //             if (event.total) {
+//         //                 const progress = Math.round((event.loaded / event.total) * 100);
+//         //                 return progress;
+//         //             }
+//         //         },
+//         //     },
 
-        );
+//         // );
 
 
-        // console.log(uploadResponse);
-        //   if (uploadResponse.data) {
-        //     return { message: 'Image Uploaded Successfully!', result: uploadResponse.data };
-        //   }
-    } catch (error) {
-        console.error('Error Uploading Image: ', error);
-        return { errorMessage: 'Image Upload Failed!' };
-    }
+//         // console.log(uploadResponse);
+//         //   if (uploadResponse.data) {
+//         //     return { message: 'Image Uploaded Successfully!', result: uploadResponse.data };
+//         //   }
+//     } catch (error) {
+//         console.error('Error Uploading Image: ', error);
+//         return { errorMessage: 'Image Upload Failed!' };
+//     }
 
-}
+// }
 
 export async function signUploadFile(folder: string, upload_preset: string, file_metadata: string, transformation?: string) {
     const isTokenValid = await isValidToken();
