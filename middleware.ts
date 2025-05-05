@@ -44,8 +44,8 @@ export async function middleware(request: NextRequest) {
         const publicKey = await jose.importX509(x509Cert, alg);
 
         const { payload } = await jose.jwtVerify(sessionToken, publicKey, {
-            issuer: `https://session.firebase.google.com/${process.env.FIREBASE_PROJECT_ID}`,
-            audience: process.env.FIREBASE_PROJECT_ID,
+            issuer: `https://session.firebase.google.com/${process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID}`,
+            audience: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
         });
 
         if (!payload.email_verified && payload.user_id !== process.env.ADMIN_USER_UID && !payload.isAdmin) {
