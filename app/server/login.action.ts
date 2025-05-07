@@ -11,25 +11,25 @@ const loginFormSchema = z.object({
     email: z.string({
         invalid_type_error: 'Invalid Email',
     })
-        .email({ message: 'Invalid email address' })
-        .endsWith('@gmail.com', { message: 'Invalid email domain' }),
+        .email({ message: 'Invalid Email' })
+        .endsWith('@gmail.com', { message: 'Invalid Email' }),
 
     password: z.string({
         invalid_type_error: 'Invalid Password',
     })
-        .min(8, { message: 'Invalid Password Min' })
-        .max(20, { message: 'Invalid Password Max' })
+        .min(8, { message: 'Invalid Password' })
+        .max(20, { message: 'Invalid Password' })
         .refine((password) => /[A-Z]/.test(password), {
-            message: "Invalid Password Uppercase",
+            message: "Invalid Password",
         })
         .refine((password) => /[a-z]/.test(password), {
-            message: "Invalid Password Lowercase",
+            message: "Invalid Password",
         })
         .refine((password) => /\d/.test(password), {
-            message: "Invalid Password Number",
+            message: "Invalid Password",
         })
         .refine((password) => /[@$!%*?&]/.test(password), {
-            message: "Invalid Password Special Character",
+            message: "Invalid Password",
         })
 })
 
