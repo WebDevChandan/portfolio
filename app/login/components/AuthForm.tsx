@@ -1,62 +1,95 @@
-"use client";
-import SubmitButton from "@/app/components/SubmitButton";
-import useAuth from "@/app/hook/useAuth";
-import { ChangeEvent, useEffect, useState } from "react";
-import { FaLock, FaUser } from "react-icons/fa";
+'use client';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { useActionState, useEffect, useState } from 'react';
+import { FaLock, FaUser } from 'react-icons/fa';
+import { login } from '@/app/server/login.action';
+import { showToast } from '@/utils/showToast';
+
+type AuthState = {
+    message?: string;
+    errorMessage?: string;
+};
+
+const initialState: AuthState = {};
 
 export default function AuthForm() {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+
+    const [state, formAction, isPending] = useActionState(login, initialState);
+
     const [inputs, setInputs] = useState({
-        email: "",
-        password: "",
+        email: '',
+        password: '',
     });
-    const [disabled, setDisabled] = useState(true);
-    const { logIn } = useAuth();
+
+    const isDisabled = inputs.email.length < 15 || inputs.password.length < 8;
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setInputs((prev) => ({
+            ...prev,
+            [e.target.name]: e.target.value,
+        }));
+    };
 
     useEffect(() => {
-        if (inputs.email.length > 15 && inputs.password.length > 6)
-            return setDisabled(false);
-        else
-            setDisabled(true);
+        if (state.message) {
+            showToast('success', state.message);
+            const returnURL = searchParams.get("returnUrl") as string;
 
-    }, [inputs])
+            if (!returnURL)
+                router.push('/dashboard');
+            else
+                router.push(`${decodeURIComponent(returnURL)}`);
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-        setInputs({
-            ...inputs,
-            [e.target.name]: e.target.value,
-        })
-    }
-
-    const handleSubmit = async (event: React.FormEvent) => {
-        event.preventDefault();
-
-        if (disabled) return null;
-
-        setDisabled(true);
-
-        await logIn({ email: inputs.email, password: inputs.password });
-
-        setDisabled(false);
-    }
+        } else if (state.errorMessage) {
+            showToast('error', state.errorMessage);
+        }
+    }, [state, router]);
 
     return (
-        <form autoComplete="off" method="POST">
+        <form autoComplete="off" action={formAction}>
             <div className="field outer-shadow hover-in-shadow">
-                <span className="fa fa-user"><FaUser /></span>
-                <input type="email" placeholder="Email ID" name="email" required onChange={(e) => handleChange(e)} autoComplete="off" />
+                <span className="fa fa-user">
+                    <FaUser />
+                </span>
+                <input
+                    type="email"
+                    placeholder="Email ID"
+                    name="email"
+                    required
+                    value={inputs.email}
+                    onChange={handleChange}
+                    autoComplete="off"
+                />
             </div>
 
             <div className="field outer-shadow hover-in-shadow">
-                <span className="fa fa-lock"><FaLock /></span>
-                <input type="password" placeholder="Password" name="password" required onChange={(e) => handleChange(e)} autoComplete="off" />
+                <span className="fa fa-lock">
+                    <FaLock />
+                </span>
+                <input
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    required
+                    value={inputs.password}
+                    onChange={handleChange}
+                    autoComplete="off"
+                />
             </div>
 
-            <SubmitButton handleSubmit={handleSubmit} disabled={disabled}/>
+            <button
+                type="submit"
+                className={`btn-1 login-btn outer-shadow ${isDisabled ? 'btn-disabled' : 'hover-in-shadow'}`}
+                disabled={isDisabled || isPending}
+            >
+                {isPending ? 'Loading...' : 'Login'}
+            </button>
 
             <div className="forgot-pass-container">
                 <p className="forgot-pass">Forgotten password?</p>
             </div>
-
         </form>
-    )
+    );
 }

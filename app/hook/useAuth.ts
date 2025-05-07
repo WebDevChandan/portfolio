@@ -1,55 +1,16 @@
-import axios, { AxiosError } from "axios";
-import { setCookie } from "cookies-next";
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { Flip, toast } from "react-toastify";
-
-interface LogInParams {
-    email: string;
-    password: string;
-}
-
-interface ErrorResponse {
-    errorMessage: string;
-}
+import { logout } from "../server/logout.action";
 
 export default function useAuth() {
-    const clientCSRFToken = crypto.randomUUID();
     const router = useRouter();
-    const searchParams = useSearchParams();
+    const returnUrl = usePathname();
 
-    useEffect(() => {
-        if (clientCSRFToken)
-            setCookie('csrf', clientCSRFToken, {
-                httpOnly: false,
-                secure: true,
-                path: '/',
-                sameSite: 'strict',
-            });
-    }, [clientCSRFToken])
+    const logOutHandler = async () => {
+        const { message, errorMessage } = await logout();
 
-    const logIn = async ({ email, password }: LogInParams) => {
-        if (!email || !password || !clientCSRFToken) return null;
-
-       
-
-        try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/auth/login`, {
-                email,
-                password,
-                clientCSRFToken,
-            });
-
-            if (response.status === 200) {
-                const returnURL = searchParams.get("returnUrl") as string;
-
-                if (!returnURL)
-                    router.push('/dashboard');
-                else
-                    router.push(`${decodeURIComponent(returnURL)}`);
-            }
-
-            toast.success(response.data.message, {
+        if (message) {
+            toast.success(message, {
                 position: "top-center",
                 autoClose: 1500,
                 hideProgressBar: true,
@@ -60,53 +21,10 @@ export default function useAuth() {
                 transition: Flip,
             });
 
-           
-
-        } catch (error: unknown) {
-            const axiosError = error as AxiosError<ErrorResponse>;
-            const errorMessage = axiosError.response?.data?.errorMessage || "An unexpected error occurred";
-
-            toast.error(errorMessage, {
-                position: "top-center",
-                autoClose: 1500,
-                hideProgressBar: true,
-                closeOnClick: false,
-                pauseOnHover: false,
-                draggable: false,
-                progress: undefined,
-                transition: Flip,
-            });
-
-            
+            router.push(`/login?returnUrl=${encodeURIComponent(returnUrl)}`);
         }
-    }
 
-    const logOut = async () => {
-       
-
-        try {
-            const response = await axios.post(`${process.env.NEXT_PUBLIC_URL}/api/auth/logout`);
-
-            if (response.status === 200) {
-                router.push("/login");
-            }
-
-            toast.success(response.data.message, {
-                position: "top-center",
-                autoClose: 1500,
-                hideProgressBar: true,
-                closeOnClick: false,
-                pauseOnHover: false,
-                draggable: false,
-                progress: undefined,
-                transition: Flip,
-            });
-
-
-        } catch (error: unknown) {
-            const axiosError = error as AxiosError<ErrorResponse>;
-            const errorMessage = axiosError.response?.data?.errorMessage || "An unexpected error occurred";
-
+        if (errorMessage) {
             toast.error(errorMessage, {
                 position: "top-center",
                 autoClose: 1500,
@@ -117,12 +35,10 @@ export default function useAuth() {
                 progress: undefined,
                 transition: Flip,
             });
-
         }
     }
 
     return {
-        logIn,
-        logOut,
+        logOutHandler,
     }
 }

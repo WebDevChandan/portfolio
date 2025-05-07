@@ -11,10 +11,3 @@ export async function verifyIdToken(idToken: string) {
         throw new Error("Invalid ID token");
     };
 }
-
-export async function verifyCSRFToken(clientCSRFToken: string, serverCSRFToken: string) {
-    if ((!clientCSRFToken || !serverCSRFToken) || (clientCSRFToken !== serverCSRFToken))
-        return false;
-    else
-        return true;
-}

@@ -1,7 +1,11 @@
-import { cert, initializeApp } from "firebase-admin/app";
+import { cert, getApps, initializeApp } from "firebase-admin/app";
 import { getAuth } from "firebase-admin/auth";
 
 const firebaseSingleton = () => {
+    if (getApps().length > 0) {
+        return getAuth();
+    }
+
     const admin = initializeApp({
         credential: cert({
             projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,

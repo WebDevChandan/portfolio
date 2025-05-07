@@ -4,9 +4,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import AuthForm from "./components/AuthForm";
 import './styles/login.scss';
 
-
 export default async function page() {
-  
   return (
     <>
       <section className="other-section login-section" id="about">
@@ -23,7 +21,6 @@ export default async function page() {
           </div>
         </div>
       </section>
-
     </>
 
   )

@@ -106,11 +106,11 @@ export const dashboardNavLinks = [
 
 export default function SideNavLinks({ pathName }: { pathName: string }) {
     const isDashboard = pathName === "/dashboard" || pathName.startsWith("/dashboard");
-    const { logOut } = useAuth();
+    const { logOutHandler } = useAuth();
 
     const handleLogout = async (event: React.FormEvent) => {
         event.preventDefault();
-        await logOut();
+        await logOutHandler();
     }
 
     return (

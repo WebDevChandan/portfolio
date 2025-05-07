@@ -6,13 +6,13 @@ import { toggleMainMenuBar } from '../Header/HamburgerButton';
 import { dashboardNavLinks as dashboardMainMenuLinks, navLinks as mainMenuLinks } from "../Sidebar/SideMenuLinks";
 
 export default function MainMenuLinks() {
-    const { logOut } = useAuth();
+    const { logOutHandler } = useAuth();
     const pathName = usePathname();
     const isDashboard = pathName === "/dashboard" || pathName.startsWith("/dashboard");
 
     const handleLogout = async (event: React.FormEvent) => {
         event.preventDefault();
-        await logOut();
+        await logOutHandler();
         const mainMenu = document.querySelector('.nav-menu');
         mainMenu?.classList.toggle("open");
     }
