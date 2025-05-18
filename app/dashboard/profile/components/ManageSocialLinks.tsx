@@ -4,7 +4,7 @@ import { InputField } from "../../components";
 import { useProfile } from "../../context/ProfileProvider";
 import '../styles/manageSocialLinks.scss';
 import { allSocialLinks } from "./ProfileSocialLinks";
-import { saveSocialLinks } from "../server/profileAction";
+import { saveSocialLinks } from "../server/profile.action";
 import { showToast } from "@/utils/showToast";
 import ServerSpinLoader from "@/app/components/Loader/ServerSpinLoader";
 import { useModalAction } from "@/app/hook/useModalAction";

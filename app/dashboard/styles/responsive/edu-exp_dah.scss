@@ -36,4 +36,20 @@
         right: auto;
 
     }
+
+    .dashNew-timeline-item {
+        .add-new-timeline {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+    }
+
+    .dash-timeline-item {
+        &:nth-child(odd) {
+            .dash-timeline-header {
+                flex-direction: row;
+            }
+        }
+    }
 }

@@ -5,7 +5,7 @@ import { Editor } from "../../components";
 import { useProfile } from "../../context/ProfileProvider";
 import { useEditorAction } from "../../hook/useEditorAction";
 import { useFileUpload } from "../../hook/useFileUpload";
-import { saveAboutInfo, saveResume } from "../server/profileAction";
+import { saveAboutInfo, saveResume } from "../server/profile.action";
 import ProfileImage, { UploadedFileForDB } from "./ProfileImage";
 
 

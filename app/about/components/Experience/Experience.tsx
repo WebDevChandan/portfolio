@@ -1,3 +1,4 @@
+import { RenderRichText } from '@/app/components';
 import prisma from '@/utils/prisma';
 import { FaBriefcase } from 'react-icons/fa';
 
@@ -38,7 +39,7 @@ export default async function Experience() {
                                 <span>{from} - {to}</span>
                                 <h3>{role}</h3>
                                 <h4>{organization.title},  {organization.location}</h4>
-                                <p>{experienceDetail}</p>
+                                <RenderRichText key={index} text={experienceDetail} />
                             </div>
                         </div>
                     )))}

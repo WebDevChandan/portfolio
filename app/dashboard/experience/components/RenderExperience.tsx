@@ -1,22 +1,23 @@
 "use client";
+import { RenderRichText, WaveLoader } from "@/app/components";
 import { useModalAction } from "@/app/hook/useModalAction";
+import { showToast } from "@/utils/showToast";
 import { useEffect, useState } from "react";
-import { FaEdit, FaGraduationCap } from "react-icons/fa";
+import { FaBriefcase, FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { Modal } from "../../components";
 import { EditorActionProvider } from "../../context/EditorProvider";
-import { EducationDetailType } from "../../types/EducationType";
-import ManageEducation from "./ManageEducation";
-import { deleteEducation } from "../server/education.action";
-import { showToast } from "@/utils/showToast";
-import { RenderRichText, WaveLoader } from "@/app/components";
+import { ExperienceDetailType } from "../../types/ExperienceType";
+import { deleteExperience } from "../server/experience.action";
+import ManageExperience from "./ManageExperience";
 
-export default function RenderEducation({ educationData }: { educationData: EducationDetailType }) {
+export default function RenderExperience({ experienceData }: { experienceData: ExperienceDetailType }) {
     const { setModalPopup, isModalLoading, setIsModalLoading } = useModalAction();
 
     const [activePopupIndex, setActivePopupIndex] = useState<number | null>(null);
     const [hoverIndex, setHoverIndex] = useState<number | null>(null);
     const [deleteIndex, setDeleteIndex] = useState<number | null>(null);
+
 
     useEffect(() => {
         if (activePopupIndex !== null && !isModalLoading)
@@ -26,12 +27,13 @@ export default function RenderEducation({ educationData }: { educationData: Educ
 
     }, [activePopupIndex, isModalLoading]);
 
-    const handleDeleteEducation = async (education: EducationDetailType[number], index: number) => {
+
+    const handleDeleteExperience = async (experience: ExperienceDetailType[number], index: number) => {
         if (confirm("Want to delete education?")) {
             setIsModalLoading(true);
             setDeleteIndex(index);
 
-            await deleteEducation(education)
+            await deleteExperience(experience)
                 .then(({ message, errorMessage }) => {
                     if (message)
                         showToast("success", message)
@@ -46,7 +48,7 @@ export default function RenderEducation({ educationData }: { educationData: Educ
     }
 
     return (
-        (educationData?.map(({ ...education }, index) => (
+        (experienceData?.map(({ ...experience }, index) => (
             <div className="timeline-item dash-timeline-item" key={index}>
                 <div className="timeline-item-inner outer-shadow">
                     {deleteIndex === index && isModalLoading &&
@@ -54,28 +56,29 @@ export default function RenderEducation({ educationData }: { educationData: Educ
                             <WaveLoader />
                         </div>
                     }
-                    <div className="icon"
+                    <div
+                        className="icon"
                         onMouseEnter={() => setHoverIndex(index)}
                         onMouseLeave={() => setHoverIndex(null)}
                         style={hoverIndex === index ? { cursor: "pointer" } : { cursor: "auto" }}
                         onClick={() => setActivePopupIndex(index)}
                     >
-                        {hoverIndex === index ? <FaEdit cursor="pointer" /> : <FaGraduationCap />}
+                        {hoverIndex === index ? <FaEdit cursor="pointer" /> : <FaBriefcase />}
                     </div>
                     <div className="dash-timeline-header">
-                        <span>{education.from} - {education.to}</span>
-                        <div className="delete" onClick={() => handleDeleteEducation(education, index)}><MdDelete /></div>
+                        <span>{experience.from} - {experience.to}</span>
+                        <div className="delete" onClick={() => handleDeleteExperience(experience, index)}><MdDelete /></div>
                     </div>
-                    <h3>{education.degree}</h3>
-                    <h4>{education.institution.title}, {education.institution.location}</h4>
-                    <RenderRichText key={index} text={education.info} />
+                    <h3>{experience.role}</h3>
+                    <h4>{experience.organization.title}, {experience.organization.location}</h4>
+                    <RenderRichText key={index} text={experience.experienceDetail} />
 
-                    {<EditorActionProvider defaultContent={education.info} defaultOpen={true}>
+                    {<EditorActionProvider defaultContent={experience.experienceDetail} defaultOpen={true}>
                         <Modal
                             isModalPopUpOpen={activePopupIndex === index && !isModalLoading}
                             setModalPopupOpen={(val) => val === false && setActivePopupIndex(null)}
                         >
-                            <ManageEducation education={education} isNewEducation={false} />
+                            <ManageExperience experience={experience} isNewExperience={false} />
                         </Modal>
                     </EditorActionProvider>}
                 </div>

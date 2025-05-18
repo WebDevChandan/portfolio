@@ -5,7 +5,7 @@ import { ImPencil } from "react-icons/im";
 import { _UploadImageFileType } from "../../components/UploadFile";
 import { useProfile } from "../../context/ProfileProvider";
 import { useFileUpload } from "../../hook/useFileUpload";
-import { saveAboutImage } from "../server/profileAction";
+import { saveAboutImage } from "../server/profile.action";
 
 export type UploadedFileForDB = {
     file: File,

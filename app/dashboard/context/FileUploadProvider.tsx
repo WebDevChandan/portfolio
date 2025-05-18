@@ -55,7 +55,7 @@ export default function FileUploadProvider({ children }: { children: React.React
             {children}
             <Modal
                 isModalPopUpOpen={isFileUploadPopUp}
-                setModalPopup={setIsFileUploadPopUp}
+                setModalPopupOpen={setIsFileUploadPopUp}
             >
                 <UploadFile
                     uploadTitle={fileUploadInfo.uploadTitle}

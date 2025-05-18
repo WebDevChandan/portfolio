@@ -7,7 +7,7 @@ import { FaSearch } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { InputField } from "../../components";
 import { useProfile } from "../../context/ProfileProvider";
-import { saveSkills } from "../server/profileAction";
+import { saveSkills } from "../server/profile.action";
 import '../styles/manageSkills.scss';
 
 export type SkillsType = {
@@ -184,9 +184,10 @@ export default function ManageSkills() {
 
                 }
 
-                {!fetchedSkill.length && <div className="skill-not-found-msg">
-                    <p>Add this <span>skill</span> to your profile!</p>
-                </div>}
+                {!fetchedSkill.length &&
+                    <div className="skill-not-found-msg">
+                        <p>Add this <span>skill</span> to your profile!</p>
+                    </div>}
 
             </div>
 

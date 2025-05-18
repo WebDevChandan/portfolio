@@ -1,5 +1,6 @@
 @use "sass:meta";
-@use "../../styles/mixins";  
+@use "../../styles/mixins";
+
 .education,
 .experience {
     padding-bottom: 80px;
@@ -76,7 +77,6 @@
                 color: var(--text-black-700);
                 font-weight: 600;
                 margin: 0 0 5px;
-                text-transform: capitalize;
             }
 
             h4 {

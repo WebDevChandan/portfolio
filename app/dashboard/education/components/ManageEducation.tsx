@@ -1,171 +1,201 @@
 "use client";
-import '../../profile/styles/manageSkills.scss';
+import { useModalAction } from "@/app/hook/useModalAction";
+import { ChangeEvent, useEffect, useState } from "react";
+import { Editor, InputField } from "../../components";
+import { useEditorAction } from "../../hook/useEditorAction";
+import { EducationDetailType, ManageEducationProps } from "../../types/EducationType";
+import '../styles/manage-education.scss';
+import { addEducation, updateEducation } from "../server/education.action";
+import { showToast } from "@/utils/showToast";
+import ServerSpinLoader from "@/app/components/Loader/ServerSpinLoader";
 
-export type SkillsType = {
-    name: string;
-    level: string;
-}[];
+export default function ManageEducation({ education, isNewEducation }: ManageEducationProps) {
+    const [isEducationUpdating, setIsEducationUpdating] = useState<boolean>(false);
+    const { setModalPopup } = useModalAction();
+    const { isEditable, editorContent, isUpdated, handleCancelEditor } = useEditorAction();
+    const [currentEducationData, setCurrentEducationData] = useState<EducationDetailType[number]>(education);
 
-export default function ManageEducation() {
-    // const { profileData, isProfileUpdating, setIsProfileUpdating } = useProfile();
-    // const { setModalPopup } = useModalAction();
+    const prevEducationData: EducationDetailType[number] = education;
 
-    // const [skills, setSkills] = useState<SkillsType>(profileData ? profileData.skills : []);
+    const [hasContentChanged, setHasContentChanged] = useState(false);
 
-    // const [newSkill, setNewSkill] = useState({
-    //     name: "",
-    //     level: "0",
-    // });
+    useEffect(() => {
+        if (isEditable) {
+            setCurrentEducationData((prev) => ({
+                ...prev,
+                info: editorContent,
+            }));
+        }
 
-    // const [hasContentChanged, setHasContentChanged] = useState(false);
+        return () => {
+            setCurrentEducationData((prev) => ({
+                ...prev,
+                info: currentEducationData.info
+            }));
+        }
+    }, [editorContent])
 
-    // const fetchedSkill = useMemo(() => {
-    //     return skills.filter(skill => skill.name.toLocaleLowerCase().startsWith(newSkill.name.toLocaleLowerCase()));
-    // }, [skills, newSkill])
+    useEffect(() => {
+        if (!isNewEducation) {
+            if (
+                (prevEducationData.degree !== currentEducationData.degree ||
+                    prevEducationData.institution.title !== currentEducationData.institution.title ||
+                    prevEducationData.institution.location !== currentEducationData.institution.location ||
+                    prevEducationData.to !== currentEducationData.to ||
+                    prevEducationData.from !== currentEducationData.from ||
+                    isUpdated)
+            )
+                setHasContentChanged(true);
+            else
+                setHasContentChanged(false);
 
-    // useEffect(() => {
-    //     if (!skills.length)
-    //         setHasContentChanged(false);
+        } else {
+            if (
+                (prevEducationData.degree !== currentEducationData.degree &&
+                    prevEducationData.institution.title !== currentEducationData.institution.title &&
+                    prevEducationData.institution.location !== currentEducationData.institution.location &&
+                    prevEducationData.to !== currentEducationData.to &&
+                    prevEducationData.from !== currentEducationData.from &&
+                    isUpdated)
+            )
+                setHasContentChanged(true);
+            else
+                setHasContentChanged(false);
+        }
+    }, [currentEducationData, isNewEducation])
 
-    //     else if (profileData?.skills.length !== skills.length)
-    //         setHasContentChanged(true);
+    const handleEducationChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = event.target;
 
-    //     else {
-    //         const hasSkillsChanged = skills.some(skill =>
-    //             profileData?.skills.some(prevSkill =>
-    //                 prevSkill.name.toLocaleLowerCase() === skill.name.toLocaleLowerCase() && prevSkill.level !== skill.level
-    //             )
-    //         );
+        if (name.includes(".")) {
+            const [parentKey, childKey] = name.split(".");
+            setCurrentEducationData((prev) => ({
+                ...prev,
+                [parentKey]: {
+                    ...(prev as any)[parentKey],
+                    [childKey]: value,
+                },
+            }));
+        } else {
+            setCurrentEducationData((prev) => ({
+                ...prev,
+                info: editorContent,
+                [name]: value,
+            }));
+        }
+    };
 
-    //         setHasContentChanged(hasSkillsChanged);
-    //     }
+    const handleCancel = () => {
+        setModalPopup(false);
 
-    // }, [skills]);
+        //Reset Edu-info as modal closed
+        handleCancelEditor();
+    }
 
+    const mutateEducationData = async () => {
+        setIsEducationUpdating(true);
 
-    // const handleSaveSkills = async (event: MouseEvent<HTMLButtonElement>) => {
-    //     event.preventDefault();
+        //Add Education
+        if (isNewEducation) {
+            await addEducation(currentEducationData)
+                .then(({ message, errorMessage }) => {
+                    if (message) {
+                        showToast("success", message)
+                        setModalPopup(false);
+                    }
 
-    //     if (event.type !== "click") return;
+                    if (errorMessage) {
+                        showToast("error", errorMessage);
+                    }
+                })
+        }
+        else {
+            await updateEducation(currentEducationData)
+                .then(({ message, errorMessage }) => {
+                    if (message) {
+                        showToast("success", message)
+                        setModalPopup(false);
+                    }
 
-    //     if (isProfileUpdating || !hasContentChanged) return;
+                    if (errorMessage) {
+                        showToast("error", errorMessage);
+                    }
+                })
+        }
 
-    //     if (!skills.length) return;
-
-    //     setIsProfileUpdating(true);
-
-    //     const { message, errorMessage } = await saveSkills(skills) as { message?: string, errorMessage?: string };
-
-    //     if (message) {
-    //         setIsProfileUpdating(false);
-    //         setModalPopup(false);
-    //         showToast("success", message);
-    //         return;
-    //     }
-
-    //     if (errorMessage) {
-    //         showToast("error", errorMessage)
-    //         setIsProfileUpdating(false);
-    //         return;
-    //     }
-    // }
-
-    // const handleSearchSkill = (event: ChangeEvent<HTMLInputElement>) => {
-    //     setNewSkill({
-    //         name: event.target.value.trim(),
-    //         level: "0",
-    //     })
-    // }
-
-    // const handleAddNewSkill = (event: MouseEvent<HTMLButtonElement>) => {
-    //     event.preventDefault();
-
-    //     if (!newSkill.name.trim()) return;
-
-    //     const isDuplicateSkill = skills.some(skill => skill.name.toLocaleLowerCase() === newSkill.name.trim().toLocaleLowerCase());
-
-    //     if (isDuplicateSkill) return;
-
-    //     setSkills([newSkill, ...skills]);
-
-    //     setNewSkill({
-    //         name: "",
-    //         level: "0",
-    //     });
-    // }
-
-    // const handleDeleteSkill = (skillName: string, skillLevel: string) => {
-    //     if (!parseInt(skillLevel))
-    //         setSkills((skills) =>
-    //             skills.filter((skill) =>
-    //                 skill.name.toLocaleLowerCase() !== skillName.toLocaleLowerCase()
-    //             )
-    //         );
-
-    //     else if (confirm('Are you sure you want to delete?'))
-    //         setSkills((skills) =>
-    //             skills.filter((skill) =>
-    //                 skill.name.toLocaleLowerCase() !== skillName.toLocaleLowerCase()
-    //             )
-    //         );
-    // }
-
-    // const handleEditSkill = (skillName: string, event: ChangeEvent<HTMLInputElement>) => {
-    //     event.preventDefault();
-
-    //     setSkills((skills) =>
-    //         skills.map((skill) =>
-    //             skill.name.toLocaleLowerCase() === skillName.toLocaleLowerCase()
-    //                 ? { ...skill, level: event.target.value }
-    //                 : skill
-    //         )
-    //     )
-    // }
+        setIsEducationUpdating(false);
+    }
 
     return (
         <div className="add-content-container">
             <div className="content-header" style={{ margin: "10px" }}>
-                <div className="content-label">Add Education</div>
+                <div className="content-label">{isNewEducation ? "Add" : "Update"} Education</div>
             </div>
 
             <div className="add-content" style={{ margin: "0px 0px 10px", padding: "5px 0px" }}>
-                {/* {
-                    fetchedSkill.map((skill, index) => (
-                        <div className="skill-item modal-skill-item" key={index}>
-                            <p>{skill.name}</p>
-                            <div className="range-container inner-shadow">
-                                <div className="progress-meter" style={{ width: `calc(${skill.level}% - 14px)` }}></div>
-                                <input
-                                    type="range"
-                                    className={`range-bar`}
-                                    min={0} max={100}
-                                    value={skill.level}
-                                    name={skill.name}
-                                    onChange={(event) => handleEditSkill(skill.name, event)}
-                                />
-                                <span>{`${skill.level}%`}</span>
-                            </div>
-                            <span className="delete-icon">
-                                <MdDelete cursor="pointer" color="#cc3a3b" onClick={() => handleDeleteSkill(skill.name, skill.level)} />
-                            </span>
-                        </div>
-                    ))
+                <div className="education-field">
+                    <InputField
+                        placeholder="Degree"
+                        value={currentEducationData.degree}
+                        specificName="degree"
+                        handleChangeInput={handleEducationChange}
+                    />
+                </div>
 
-                }
+                <div className="education-field">
+                    <InputField
+                        placeholder="Institution Name"
+                        value={currentEducationData.institution.title}
+                        specificName="institution.title"
+                        handleChangeInput={handleEducationChange}
+                    />
+                </div>
 
-                {!fetchedSkill.length && <div className="skill-not-found-msg">
-                    <p>Add this <span>skill</span> to your profile!</p>
-                </div>} */}
+                <div className="education-field">
+                    <InputField
+                        placeholder="Institution Location"
+                        value={currentEducationData.institution.location}
+                        specificName="institution.location"
+                        handleChangeInput={handleEducationChange}
+                    />
+                </div>
 
+                <div className="education-field date-field">
+                    <div className="w-50">
+                        <InputField
+                            placeholder="From (YYYY)"
+                            value={currentEducationData.from}
+                            specificName="from"
+                            handleChangeInput={handleEducationChange}
+                        />
+                    </div>
+                    <div className="w-50">
+                        <InputField
+                            placeholder="To (YYYY)"
+                            value={currentEducationData.to}
+                            specificName="to"
+                            handleChangeInput={handleEducationChange}
+                        />
+                    </div>
+                </div>
+                <div className="education-field editor-field">
+                    <Editor />
+                </div>
             </div>
 
             <div className="modal-btn">
-                {/* {
-                    fetchedSkill.length
-                        ? <button onClick={handleSaveSkills} disabled={isProfileUpdating || !hasContentChanged} className={`btn-1 outer-shadow ${isProfileUpdating ? "btn-disabled" : !hasContentChanged ? "btn-disabled-without-loader" : "hover-in-shadow"}`}>{isProfileUpdating && <ServerSpinLoader />} Save Skills</button>
-                        : <button onClick={handleAddNewSkill} className={`btn-1 outer-shadow hover-in-shadow`}> Add Skill</button>
-                } */}
-
+                <button className={`btn-1 outer-shadow hover-in-shadow`} onClick={handleCancel}> Cancel</button>
+                {
+                    isEducationUpdating
+                        ? <button className={`btn-1 outer-shadow btn-disabled`}> <ServerSpinLoader /> Saving...</button>
+                        : <button
+                            className={`btn-1 outer-shadow hover-in-shadow ${!hasContentChanged ? 'btn-disabled-without-loader' : ''}`}
+                            onClick={mutateEducationData}
+                            disabled={!hasContentChanged}
+                        >
+                            {isNewEducation ? "Add" : "Update"}
+                        </button>
+                }
             </div>
         </div>
     )

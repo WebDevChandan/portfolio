@@ -1,24 +1,24 @@
 import { Title, WaveLoader } from "@/app/components";
 import ModalProvider from "@/app/context/ModalProvider";
 import { Suspense } from "react";
-import NewEducation from "./components/NewEducation";
-import RenderEducation from "./components/RenderEducation";
-import { fetchEducationDetails } from "./server/education.action";
+import { fetchExperienceDetails } from "./server/experience.action";
 import "../styles/education-experience_dash.scss";
+import RenderExperience from "./components/RenderExperience";
+import NewExperience from "./components/NewExperience";
 
-export default async function EducationDash() {
-    const educationDetails = await fetchEducationDetails();
+export default async function ExperienceDash() {
+    const experienceDetails = await fetchExperienceDetails();
 
     return (
         <>
-            <Title title="Education" subTitle="View or Edit Education" />
+            <Title title="Experience" subTitle="View or Edit Experience" />
             <Suspense fallback={<WaveLoader />}>
                 <ModalProvider>
                     <div className="education">
                         <div className="timeline">
                             <div className="row">
-                                <NewEducation />
-                                {educationDetails && <RenderEducation educationData={educationDetails} />}
+                                <NewExperience />
+                                {experienceDetails && <RenderExperience experienceData={experienceDetails} />}
                             </div>
                         </div>
                     </div>

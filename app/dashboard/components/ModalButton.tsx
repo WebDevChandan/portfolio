@@ -20,7 +20,7 @@ export default function ModalButton({ label, children }: ModalButtonType) {
                     {label}
                 </div>
             </div>
-            <Modal isModalPopUpOpen={modalPopup} setModalPopup={setModalPopup} >
+            <Modal isModalPopUpOpen={modalPopup} setModalPopupOpen={setModalPopup} >
                 {children}
             </Modal>
         </>

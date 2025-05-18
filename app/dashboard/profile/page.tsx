@@ -1,12 +1,12 @@
 import { Title, WaveLoader } from '@/app/components';
 import prisma from '@/utils/prisma';
+import { Suspense } from 'react';
 import { SubSectionTitle } from '../components';
 import { EditorActionProvider } from '../context/EditorProvider';
 import FileUploadProvider from '../context/FileUploadProvider';
 import { ProfileProvider } from '../context/ProfileProvider';
 import { Profileheader, ProfileSkills, ProfileSocialLinks } from './components';
 import './styles/profile.scss';
-import { Suspense } from 'react';
 
 export type ProfileType = {
     aboutImage: string;
@@ -52,16 +52,16 @@ const Profile = async () => {
                         <>
                             {profileData && (
                                 <FileUploadProvider>
-                                    <EditorActionProvider defaultContent={profileData.about}>
+                                        <EditorActionProvider defaultContent={profileData.about} defaultOpen={false}>
 
-                                        <Profileheader />
+                                            <Profileheader />
 
-                                        <SubSectionTitle title="Social Links" />
-                                        <ProfileSocialLinks />
+                                            <SubSectionTitle title="Social Links" />
+                                            <ProfileSocialLinks />
 
-                                        <SubSectionTitle title="Skills" />
-                                        <ProfileSkills />
-                                    </EditorActionProvider>
+                                            <SubSectionTitle title="Skills" />
+                                            <ProfileSkills />
+                                        </EditorActionProvider>
                                 </FileUploadProvider>
                             )}
                         </>
