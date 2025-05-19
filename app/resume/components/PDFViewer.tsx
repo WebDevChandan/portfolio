@@ -7,12 +7,6 @@ interface ResumeProps {
 }
 
 export default function PDFViewer({ resumeFile }: ResumeProps) {
-    const handlePrint = () => {
-        const printWindow = window.open(resumeFile, "_blank");
-        printWindow?.focus();
-        printWindow?.print();
-    };
-
     return (
         <div className={styles.resumeWrapper}>
             <iframe
