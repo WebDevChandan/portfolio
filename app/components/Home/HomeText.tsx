@@ -15,8 +15,8 @@ export default function HomeText({ name, roles }: { name: string, roles: string[
                 }
             </h1>
 
-            <Button label="Portfolio" />
-            <Button label="Resume" />
+            <Button label="Portfolio" href="/portfolio"/>
+            <Button label="Resume" href="/resume"/>
 
         </div>
     )

@@ -6,7 +6,7 @@ export default async function Resume({ resumeFile }: { resumeFile: string }) {
     return (
         <>
             {
-                status === 200 && <PDFViewer pdfUrl={`${resumeFile}`} />
+                status === 200 && <PDFViewer resumeFile={`${resumeFile}`} />
                 ||
                 <h2
                     style={{

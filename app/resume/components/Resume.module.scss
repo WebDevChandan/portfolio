@@ -1,0 +1,49 @@
+.resumeWrapper {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  aspect-ratio: 8.5 / 11;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    aspect-ratio: auto;
+    height: 90vh;
+  }
+}
+
+.iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 1rem;
+  margin-top: 1rem;
+
+  button {
+    background-color: #011627;
+    color: #fff;
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background-color: #023e8a;
+    }
+  }
+
+  a {
+    text-decoration: none;
+  }
+}

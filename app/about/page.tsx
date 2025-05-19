@@ -10,6 +10,7 @@ const fetchAboutDetails = async () => {
             select: {
                 about: true,
                 aboutImage: true,
+                resume: true
             }
         });
 
@@ -54,7 +55,7 @@ export default async function About() {
                                     <MyImage src={aboutData.aboutImage} />
                                     <SocialLinks />
                                 </div>
-                                <AboutMe info={aboutData!.about} />
+                                <AboutMe info={aboutData!.about} resume={aboutData.resume} />
                             </div>
                         )
                     }
