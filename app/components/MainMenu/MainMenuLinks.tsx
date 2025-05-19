@@ -48,6 +48,7 @@ export default function MainMenuLinks() {
                                     <Link href={label !== "Dashboard" ? `/dashboard/${label.toLowerCase()}` : "/dashboard"}
                                         className={`${active ? "active inner-shadow " : "outer-shadow hover-in-shadow"}`}
                                         onClick={(e) => toggleMainMenuBar(e.currentTarget)}
+                                        prefetch={true}
                                     >
                                         {label}
                                     </Link>

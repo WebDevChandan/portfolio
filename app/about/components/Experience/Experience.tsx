@@ -16,6 +16,9 @@ const fetchExpericneDetail = async () => {
                         location: true,
                     }
                 }
+            },
+            orderBy: {
+                created_at: "desc",
             }
         });
         return experienceDetail;

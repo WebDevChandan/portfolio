@@ -129,7 +129,7 @@ export default function SideNavLinks({ pathName }: { pathName: string }) {
                                     }}
                                     title={label}
                                 >
-                                    <Link href={label !== "Home" ? label.toLowerCase() : "/"}>
+                                    <Link href={label !== "Home" ? label.toLowerCase() : "/"} prefetch={true}>
                                         <i className='icon'>{icon}</i>
                                         <span className="text nav-text">{label}</span>
                                     </Link>
@@ -155,7 +155,7 @@ export default function SideNavLinks({ pathName }: { pathName: string }) {
                                         }}
                                         title={label}
                                     >
-                                        <Link href={label !== "Dashboard" ? `/dashboard/${label.toLowerCase()}` : "/dashboard"}>
+                                        <Link href={label !== "Dashboard" ? `/dashboard/${label.toLowerCase()}` : "/dashboard"} prefetch={true}>
                                             <i className='icon'>{icon}</i>
                                             <span className="text nav-text">{label}</span>
                                         </Link>

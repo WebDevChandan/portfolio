@@ -5,6 +5,6 @@ export default async function PDFViewer({ pdfUrl }: { pdfUrl: string }) {
                 type="application/pdf"
                 width="800"
                 height="600"
-            />
+                    />
     )
 }
