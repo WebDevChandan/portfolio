@@ -1,6 +1,6 @@
 'use server';
 import { isFirebaseAuthError } from '@/utils/firebaseAuthError';
-import { firebaseConfig } from '@/utils/firebaseConfig';
+import { firebaseConfig } from '@/utils/firebaseClient';
 import { getApps, initializeApp } from 'firebase/app';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { cookies } from 'next/headers';

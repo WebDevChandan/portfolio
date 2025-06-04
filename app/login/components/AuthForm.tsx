@@ -81,7 +81,7 @@ export default function AuthForm() {
 
             <button
                 type="submit"
-                className={`btn-1 login-btn outer-shadow ${isDisabled ? 'btn-disabled' : 'hover-in-shadow'}`}
+                className={`btn-1 login-btn outer-shadow ${isDisabled ? 'btn-disabled-without-loader' : 'hover-in-shadow'}`}
                 disabled={isDisabled || isPending}
             >
                 {isPending ? 'Loading...' : 'Login'}
